@@ -4,6 +4,7 @@ export const REMOVE_STATION = 'REMOVE_STATION'
 export const ADD_STATION = 'ADD_STATION'
 export const UPDATE_STATION = 'UPDATE_STATION'
 export const SET_NEXT_SONG = 'SET_NEXT_SONG'
+export const SET_PREV_SONG = 'SET_PREV_SONG'
 
 const initialState = {
     stations: [],
@@ -41,6 +42,15 @@ export function stationReducer(state = initialState, action) {
                 currentSongIdx: nextIdx,
             }
         }
+        case SET_PREV_SONG: {
+            const prevIdx =
+              (state.currentSongIdx - 1 + state.station.songs.length) %
+              state.station.songs.length
+            return {
+              ...state,
+              currentSongIdx: prevIdx,
+            }
+          }
         default:
     }
     return newState
