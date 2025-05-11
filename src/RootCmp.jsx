@@ -15,6 +15,7 @@ import { UserMsg } from './cmps/UserMsg.jsx'
 import { LoginSignup } from './pages/LoginSignup.jsx'
 import { Login } from './pages/Login.jsx'
 import { Signup } from './pages/Signup.jsx'
+import { MediaPlayer } from './cmps/MediaPlayer.jsx'
 
 export function RootCmp() {
     return (
@@ -35,7 +36,7 @@ export function RootCmp() {
                     </Route>
                 </Routes>
             </main>
-            <AppFooter />
+            <MediaPlayer/>
         </div>
     )
 }

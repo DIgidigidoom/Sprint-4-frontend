@@ -1,6 +1,7 @@
 import { stationService } from '../../services/station/station.service.local.js'
 import { store } from '../store.js'
-import { ADD_STATION, REMOVE_STATION, SET_STATIONS, SET_STATION, UPDATE_STATION} from '../reducers/station.reducer.js'
+import { ADD_STATION, REMOVE_STATION, SET_STATIONS, SET_STATION, UPDATE_STATION, SET_NEXT_SONG } from '../reducers/station.reducer.js'
+
 
 export async function loadStations(filterBy) {
     try {
@@ -54,6 +55,16 @@ export async function updateStation(station) {
         throw err
     }
 }
+// Media Player
+export function setCurrentStation(station) {
+    return { type: SET_STATION, station }
+}
+
+export function setNextSong() {
+    return {
+      type: SET_NEXT_SONG
+    }
+  }
 
 
 // Command Creators:
