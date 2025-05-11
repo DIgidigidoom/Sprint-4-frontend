@@ -12,14 +12,25 @@ export function MediaPlayer() {
 
     const [isPlaying, setIsPlaying] = useState(false)
     const [volume, setVolume] = useState(100)
+    const [progress, setProgress] = useState(0)
+    const [duration, setDuration] = useState(0)
     const playerRef = useRef(null)
 
     const song = station?.songs[songIdx]
 
     useEffect(() => {
+        const interval = setInterval(() => {
+            if (playerRef.current && isPlaying) {
+                const currentTime = playerRef.current.getCurrentTime()
+                const totalTime = playerRef.current.getDuration()
+                setProgress(currentTime)
+                setDuration(totalTime)
+            }
+        }, 500)
         console.log("song: ", song)
         if (playerRef.current && isPlaying) playerRef.current.playVideo()
-    }, [song])
+        return () => clearInterval(interval)
+    }, [song, isPlaying])
 
     function onReady(event) {
         const player = event?.target
@@ -57,6 +68,12 @@ export function MediaPlayer() {
         }
     }
 
+    function formatTime(sec) {
+        const minutes = Math.floor(sec / 60)
+        const seconds = Math.floor(sec % 60).toString().padStart(2, '0')
+        return `${minutes}:${seconds}`
+    }
+
 
     return (
         <footer className="media-player">
@@ -72,13 +89,33 @@ export function MediaPlayer() {
 
 
             <div className="track-controls">
-                <button onClick={prevSong} disabled={!song}>⏮️</button>
-                <button onClick={togglePlay} disabled={!song}>
-                    {isPlaying ? '⏸️' : '▶️'}
-                </button>
-                <button onClick={nextSong} disabled={!song}>⏭️</button>
+                <div className='track-controls-middle'>
+                    <div className="track-nav-container">
+                        <button onClick={prevSong} disabled={!song}>⏮️</button>
+                        <button onClick={togglePlay} disabled={!song}>
+                            {isPlaying ? '⏸️' : '▶️'}
+                        </button>
+                        <button onClick={nextSong} disabled={!song}>⏭️</button>
+                    </div>
+                    <div className='track-seek-container'>
+                        <span>{formatTime(progress)}</span>
+                        <input
+                            type="range"
+                            min="0"
+                            max={duration}
+                            value={progress}
+                            step="0.1"
+                            onChange={(ev) => {
+                                const newTime = +ev.target.value
+                                playerRef.current.seekTo(newTime, true)
+                                setProgress(newTime)
+                            }}
+                            className="seek-bar"
+                        />
+                        <span>{formatTime(duration)}</span>
+                    </div>
+                </div>
             </div>
-
             <div className="track-options">
                 <input
                     type="range"
