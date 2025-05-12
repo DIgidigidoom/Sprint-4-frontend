@@ -8,11 +8,14 @@ import { stationService } from '../services/station/index.js'
 import { userService } from '../services/user/user.service.local.js'
 import { StationList } from '../cmps/StationList.jsx'
 import { StationFilter } from '../cmps/StationFilter.jsx'
+import { EditStationModal } from '../cmps/EditStationModal.jsx'
 
 export function StationIndex() {
 
     const [filterBy, setFilterBy] = useState(stationService.getDefaultFilter())
     const stations = useSelector(storeState => storeState.stationModule.stations)
+    const [stationToEdit, setStationToEdit] = useState(null)
+
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -28,27 +31,21 @@ export function StationIndex() {
         }
     }
 
-    async function onUpdateStation(station) {
-        station.title = prompt('Title?', 'Some Title')
-        const stationToSave = { ...station, name }
-        try {
-            const savedStation = await updateStation(stationToSave)
-            showSuccessMsg(`Station updated, new name: ${savedStation.name}`)
-        } catch (err) {
-            showErrorMsg('Cannot update station')
-        }
+    function onUpdateStation(station) {
+        setStationToEdit(station)
     }
 
     async function onCreateStation() {
         const station = stationService.getEmptyStation()
         try {
-            const savedStation = await stationService.save(station)
+            const savedStation = await addStation(station)
             navigate(`/station/${savedStation._id}`)
         } catch (err) {
             console.error('Cannot create station', err)
             showErrorMsg('Cannot create station')
         }
     }
+
 
     return (
         <main className="station-index">
@@ -64,6 +61,14 @@ export function StationIndex() {
                 stations={stations}
                 onRemoveStation={onRemoveStation}
                 onUpdateStation={onUpdateStation} />
+
+            {stationToEdit && (
+                <EditStationModal
+                    station={stationToEdit}
+                    onClose={() => setStationToEdit(null)}
+                />
+            )}
+
         </main>
     )
 }

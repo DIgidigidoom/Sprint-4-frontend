@@ -111,4 +111,22 @@
             }
         }
     }
+
+    .station-name-input {
+        color: white;
+        font-size: 1.5em;
+        font-weight: bold;
+        border: none;
+        border-bottom: 1px solid #ccc;
+        outline: none;
+        background: transparent;
+        width: 100%;
+        margin-bottom: 0.5em;
+    }
+
+    .station-name-input:focus {
+        border-bottom: 2px solid #1db954;
+    }
+
+
 }

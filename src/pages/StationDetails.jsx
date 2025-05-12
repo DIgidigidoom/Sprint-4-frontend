@@ -1,20 +1,34 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { loadStation } from '../store/actions/station.actions'
-import { stationService } from '../services/station/station.service.local'
+import { loadStation, updateStation } from '../store/actions/station.actions'
+import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 
 export function StationDetails() {
   const { stationId } = useParams()
   const navigate = useNavigate()
   const station = useSelector(storeState => storeState.stationModule.station)
+  const [name, setName] = useState('')
 
 
   useEffect(() => {
     if (stationId) loadStation(stationId)
   }, [stationId])
 
+  useEffect(() => {
+    if (station) setName(station.name)
+  }, [station])
 
+  async function onSaveName() {
+    try {
+      const updatedStation = { ...station, name }
+      await updateStation(updatedStation)
+      showSuccessMsg('Station name updated')
+    } catch (err) {
+      console.error('Failed to update station name', err)
+      showErrorMsg('Failed to save station')
+    }
+  }
 
   if (!station) return <div>Loading...</div>
 
@@ -25,8 +39,17 @@ export function StationDetails() {
           <img className="station-img" src={station.imgUrl} alt={station.name} />
         )}
         <div className="station-info">
-          <h1>{station.name}</h1>
-          <div className="station-meta">Playlist • {station.songs?.length || 0} songs</div>
+
+          <input
+            className="station-name-input"
+            value={name}
+            onChange={(ev) => setName(ev.target.value)}
+          />
+          <button onClick={onSaveName}>Save</button>
+
+          <div className="station-meta">
+            Playlist • {station.songs?.length || 0} songs
+          </div>
         </div>
       </div>
 
