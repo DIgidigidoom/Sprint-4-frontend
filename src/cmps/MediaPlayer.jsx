@@ -77,7 +77,6 @@ export function MediaPlayer() {
 
     return (
         <footer className="media-player">
-
             <div className="track-info">
                 {song && (
                     <React.Fragment>
@@ -86,34 +85,34 @@ export function MediaPlayer() {
                     </React.Fragment>
                 )}
             </div>
-
-
             <div className="track-controls">
-                <div className='track-controls-middle'>
-                    <div className="track-nav-container">
-                        <button onClick={prevSong} disabled={!song}>⏮️</button>
-                        <button onClick={togglePlay} disabled={!song}>
-                            {isPlaying ? '⏸️' : '▶️'}
-                        </button>
-                        <button onClick={nextSong} disabled={!song}>⏭️</button>
-                    </div>
-                    <div className='track-seek-container'>
-                        <span>{formatTime(progress)}</span>
-                        <input
-                            type="range"
-                            min="0"
-                            max={duration}
-                            value={progress}
-                            step="0.1"
-                            onChange={(ev) => {
-                                const newTime = +ev.target.value
-                                playerRef.current.seekTo(newTime, true)
-                                setProgress(newTime)
-                            }}
-                            className="seek-bar"
-                        />
-                        <span>{formatTime(duration)}</span>
-                    </div>
+                <div className="track-nav-container">
+                    <button onClick={prevSong} disabled={!song}>
+                        <span class="bx--skip-previous"></span>
+                    </button>
+                    <button className="play-btn" onClick={togglePlay} disabled={!song}>
+                        <span className={isPlaying ? "icon-park-solid--pause-one" : "icon-park-solid--play"}></span>
+                    </button>
+                    <button onClick={nextSong} disabled={!song}>
+                        <span class="bx--skip-next"></span>
+                    </button>
+                </div>
+                <div className="track-seek-container">
+                    <div className='track-time'>{formatTime(progress)}</div>
+                    <input
+                        type="range"
+                        min="0"
+                        max={duration}
+                        value={progress}
+                        step="0.1"
+                        onChange={(ev) => {
+                            const newTime = +ev.target.value
+                            playerRef.current.seekTo(newTime, true)
+                            setProgress(newTime)
+                        }}
+                        className="seek-bar"
+                    />
+                    <div className='track-time'>{formatTime(duration)}</div>
                 </div>
             </div>
             <div className="track-options">
