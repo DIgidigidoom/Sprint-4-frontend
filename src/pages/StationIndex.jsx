@@ -3,13 +3,9 @@ import { useSelector } from 'react-redux'
 
 import { loadStations, addStation, updateStation, removeStation } from '../store/actions/station.actions.js'
 import { useNavigate } from 'react-router-dom'
-import { loadStations, addStation, updateStation, removeStation } from '../store/actions/station.actions.js'
 
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 import { stationService } from '../services/station/index.js'
-import { userService } from '../services/user/user.service.local.js'
-import { StationList } from '../cmps/StationList.jsx'
-import { StationFilter } from '../cmps/StationFilter.jsx'
 import { SideBar } from '../cmps/SideBar.jsx'
 import { AppHeader } from '../cmps/AppHeader.jsx'
 import MainPage from './MainPage.jsx'
@@ -61,11 +57,9 @@ export function StationIndex() {
         } catch (err) {
             showErrorMsg('Cannot update station')
         }
-            console.error('Cannot create station', err)
-            showErrorMsg('Cannot create station')
-        }
+        console.error('Cannot create station', err)
+        showErrorMsg('Cannot create station')
     }
-
 
     return (
         <main className="station-index">
@@ -75,31 +69,21 @@ export function StationIndex() {
                 stations={stations}
                 onRemoveStation={onRemoveStation}
                 onUpdateStation={onUpdateStation} /> */}
-            <MainPage
-            <header>
-                <h2>Stations</h2>
-                <button className="btn-create" onClick={onCreateStation}>
-                    <i className="fa-solid fa-plus"></i> Create Playlist
-                </button>
-
-            </header>
-            <StationFilter filterBy={filterBy} setFilterBy={setFilterBy} />
-            <StationList
-                stations={stations}
+            <MainPage stations={stations}
                 onRemoveStation={onRemoveStation}
                 onUpdateStation={onUpdateStation} />
+
             <SideBar />
-
-                onRemoveStation={onRemoveStation}
-                onUpdateStation={onUpdateStation} />
 
             {stationToEdit && (
                 <EditStationModal
                     station={stationToEdit}
-                    onClose={() => setStationToEdit(null)}
-                />
+                    onClose={() => setStationToEdit(null)} />
             )}
 
         </main>
     )
 }
+
+
+
