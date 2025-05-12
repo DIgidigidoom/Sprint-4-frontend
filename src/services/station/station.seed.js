@@ -1,5 +1,3 @@
-
-
 export function seedStationsToLocalStorage() {
   const STORAGE_KEY = 'stationDB'
 
@@ -12,10 +10,9 @@ export function seedStationsToLocalStorage() {
   }
 }
 
-
 export const stations = [
   {
-    "_id": "772d9a4477b2",
+    "_id": "c2f36bbbdd74",
     "name": "Jazz & Chill",
     "tags": [
       "Jazz",
@@ -32,38 +29,38 @@ export const stations = [
     ],
     "songs": [
       {
-        "id": "bYH9OOzY_J4",
+        "id": "TLDflhhdPCg",
         "title": "Blue in Green",
-        "url": "youtube/bYH9OOzY_J4.mp4",
-        "imgUrl": "https://i.ytimg.com/vi/bYH9OOzY_J4/mqdefault.jpg",
+        "url": "TLDflhhdPCg",
+        "imgUrl": "https://i.ytimg.com/vi/TLDflhhdPCg/mqdefault.jpg",
         "addedBy": "{minimal-user}",
         "likedBy": [
           "{minimal-user}"
         ],
-        "addedAt": 1746978811949
+        "addedAt": 1746986007370
       },
       {
-        "id": "zqNTltOGh5c",
+        "id": "ylXk1LBvIqU",
         "title": "So What",
-        "url": "youtube/zqNTltOGh5c.mp4",
-        "imgUrl": "https://i.ytimg.com/vi/zqNTltOGh5c/mqdefault.jpg",
+        "url": "ylXk1LBvIqU",
+        "imgUrl": "https://i.ytimg.com/vi/ylXk1LBvIq/mqdefault.jpg",
         "addedBy": "{minimal-user}",
         "likedBy": [
           "{minimal-user}"
         ],
-        "addedAt": 1746978811949
+        "addedAt": 1746986007370
       }
     ],
     "msgs": [
       {
-        "id": "ma54a694bcabe",
+        "id": "ma9e79a0912ee",
         "from": "{mini-user}",
         "txt": "Awesome vibes!"
       }
     ]
   },
   {
-    "_id": "eaa135ae7724",
+    "_id": "190c4c7d4071",
     "name": "Rock Classics",
     "tags": [
       "Rock",
@@ -82,36 +79,36 @@ export const stations = [
       {
         "id": "QkF3oxziUI4",
         "title": "Stairway to Heaven",
-        "url": "youtube/QkF3oxziUI4.mp4",
+        "url": "QkF3oxziUI4",
         "imgUrl": "https://i.ytimg.com/vi/QkF3oxziUI4/mqdefault.jpg",
         "addedBy": "{minimal-user}",
         "likedBy": [
           "{minimal-user}"
         ],
-        "addedAt": 1746978811950
+        "addedAt": 1746986007370
       },
       {
         "id": "fJ9rUzIMcZQ",
         "title": "Bohemian Rhapsody",
-        "url": "youtube/fJ9rUzIMcZQ.mp4",
+        "url": "fJ9rUzIMcZQ",
         "imgUrl": "https://i.ytimg.com/vi/fJ9rUzIMcZQ/mqdefault.jpg",
         "addedBy": "{minimal-user}",
         "likedBy": [
           "{minimal-user}"
         ],
-        "addedAt": 1746978811950
+        "addedAt": 1746986007370
       }
     ],
     "msgs": [
       {
-        "id": "m48c7d7a73436",
+        "id": "mc63a2efa25e9",
         "from": "{mini-user}",
         "txt": "Awesome vibes!"
       }
     ]
   },
   {
-    "_id": "968ef3533f6d",
+    "_id": "d86fe95a7743",
     "name": "Workout Boost",
     "tags": [
       "Workout",
@@ -130,36 +127,36 @@ export const stations = [
       {
         "id": "btPJPFnesV4",
         "title": "Eye of the Tiger",
-        "url": "youtube/btPJPFnesV4.mp4",
+        "url": "btPJPFnesV4",
         "imgUrl": "https://i.ytimg.com/vi/btPJPFnesV4/mqdefault.jpg",
         "addedBy": "{minimal-user}",
         "likedBy": [
           "{minimal-user}"
         ],
-        "addedAt": 1746978811950
+        "addedAt": 1746986007370
       },
       {
         "id": "AJtDXIazrMo",
         "title": "Stronger",
-        "url": "youtube/AJtDXIazrMo.mp4",
+        "url": "AJtDXIazrMo",
         "imgUrl": "https://i.ytimg.com/vi/AJtDXIazrMo/mqdefault.jpg",
         "addedBy": "{minimal-user}",
         "likedBy": [
           "{minimal-user}"
         ],
-        "addedAt": 1746978811950
+        "addedAt": 1746986007370
       }
     ],
     "msgs": [
       {
-        "id": "mad9ac4da20aa",
+        "id": "mfbcfe05c1218",
         "from": "{mini-user}",
         "txt": "Awesome vibes!"
       }
     ]
   },
   {
-    "_id": "570d56c1eedb",
+    "_id": "b277701f83e5",
     "name": "Lofi Moods",
     "tags": [
       "Lofi",
@@ -178,36 +175,36 @@ export const stations = [
       {
         "id": "hHW1oY26kxQ",
         "title": "lucky day",
-        "url": "youtube/hHW1oY26kxQ.mp4",
+        "url": "hHW1oY26kxQ",
         "imgUrl": "https://i.ytimg.com/vi/hHW1oY26kxQ/mqdefault.jpg",
         "addedBy": "{minimal-user}",
         "likedBy": [
           "{minimal-user}"
         ],
-        "addedAt": 1746978811950
+        "addedAt": 1746986007370
       },
       {
         "id": "5qap5aO4i9A",
         "title": "dreamscape",
-        "url": "youtube/5qap5aO4i9A.mp4",
+        "url": "5qap5aO4i9A",
         "imgUrl": "https://i.ytimg.com/vi/5qap5aO4i9A/mqdefault.jpg",
         "addedBy": "{minimal-user}",
         "likedBy": [
           "{minimal-user}"
         ],
-        "addedAt": 1746978811950
+        "addedAt": 1746986007370
       }
     ],
     "msgs": [
       {
-        "id": "m70d10260ef89",
+        "id": "mce33418fc9a2",
         "from": "{mini-user}",
         "txt": "Awesome vibes!"
       }
     ]
   },
   {
-    "_id": "7153af937c14",
+    "_id": "50fad7a73dc3",
     "name": "Classical Calm",
     "tags": [
       "Classical",
@@ -226,36 +223,36 @@ export const stations = [
       {
         "id": "ea2WoUtbzuw",
         "title": "Clair de Lune",
-        "url": "youtube/ea2WoUtbzuw.mp4",
+        "url": "ea2WoUtbzuw",
         "imgUrl": "https://i.ytimg.com/vi/ea2WoUtbzuw/mqdefault.jpg",
         "addedBy": "{minimal-user}",
         "likedBy": [
           "{minimal-user}"
         ],
-        "addedAt": 1746978811950
+        "addedAt": 1746986007370
       },
       {
         "id": "4Tr0otuiQuU",
         "title": "Moonlight Sonata",
-        "url": "youtube/4Tr0otuiQuU.mp4",
+        "url": "4Tr0otuiQuU",
         "imgUrl": "https://i.ytimg.com/vi/4Tr0otuiQuU/mqdefault.jpg",
         "addedBy": "{minimal-user}",
         "likedBy": [
           "{minimal-user}"
         ],
-        "addedAt": 1746978811950
+        "addedAt": 1746986007370
       }
     ],
     "msgs": [
       {
-        "id": "m88fbf83c5ad8",
+        "id": "m671ea5deac22",
         "from": "{mini-user}",
         "txt": "Awesome vibes!"
       }
     ]
   },
   {
-    "_id": "25fa95de11f9",
+    "_id": "734278733651",
     "name": "Reggae Vibes",
     "tags": [
       "Reggae",
@@ -274,36 +271,36 @@ export const stations = [
       {
         "id": "LanCLS_hIo4",
         "title": "Three Little Birds",
-        "url": "youtube/LanCLS_hIo4.mp4",
+        "url": "LanCLS_hIo4",
         "imgUrl": "https://i.ytimg.com/vi/LanCLS_hIo4/mqdefault.jpg",
         "addedBy": "{minimal-user}",
         "likedBy": [
           "{minimal-user}"
         ],
-        "addedAt": 1746978811950
+        "addedAt": 1746986007370
       },
       {
         "id": "zXt56MB-3vc",
         "title": "Red Red Wine",
-        "url": "youtube/zXt56MB-3vc.mp4",
+        "url": "zXt56MB-3vc",
         "imgUrl": "https://i.ytimg.com/vi/zXt56MB-3vc/mqdefault.jpg",
         "addedBy": "{minimal-user}",
         "likedBy": [
           "{minimal-user}"
         ],
-        "addedAt": 1746978811950
+        "addedAt": 1746986007370
       }
     ],
     "msgs": [
       {
-        "id": "m3f09b9ffb97f",
+        "id": "m1c9ad01a9f0f",
         "from": "{mini-user}",
         "txt": "Awesome vibes!"
       }
     ]
   },
   {
-    "_id": "c8c9e220c1b4",
+    "_id": "ea6685e71e6d",
     "name": "Electronic Pulse",
     "tags": [
       "EDM",
@@ -322,36 +319,36 @@ export const stations = [
       {
         "id": "gCYcHz2k5x0",
         "title": "Animals",
-        "url": "youtube/gCYcHz2k5x0.mp4",
+        "url": "gCYcHz2k5x0",
         "imgUrl": "https://i.ytimg.com/vi/gCYcHz2k5x0/mqdefault.jpg",
         "addedBy": "{minimal-user}",
         "likedBy": [
           "{minimal-user}"
         ],
-        "addedAt": 1746978811950
+        "addedAt": 1746986007370
       },
       {
         "id": "Uj1ykZWtPYI",
         "title": "Levels",
-        "url": "youtube/Uj1ykZWtPYI.mp4",
+        "url": "Uj1ykZWtPYI",
         "imgUrl": "https://i.ytimg.com/vi/Uj1ykZWtPYI/mqdefault.jpg",
         "addedBy": "{minimal-user}",
         "likedBy": [
           "{minimal-user}"
         ],
-        "addedAt": 1746978811950
+        "addedAt": 1746986007370
       }
     ],
     "msgs": [
       {
-        "id": "m705a87a0b1ea",
+        "id": "m7df36a545b9d",
         "from": "{mini-user}",
         "txt": "Awesome vibes!"
       }
     ]
   },
   {
-    "_id": "f38d37d72b0c",
+    "_id": "93154d18e8c4",
     "name": "Pop Hits",
     "tags": [
       "Pop",
@@ -370,36 +367,36 @@ export const stations = [
       {
         "id": "fHI8X4OXluQ",
         "title": "Blinding Lights",
-        "url": "youtube/fHI8X4OXluQ.mp4",
+        "url": "fHI8X4OXluQ",
         "imgUrl": "https://i.ytimg.com/vi/fHI8X4OXluQ/mqdefault.jpg",
         "addedBy": "{minimal-user}",
         "likedBy": [
           "{minimal-user}"
         ],
-        "addedAt": 1746978811950
+        "addedAt": 1746986007371
       },
       {
         "id": "TUVcZfQe-Kw",
         "title": "Levitating",
-        "url": "youtube/TUVcZfQe-Kw.mp4",
+        "url": "TUVcZfQe-Kw",
         "imgUrl": "https://i.ytimg.com/vi/TUVcZfQe-Kw/mqdefault.jpg",
         "addedBy": "{minimal-user}",
         "likedBy": [
           "{minimal-user}"
         ],
-        "addedAt": 1746978811950
+        "addedAt": 1746986007371
       }
     ],
     "msgs": [
       {
-        "id": "mebe2258654a9",
+        "id": "m110d241da69b",
         "from": "{mini-user}",
         "txt": "Awesome vibes!"
       }
     ]
   },
   {
-    "_id": "483e4492181b",
+    "_id": "581e59c62645",
     "name": "Soulful Sundays",
     "tags": [
       "Soul",
@@ -418,29 +415,29 @@ export const stations = [
       {
         "id": "tIdIqbv7SPo",
         "title": "Ain\u2019t No Sunshine",
-        "url": "youtube/tIdIqbv7SPo.mp4",
+        "url": "tIdIqbv7SPo",
         "imgUrl": "https://i.ytimg.com/vi/tIdIqbv7SPo/mqdefault.jpg",
         "addedBy": "{minimal-user}",
         "likedBy": [
           "{minimal-user}"
         ],
-        "addedAt": 1746978811950
+        "addedAt": 1746986007371
       },
       {
         "id": "COiIC3A0ROM",
         "title": "Let\u2019s Stay Together",
-        "url": "youtube/COiIC3A0ROM.mp4",
+        "url": "COiIC3A0ROM",
         "imgUrl": "https://i.ytimg.com/vi/COiIC3A0ROM/mqdefault.jpg",
         "addedBy": "{minimal-user}",
         "likedBy": [
           "{minimal-user}"
         ],
-        "addedAt": 1746978811950
+        "addedAt": 1746986007371
       }
     ],
     "msgs": [
       {
-        "id": "mddad299829c9",
+        "id": "ma9e303ee3504",
         "from": "{mini-user}",
         "txt": "Awesome vibes!"
       }
