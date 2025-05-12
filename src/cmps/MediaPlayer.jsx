@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useRef, useState } from 'react'
-import { setNextSong, setPrevSong } from '../store/actions/station.actions.js'
+import { setNextSong, setPrevSong,setIsPlaying  } from '../store/actions/station.actions.js'
 import { ReactYouTube } from './ReactYoutube.jsx'
 import React from 'react'
 
@@ -8,9 +8,10 @@ export function MediaPlayer() {
 
     const station = useSelector(storeState => storeState.stationModule.station)
     const songIdx = useSelector(storeState => storeState.stationModule.currentSongIdx)
+    const isPlaying = useSelector(storeState => storeState.stationModule.isPlaying)
     const dispatch = useDispatch()
 
-    const [isPlaying, setIsPlaying] = useState(false)
+    
     const [volume, setVolume] = useState(100)
     const [prevVolume, setPrevVolume] = useState(100)
     const [progress, setProgress] = useState(0)
@@ -51,7 +52,7 @@ export function MediaPlayer() {
         } else {
             playerRef.current.playVideo()
         }
-        setIsPlaying(!isPlaying)
+        dispatch(setIsPlaying(!isPlaying))
     }
 
     function nextSong() {
