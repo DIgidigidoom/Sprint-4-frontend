@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router'
 import { useSelector } from 'react-redux'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { logout } from '../store/actions/user.actions'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHouse, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { faSpotify } from '@fortawesome/free-brands-svg-icons'
 
 export function AppHeader() {
 	const user = useSelector(storeState => storeState.userModule.user)
@@ -22,22 +25,34 @@ export function AppHeader() {
 		<header className="app-header full">
 			<nav>
 				<NavLink to="/" className="logo">
-					Sprint 4 Spotify
+					<FontAwesomeIcon icon={faSpotify} className="logo-icon" />
 				</NavLink>
-				<NavLink to="about">About</NavLink>
-				<NavLink to="station">Stations</NavLink>
 
-                {user?.isAdmin && <NavLink to="/admin">Admin</NavLink>}
+				<div className="middle-header">
+					<NavLink to="/" className="home-btn">
+						<FontAwesomeIcon icon={faHouse} className="home-btn-icon" />
+					</NavLink>
 
-				{!user && <NavLink to="login" className="login-link">Login</NavLink>}
+					<div className="search-wrapper">
+						<FontAwesomeIcon icon={faMagnifyingGlass} className="magnifying-glass-header-filter" />
+						<input
+							type="text"
+							className="header-filter"
+							placeholder="What do you want to play?"
+						/>
+					</div>
+				</div>
+
+				{!user && (
+					<div className="auth-buttons">
+						<button className="signup-btn">Sign up</button>
+						<button className="login-btn">Log in</button>
+					</div>
+				)}
 				{user && (
 					<div className="user-info">
-						<Link to={`user/${user._id}`}>
-							{/* {user.imgUrl && <img src={user.imgUrl} />} */}
-							{user.fullname}
-						</Link>
-						{/* <span className="score">{user.score?.toLocaleString()}</span> */}
-						<button onClick={onLogout}>logout</button>
+						<Link to={`user/${user._id}`}>{user.fullname}</Link>
+						<button onClick={onLogout}>Logout</button>
 					</div>
 				)}
 			</nav>
