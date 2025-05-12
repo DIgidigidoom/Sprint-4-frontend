@@ -1,22 +1,30 @@
 import { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { loadStation, updateStation } from '../store/actions/station.actions'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
+import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
+import { useParams, useNavigate } from 'react-router-dom'
+
+import { useDispatch } from 'react-redux'
+import { SET_STATION } from '../store/reducers/station.reducer'
 
 export function StationDetails() {
-  const { stationId } = useParams()
-  const navigate = useNavigate()
   const station = useSelector(storeState => storeState.stationModule.station)
   const [name, setName] = useState('')
+  const [songs, setSongs] = useState([])
+  const { stationId } = useParams()
 
 
   useEffect(() => {
     if (stationId) loadStation(stationId)
   }, [stationId])
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    if (station) setName(station.name)
+    if (station) {
+      setName(station.name)
+      setSongs(station.songs || [])
+    }
   }, [station])
 
   async function onSaveName() {
@@ -30,6 +38,24 @@ export function StationDetails() {
     }
   }
 
+  function onBackToList() {
+    dispatch({ type: SET_STATION, station: null })
+  }
+
+
+  function handleDragEnd(result) {
+    if (!result.destination) return
+
+    const reordered = Array.from(songs)
+    const [moved] = reordered.splice(result.source.index, 1)
+    reordered.splice(result.destination.index, 0, moved)
+    setSongs(reordered)
+
+    // Optional: Persist song order in store/database
+    const updatedStation = { ...station, songs: reordered }
+    updateStation(updatedStation)
+  }
+
   if (!station) return <div>Loading...</div>
 
   return (
@@ -39,16 +65,14 @@ export function StationDetails() {
           <img className="station-img" src={station.imgUrl} alt={station.name} />
         )}
         <div className="station-info">
-
           <input
             className="station-name-input"
             value={name}
             onChange={(ev) => setName(ev.target.value)}
           />
           <button onClick={onSaveName}>Save</button>
-
           <div className="station-meta">
-            Playlist • {station.songs?.length || 0} songs
+            Playlist • {songs.length} songs
           </div>
         </div>
       </div>
@@ -59,6 +83,41 @@ export function StationDetails() {
         </button>
       </div>
 
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <Droppable droppableId="songList">
+          {(provided) => (
+            <div
+              className="song-list"
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              {songs.map((song, idx) => (
+                <Draggable
+                  key={song._id || idx}
+                  draggableId={song._id || `song-${idx}`}
+                  index={idx}
+                >
+                  {(provided) => (
+                    <div
+                      className="song-row"
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                    >
+                      <span className="song-index">{idx + 1}</span>
+                      <div className="song-info">
+                        <p className="song-title">{song.title}</p>
+                        <p className="song-artist">{song.artist}</p>
+                      </div>
+                    </div>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
       {station.songs && station.songs.length ? (
         <div className="song-list">
           {station.songs.map((song, idx) => (
@@ -74,6 +133,12 @@ export function StationDetails() {
       ) : (
         <p>No songs yet.</p>
       )}
+
+      <button className="btn-back" onClick={onBackToList}>
+        ← Back to list
+      </button>
+
+
     </section>
   )
 }

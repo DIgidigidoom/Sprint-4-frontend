@@ -4,7 +4,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 import { stationService } from '../services/station/index.js'
 import { addStation } from '../store/actions/station.actions.js'
-import { useNavigate } from 'react-router-dom'
+
 
 export function SideBar() {
     const [isSearchOpen, setIsSearchOpen] = useState(false)
@@ -23,12 +23,22 @@ export function SideBar() {
             console.log("err: ", err)
         }
     }
+export function SideBar({ onCreateStation }) {
+
 
     return (
         <div className='sidebar'>
             <div className='sidebar-header'>
                 <span>Your Library</span>
                 <button onClick={() => onCreateStation()} className='sidebar-create-btn'> <FontAwesomeIcon icon={faPlus} className='sidebar-plus' />Create</button>
+
+                <button
+                    onClick={onCreateStation}
+                    className='sidebar-create-btn'>
+                    <FontAwesomeIcon icon={faPlus} className='sidebar-plus' 
+                    />
+                    Create
+                </button>
             </div>
             <div className='sidebar-sort-btns'>
                 <button className='sidebar-playlist-btn sidebar-sort-btn'>Playlists</button>

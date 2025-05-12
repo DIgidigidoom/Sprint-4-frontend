@@ -1,13 +1,23 @@
 import React from 'react'
-import { StationList } from '../cmps/StationList'
+import { StationList } from '../cmps/StationList.jsx'
 
-export default function MainPage({stations, onRemoveStation, onUpdateStation}) {
+import { useSelector } from 'react-redux'
+import { StationDetails } from './StationDetails.jsx'
+
+export default function MainPage({ onRemoveStation, onUpdateStation, onSelectStation, stations }) {
+    const station = useSelector(storeState => storeState.stationModule.station)
     return (
         <div className='main-page'>
-            <StationList
-                stations={stations}
-                onRemoveStation={onRemoveStation}
-                onUpdateStation={onUpdateStation} />
+            {station ? (
+                <StationDetails />
+            ) : (
+                <StationList
+                    stations={stations}
+                    onRemoveStation={onRemoveStation}
+                    onUpdateStation={onUpdateStation}
+                    onSelectStation={onSelectStation}
+                />
+            )}
         </div>
     )
 }
