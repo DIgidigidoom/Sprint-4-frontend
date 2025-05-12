@@ -6,24 +6,16 @@ import { stationService } from '../services/station/index.js'
 import { addStation } from '../store/actions/station.actions.js'
 
 
-export function SideBar() {
+
+    
+
+    
+export function SideBar({ onCreateStation }) {
     const [isSearchOpen, setIsSearchOpen] = useState(false)
     const [searchTerm, setSearchTerm] = useState('')
     
 
-    const navigate = useNavigate()
-
-    async function onCreateStation() {
-        const station = stationService.getEmptyStation()
-        try {
-            const savedStation = await addStation(station)
-            navigate(`/station/${savedStation._id}`)
-        } catch (err) {
-            showErrorMsg('Cannot add station')
-            console.log("err: ", err)
-        }
-    }
-export function SideBar({ onCreateStation }) {
+    
 
 
     return (
