@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --force",
     "dev:remote": "vite",
     "dev:remote:mac": "vite",
     "dev:local": "set VITE_LOCAL=true&&vite",
@@ -19,6 +19,7 @@
     "@fortawesome/free-brands-svg-icons": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "@hello-pangea/dnd": "^18.0.1",
     "axios": "^1.5.0",
     "nodemon": "^3.1.10",
     "react": "^18.2.0",

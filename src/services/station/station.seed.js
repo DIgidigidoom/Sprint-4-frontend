@@ -49,6 +49,33 @@ export const stations = [
           "{minimal-user}"
         ],
         "addedAt": 1746986007370
+      },
+      {
+        "id": "vmDDOFXSgAs",
+        "title": "Take Five",
+        "url": "vmDDOFXSgAs",
+        "imgUrl": "https://i.ytimg.com/vi/vmDDOFXSgAs/mqdefault.jpg",
+        "addedBy": "{minimal-user}",
+        "likedBy": ["{minimal-user}"],
+        "addedAt": 1746986007370
+      },
+      {
+        "id": "CpB7-8SGlJ0",
+        "title": "Autumn Leaves - Cannonball Adderley",
+        "url": "CpB7-8SGlJ0",
+        "imgUrl": "https://i.ytimg.com/vi/CpB7-8SGlJ0/mqdefault.jpg",
+        "addedBy": "{minimal-user}",
+        "likedBy": ["{minimal-user}"],
+        "addedAt": 1746986007370
+      },
+      {
+        "id": "z4PKzz81m5c",
+        "title": "Chet Baker - Almost Blue",
+        "url": "z4PKzz81m5c",
+        "imgUrl": "https://i.ytimg.com/vi/z4PKzz81m5c/mqdefault.jpg",
+        "addedBy": "{minimal-user}",
+        "likedBy": ["{minimal-user}"],
+        "addedAt": 1746986007370
       }
     ],
     "msgs": [
