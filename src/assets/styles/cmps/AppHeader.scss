@@ -1,61 +1,169 @@
 .app-header {
     display: flex;
-    min-height: 3.5rem;
+    position: relative;
+    left: 0;
+    width: 100%;
+    height: rem(48px);
+    background-color: black;
+    z-index: 100;
 
-    background-color: $clr4;
-    padding: rem(10px) 1rem;
-    
     nav {
         display: flex;
         width: 100%;
         align-items: center;
         gap: 1em;
-        
-        font-size: .8em;
+        font-size: 0.8em;
+
+        .logo {
+            display: flex;
+            align-items: center;
+            padding-left: 1.25rem;
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-inline-end: 2em;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .logo-icon {
+            width: 2rem;
+            height: 2rem;
+        }
 
         .active {
             color: $clr1;
         }
 
-        .logo {
-            font-size: 1.4em;
-            font-weight: bold;
-            margin-inline-end: 2em;
+        .middle-header {
+            display: flex;
+            gap: rem(8px);
+            justify-content: center;
+            align-items: center;
+            margin-left: rem(99px);
+            flex: 1;
+
+            .search-wrapper {
+                position: relative;
+                display: flex;
+                align-items: center;
+
+                .magnifying-glass-header-filter {
+                    position: absolute;
+                    color: white;
+                    left: 1rem;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    height: rem(20px);
+                    pointer-events: none;
+                }
+
+                .header-filter {
+                    width: rem(474px);
+                    height: 3rem;
+                    border-radius: 999px;
+                    background-color: $gray4;
+                    border: 2px solid transparent;
+                    padding-left: rem(50px);
+                    padding-right: 1rem;
+                    color: $clr6;
+                    font-size: 1rem;
+                    transition: background-color 0.2s ease, border-color 0.2s ease;
+
+                    &::placeholder {
+                        color: #b3b3b3;
+                    }
+
+                    &:hover {
+                        background-color: lighten($gray4, 3%); // hover effect
+                    }
+
+                    &:focus {
+                        background-color: lighten($gray4, 5%);
+                        border-color: white;
+                        outline: none;
+                    }
+                }
+            }
+
+            .home-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 3rem;
+                width: 3rem;
+                border-radius: 50%;
+                background-color: $gray4;
+                text-decoration: none;
+
+                &:hover {
+                    background-color: lighten($gray4, 5%);
+                }
+
+                .home-btn-icon {
+                    color: white;
+                    font-size: 1.5rem;
+                }
+            }
+
+
         }
 
-        .login-link {
+        .auth-buttons {
+            display: flex;
+            align-items: center;
             margin-inline-start: auto;
+
+            .signup-btn {
+                background: none;
+                border: none;
+                color: #b3b3b3;
+                font-weight: 600;
+                font-size: rem(14px);
+                transition: background-color, 0.1s ease;
+                cursor: pointer;
+
+                &:hover {
+                    color: #fff;
+                    transform: scale(1.03);
+                }
+            }
+
+            .login-btn {
+                background-color: #fff;
+                color: #000;
+                border: none;
+                height: rem(48px);
+                width: rem(110px);
+                border-radius: 999px;
+                font-weight: 700;
+                cursor: pointer;
+                font-size: 1rem;
+                transition: background-color, 0.1s ease;
+
+                &:hover {
+                    background-color: #f1f1f1;
+                    backface-visibility: hidden;
+                    transform: scale(1.03);
+                }
+            }
         }
 
-        button {
-            margin-inline-end: 0;
-        }
-    }
+        .user-info {
+            display: flex;
+            align-items: center;
+            margin-inline-start: auto;
+            margin-inline-end: 1rem;
+            color: $clr1;
 
-    .user-info {
-        display: flex;
-        align-items: center;
-        margin-inline-start: auto;
+            img {
+                width: 32px;
+                aspect-ratio: 1;
+                border-radius: 50%;
+            }
 
-        color: $clr1;
-
-        .score {
-            padding: 8px;
-            background-color: $clr2;
-            border-radius: 50%;
-            margin: 10px;
-
-            color: $clr6;
-        }
-
-        img {
-            width: 32px;
-            aspect-ratio: 1;
-            border-radius: 50%;
-        }
-        
-        .btn-link {
-            color: $clr2;
+            .btn-link {
+                color: $clr2;
+            }
         }
     }
 }

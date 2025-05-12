@@ -21,12 +21,15 @@
 @import "pages/StationIndex";
 @import "pages/UserDetails";
 @import "pages/LoginSignup";
+@import "pages/MainPage";
+
 
 
 // Components
 @import "cmps/AppHeader";
 @import "cmps/AppFooter";
 @import "cmps/UserMsg";
+@import "cmps/SideBar";
 @import "cmps/MediaPlayer.scss";
 
 @import "cmps/StationFilter";
