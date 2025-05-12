@@ -56,23 +56,28 @@ export function StationDetails() {
     updateStation(updatedStation)
   }
 
+  const { createdBy } = station
   if (!station) return <div>Loading...</div>
 
   return (
     <section className="station-details">
+
       <div className="station-header">
-        {station.imgUrl && (
+        <div className="station-header-content">
           <img className="station-img" src={station.imgUrl} alt={station.name} />
-        )}
-        <div className="station-info">
-          <input
-            className="station-name-input"
-            value={name}
-            onChange={(ev) => setName(ev.target.value)}
-          />
-          <button onClick={onSaveName}>Save</button>
-          <div className="station-meta">
-            Playlist • {songs.length} songs
+          <div className="station-info">
+            <p>Public Playlist</p>
+            <input
+              className="station-name-input"
+              value={name}
+              onChange={(ev) => setName(ev.target.value)}
+            />
+            
+              
+             <p>
+                {createdBy.fullname} • {songs.length} songs
+              </p>
+            
           </div>
         </div>
       </div>
@@ -118,8 +123,8 @@ export function StationDetails() {
           )}
         </Droppable>
       </DragDropContext>
-      
 
+      <button onClick={onSaveName}>Save</button>
       <button className="btn-back" onClick={onBackToList}>
         ← Back to list
       </button>

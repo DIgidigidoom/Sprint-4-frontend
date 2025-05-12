@@ -45,6 +45,7 @@ export function StationIndex() {
 
     async function onCreateStation() {
         const station = stationService.getEmptyStation()
+        // station.createdBy.fullname = 'Tom Shahar'
         try {
             const savedStation = await addStation(station)
             console.log('Saved station:', savedStation)

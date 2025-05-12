@@ -20,7 +20,7 @@ export const stations = [
     ],
     "createdBy": {
       "_id": "u101",
-      "fullname": "Puki Ben David",
+      "fullname": "spotify",
       "imgUrl": "http://some-photo/"
     },
     "likedByUsers": [
@@ -95,7 +95,7 @@ export const stations = [
     ],
     "createdBy": {
       "_id": "u101",
-      "fullname": "Puki Ben David",
+      "fullname": "spotify",
       "imgUrl": "http://some-photo/"
     },
     "likedByUsers": [
@@ -143,7 +143,7 @@ export const stations = [
     ],
     "createdBy": {
       "_id": "u101",
-      "fullname": "Puki Ben David",
+      "fullname": "spotify",
       "imgUrl": "http://some-photo/"
     },
     "likedByUsers": [
@@ -191,7 +191,7 @@ export const stations = [
     ],
     "createdBy": {
       "_id": "u101",
-      "fullname": "Puki Ben David",
+      "fullname": "spotify",
       "imgUrl": "http://some-photo/"
     },
     "likedByUsers": [
@@ -239,7 +239,7 @@ export const stations = [
     ],
     "createdBy": {
       "_id": "u101",
-      "fullname": "Puki Ben David",
+      "fullname": "spotify",
       "imgUrl": "http://some-photo/"
     },
     "likedByUsers": [
@@ -287,7 +287,7 @@ export const stations = [
     ],
     "createdBy": {
       "_id": "u101",
-      "fullname": "Puki Ben David",
+      "fullname": "spotify",
       "imgUrl": "http://some-photo/"
     },
     "likedByUsers": [
@@ -335,7 +335,7 @@ export const stations = [
     ],
     "createdBy": {
       "_id": "u101",
-      "fullname": "Puki Ben David",
+      "fullname": "spotify",
       "imgUrl": "http://some-photo/"
     },
     "likedByUsers": [
@@ -383,7 +383,7 @@ export const stations = [
     ],
     "createdBy": {
       "_id": "u101",
-      "fullname": "Puki Ben David",
+      "fullname": "spotify",
       "imgUrl": "http://some-photo/"
     },
     "likedByUsers": [
@@ -431,7 +431,7 @@ export const stations = [
     ],
     "createdBy": {
       "_id": "u101",
-      "fullname": "Puki Ben David",
+      "fullname": "spotify",
       "imgUrl": "http://some-photo/"
     },
     "likedByUsers": [

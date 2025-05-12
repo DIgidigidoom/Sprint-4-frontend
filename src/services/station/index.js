@@ -12,7 +12,7 @@ function getEmptyStation() {
         imgUrl: 'https://res.cloudinary.com/deyotfuqw/image/upload/v1747039279/player_pic_g8cjbv.png',
         songs: [],
         createdAt: Date.now(),
-        owner: userService.getLoggedinUser()
+        owner: userService.getLoggedinUser() || 'Tom Shahar'
     }
 }
 
