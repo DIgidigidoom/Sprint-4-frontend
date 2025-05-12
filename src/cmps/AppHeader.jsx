@@ -6,6 +6,7 @@ import { logout } from '../store/actions/user.actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouse, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { faSpotify } from '@fortawesome/free-brands-svg-icons'
+import HomeIcon from '../assets/icons/home-btn.svg?react'
 
 export function AppHeader() {
 	const user = useSelector(storeState => storeState.userModule.user)
@@ -30,7 +31,7 @@ export function AppHeader() {
 
 				<div className="middle-header">
 					<NavLink to="/" className="home-btn">
-						<FontAwesomeIcon icon={faHouse} className="home-btn-icon" />
+						<span className='home-btn-icon'><HomeIcon/></span>
 					</NavLink>
 
 					<div className="search-wrapper">
