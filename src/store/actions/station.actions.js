@@ -75,8 +75,7 @@ export function setNextSong() {
         type: SET_NEXT_SONG
     }
 }
-export function setPrevSong() {
-}
+
 export function setPrevSong() {
     return {
         type: SET_PREV_SONG

@@ -2,26 +2,20 @@ import React from 'react'
 import { StationList } from '../cmps/StationList.jsx'
 
 import { useSelector } from 'react-redux'
-import { StationList } from '../cmps/StationList'
-import { StationDetails } from './StationDetails'
+import { StationDetails } from './StationDetails.jsx'
 
-export default function MainPage(props) {
+export default function MainPage({ onRemoveStation, onUpdateStation, onSelectStation, stations }) {
     const station = useSelector(storeState => storeState.stationModule.station)
     return (
         <div className='main-page'>
-            <StationList
-                stations={stations}
-                onRemoveStation={onRemoveStation}
-                onUpdateStation={onUpdateStation} />
-                {/* <DraggableList/> */}
             {station ? (
                 <StationDetails />
             ) : (
                 <StationList
-                    stations={props.stations}
-                    onRemoveStation={props.onRemoveStation}
-                    onUpdateStation={props.onUpdateStation}
-                    onSelectStation={props.onSelectStation}
+                    stations={stations}
+                    onRemoveStation={onRemoveStation}
+                    onUpdateStation={onUpdateStation}
+                    onSelectStation={onSelectStation}
                 />
             )}
         </div>

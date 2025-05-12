@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { loadStation, updateStation } from '../store/actions/station.actions'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
+import { useParams, useNavigate } from 'react-router-dom'
 
 import { useDispatch } from 'react-redux'
 import { SET_STATION } from '../store/reducers/station.reducer'
@@ -11,6 +12,7 @@ export function StationDetails() {
   const station = useSelector(storeState => storeState.stationModule.station)
   const [name, setName] = useState('')
   const [songs, setSongs] = useState([])
+  const { stationId } = useParams()
 
 
   useEffect(() => {
