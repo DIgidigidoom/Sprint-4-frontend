@@ -1,13 +1,13 @@
 .media-player {
-    position: fixed;
+    position: relative;
     bottom: 0;
     left: 0;
     right: 0;
-    height: fit-content;
+    height: rem(72px);
     display: grid;
     grid-template-columns: minmax(230px,1fr) minmax(230px,720px) minmax(230px,1fr);
     align-items: center;
-    background-color: #181818;
+    background-color: black;
     color: white;
     padding: 0 10px;
     align-content: center;
