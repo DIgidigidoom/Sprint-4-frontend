@@ -1,16 +1,19 @@
 const { DEV, VITE_LOCAL } = import.meta.env
 
 import { getRandomIntInclusive, makeId } from '../util.service'
+import { userService } from '../user/user.service.local'
 
 import { stationService as local } from './station.service.local'
 import { stationService as remote } from './station.service.remote'
 
 function getEmptyStation() {
-	return {
-        _id: makeId(),
-		name: '',
-        txt,
-	}
+    return {
+        name: 'My Playlist',
+        imgUrl: '',
+        songs: [],
+        createdAt: Date.now(),
+        owner: userService.getLoggedinUser()
+    }
 }
 
 function getDefaultFilter() {

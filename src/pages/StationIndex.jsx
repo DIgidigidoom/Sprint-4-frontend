@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-
-import { loadStations, addStation, updateStation, removeStation} from '../store/actions/station.actions.js'
+import { useNavigate } from 'react-router-dom'
+import { loadStations, addStation, updateStation, removeStation } from '../store/actions/station.actions.js'
 
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 import { stationService } from '../services/station/index.js'
@@ -11,8 +11,9 @@ import { StationFilter } from '../cmps/StationFilter.jsx'
 
 export function StationIndex() {
 
-    const [ filterBy, setFilterBy ] = useState(stationService.getDefaultFilter())
+    const [filterBy, setFilterBy] = useState(stationService.getDefaultFilter())
     const stations = useSelector(storeState => storeState.stationModule.stations)
+    const navigate = useNavigate()
 
     useEffect(() => {
         loadStations(filterBy)
@@ -21,21 +22,10 @@ export function StationIndex() {
     async function onRemoveStation(stationId) {
         try {
             await removeStation(stationId)
-            showSuccessMsg('Station removed')            
+            showSuccessMsg('Station removed')
         } catch (err) {
             showErrorMsg('Cannot remove station')
         }
-    }
-
-    async function onAddStation() {
-        const station = stationService.getEmptyStation()
-        station.name = prompt('Name?', 'Some name')
-        try {
-            const savedStation = await addStation(station)
-            showSuccessMsg(`Station added (id: ${savedStation._id})`)
-        } catch (err) {
-            showErrorMsg('Cannot add station')
-        }        
     }
 
     async function onUpdateStation(station) {
@@ -46,20 +36,34 @@ export function StationIndex() {
             showSuccessMsg(`Station updated, new name: ${savedStation.name}`)
         } catch (err) {
             showErrorMsg('Cannot update station')
-        }        
+        }
+    }
+
+    async function onCreateStation() {
+        const station = stationService.getEmptyStation()
+        try {
+            const savedStation = await stationService.save(station)
+            navigate(`/station/${savedStation._id}`)
+        } catch (err) {
+            console.error('Cannot create station', err)
+            showErrorMsg('Cannot create station')
+        }
     }
 
     return (
         <main className="station-index">
             <header>
                 <h2>Stations</h2>
-                {userService.getLoggedinUser() && <button onClick={onAddStation}>Add a Station</button>}
+                <button className="btn-create" onClick={onCreateStation}>
+                    <i className="fa-solid fa-plus"></i> Create Playlist
+                </button>
+
             </header>
             <StationFilter filterBy={filterBy} setFilterBy={setFilterBy} />
-            <StationList 
+            <StationList
                 stations={stations}
-                onRemoveStation={onRemoveStation} 
-                onUpdateStation={onUpdateStation}/>
+                onRemoveStation={onRemoveStation}
+                onUpdateStation={onUpdateStation} />
         </main>
     )
 }
