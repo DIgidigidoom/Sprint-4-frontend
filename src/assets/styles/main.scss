@@ -17,10 +17,10 @@
 @import "RootCmp";
 
 @import "pages/AboutUs";
-// @import "pages/HomePage";
 @import "pages/StationIndex";
 @import "pages/UserDetails";
 @import "pages/LoginSignup";
+@import "pages/StationDetails";
 @import "pages/MainPage";
 
 
@@ -35,3 +35,4 @@
 @import "cmps/StationFilter";
 @import "cmps/StationList";
 @import "cmps/StationPreview";
+@import "cmps/EditStationModal";
