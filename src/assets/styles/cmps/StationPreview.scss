@@ -4,6 +4,8 @@
     gap: 0.5em;
     color: white;
     text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
 
     .station-img-wrapper {
         position: relative;

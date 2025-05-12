@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
-import { loadStations, addStation, updateStation, removeStation } from '../store/actions/station.actions.js'
+import { loadStations, loadStation, addStation, updateStation, removeStation } from '../store/actions/station.actions.js'
 import { useNavigate } from 'react-router-dom'
 
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
@@ -35,8 +35,27 @@ export function StationIndex() {
         }
     }
 
+    function onSelectStation(stationId) {
+        loadStation(stationId)
+    }
+
     function onUpdateStation(station) {
         setStationToEdit(station)
+    }
+
+    async function onCreateStation() {
+        const station = stationService.getEmptyStation()
+        try {
+            const savedStation = await addStation(station)
+            console.log('Saved station:', savedStation)
+            console.log('🆕 Saved station ID:', savedStation._id)
+
+            await loadStation(savedStation._id)
+            showSuccessMsg('Station created')
+        } catch (err) {
+            showErrorMsg('Cannot create station')
+            console.error(err)
+        }
     }
 
     return (
@@ -47,11 +66,14 @@ export function StationIndex() {
                 stations={stations}
                 onRemoveStation={onRemoveStation}
                 onUpdateStation={onUpdateStation} /> */}
-            <MainPage stations={stations}
+            <MainPage
+                stations={stations}
                 onRemoveStation={onRemoveStation}
-                onUpdateStation={onUpdateStation} />
+                onUpdateStation={onUpdateStation}
+                onSelectStation={onSelectStation}
+            />
 
-            <SideBar />
+            <SideBar onCreateStation={onCreateStation} />
 
             <MediaPlayer />
 

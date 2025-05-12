@@ -1,19 +1,14 @@
 import { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { loadStation, updateStation } from '../store/actions/station.actions'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
+import { useDispatch } from 'react-redux'
+import { SET_STATION } from '../store/reducers/station.reducer'
 
 export function StationDetails() {
-  const { stationId } = useParams()
-  const navigate = useNavigate()
   const station = useSelector(storeState => storeState.stationModule.station)
   const [name, setName] = useState('')
-
-
-  useEffect(() => {
-    if (stationId) loadStation(stationId)
-  }, [stationId])
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (station) setName(station.name)
@@ -28,6 +23,10 @@ export function StationDetails() {
       console.error('Failed to update station name', err)
       showErrorMsg('Failed to save station')
     }
+  }
+
+  function onBackToList() {
+    dispatch({ type: SET_STATION, station: null })
   }
 
   if (!station) return <div>Loading...</div>
@@ -74,6 +73,12 @@ export function StationDetails() {
       ) : (
         <p>No songs yet.</p>
       )}
+
+      <button className="btn-back" onClick={onBackToList}>
+        ← Back to list
+      </button>
+
+
     </section>
   )
 }

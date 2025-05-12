@@ -38,16 +38,14 @@ async function remove(stationId) {
 async function save(station) {
     var savedStation
     if (station._id) {
-        const stationToSave = {
-            _id: station._id,
-            name: station.name
-        }
-        savedStation = await storageService.put(STORAGE_KEY, stationToSave)
+        savedStation = await storageService.put(STORAGE_KEY, { ...station })
     } else {
         const stationToSave = {
             _id: makeId(4),
-            name: station.name,
-            // Later, owner is set by the backend
+            name: station.name || 'My Playlist',
+            imgUrl: station.imgUrl || 'https://res.cloudinary.com/deyotfuqw/image/upload/v1747039279/player_pic_g8cjbv.png',
+            songs: station.songs || [],
+            createdAt: Date.now(),
             owner: userService.getLoggedinUser(),
 
         }
