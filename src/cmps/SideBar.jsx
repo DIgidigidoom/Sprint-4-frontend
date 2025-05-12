@@ -22,7 +22,7 @@ export function SideBar({ onCreateStation }) {
         <div className='sidebar'>
             <div className='sidebar-header'>
                 <span>Your Library</span>
-                <button onClick={() => onCreateStation()} className='sidebar-create-btn'> <FontAwesomeIcon icon={faPlus} className='sidebar-plus' />Create</button>
+                
 
                 <button
                     onClick={onCreateStation}

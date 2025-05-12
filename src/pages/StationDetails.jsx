@@ -118,21 +118,7 @@ export function StationDetails() {
           )}
         </Droppable>
       </DragDropContext>
-      {station.songs && station.songs.length ? (
-        <div className="song-list">
-          {station.songs.map((song, idx) => (
-            <div key={song._id || idx} className="song-row">
-              <span className="song-index">{idx + 1}</span>
-              <div className="song-info">
-                <p className="song-title">{song.title}</p>
-                <p className="song-artist">{song.artist}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p>No songs yet.</p>
-      )}
+      
 
       <button className="btn-back" onClick={onBackToList}>
         ← Back to list
