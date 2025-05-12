@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useRef, useState } from 'react'
-import { setNextSong, setPrevSong,setIsPlaying  } from '../store/actions/station.actions.js'
+import { setNextSong, setPrevSong, setIsPlaying } from '../store/actions/station.actions.js'
 import { ReactYouTube } from './ReactYoutube.jsx'
 import React from 'react'
 
@@ -11,11 +11,13 @@ export function MediaPlayer() {
     const isPlaying = useSelector(storeState => storeState.stationModule.isPlaying)
     const dispatch = useDispatch()
 
-    
+
     const [volume, setVolume] = useState(100)
     const [prevVolume, setPrevVolume] = useState(100)
     const [progress, setProgress] = useState(0)
     const [duration, setDuration] = useState(0)
+    const [isRepeat, setIsRepeat] = useState(false)
+    const [isShuffle, setIsShuffle] = useState(false)
     const playerRef = useRef(null)
 
 
@@ -43,6 +45,14 @@ export function MediaPlayer() {
         playerRef.current = player
         player.setVolume(100)
     }
+    function onEnd() {
+        if (isRepeat && playerRef.current) {
+            playerRef.current.seekTo(0)
+            playerRef.current.playVideo()
+        } else {
+            nextSong()
+        }
+    }
 
     function togglePlay() {
         if (!playerRef.current) return
@@ -56,7 +66,16 @@ export function MediaPlayer() {
     }
 
     function nextSong() {
-        dispatch(setNextSong())
+        if (isShuffle && station?.songs?.length > 1) {
+            let nextIdx
+            do {
+                nextIdx = Math.floor(Math.random() * station.songs.length)
+            } while (nextIdx === songIdx)
+
+            dispatch({ type: 'SET_SONG_IDX', idx: nextIdx })
+        } else {
+            dispatch(setNextSong())
+        }
     }
 
     function prevSong() {
@@ -107,11 +126,18 @@ export function MediaPlayer() {
                     <React.Fragment>
                         <img src={song.imgUrl} alt={song.title} />
                         <div>{song.title}</div>
+                        <button className="add-liked"> </button>
                     </React.Fragment>
                 )}
             </div>
             <div className="track-controls">
                 <div className="track-nav-container">
+                    <button
+                        onClick={() => setIsShuffle(prev => !prev)}
+                        title="Toggle Shuffle"
+                    >
+                        <span class={isShuffle ? "shuffle-green" : "shuffle-white"}></span>
+                    </button>
                     <button onClick={prevSong} disabled={!song}>
                         <span class="bx--skip-previous"></span>
                     </button>
@@ -120,6 +146,12 @@ export function MediaPlayer() {
                     </button>
                     <button onClick={nextSong} disabled={!song}>
                         <span class="bx--skip-next"></span>
+                    </button>
+                    <button
+                        onClick={() => setIsRepeat(prev => !prev)}
+                        title="Toggle Repeat"
+                    >
+                        <span class={isRepeat ? "repeat-green" : "repeat-white"}></span>
                     </button>
                 </div>
                 <div className="track-seek-container">
@@ -160,6 +192,7 @@ export function MediaPlayer() {
                         videoId={song.url}
                         opts={{ width: 0, height: 0 }}
                         onReady={onReady}
+                        onEnd={onEnd}
                     />
                 </span>
             )}
