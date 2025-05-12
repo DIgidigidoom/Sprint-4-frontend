@@ -12,9 +12,12 @@ export function MediaPlayer() {
 
     const [isPlaying, setIsPlaying] = useState(false)
     const [volume, setVolume] = useState(100)
+    const [prevVolume, setPrevVolume] = useState(100)
     const [progress, setProgress] = useState(0)
     const [duration, setDuration] = useState(0)
     const playerRef = useRef(null)
+
+
 
     const song = station?.songs[songIdx]
 
@@ -30,7 +33,7 @@ export function MediaPlayer() {
         console.log("song: ", song)
         if (playerRef.current && isPlaying) playerRef.current.playVideo()
         return () => clearInterval(interval)
-    }, [song, isPlaying])
+    }, [song, isPlaying, volume])
 
     function onReady(event) {
         const player = event?.target
@@ -38,7 +41,6 @@ export function MediaPlayer() {
 
         playerRef.current = player
         player.setVolume(100)
-        player.playVideo()
     }
 
     function togglePlay() {
@@ -68,11 +70,33 @@ export function MediaPlayer() {
         }
     }
 
+    function toggleMute() {
+        if (volume === 0) {
+
+            setVolume(prevVolume)
+            if (playerRef.current) playerRef.current.setVolume(prevVolume)
+        } else {
+
+            setPrevVolume(volume)
+            setVolume(0)
+            if (playerRef.current) playerRef.current.setVolume(0)
+        }
+    }
+
+
+
     function formatTime(sec) {
         const minutes = Math.floor(sec / 60)
         const seconds = Math.floor(sec % 60).toString().padStart(2, '0')
         return `${minutes}:${seconds}`
     }
+
+    const volumeIconClass =
+        volume === 0
+            ? 'lucide--volume-x'
+            : volume <= 80
+                ? 'lucide--volume-1'
+                : 'lucide--volume-2'
 
 
     return (
@@ -116,6 +140,9 @@ export function MediaPlayer() {
                 </div>
             </div>
             <div className="track-options">
+                <button className="mute-btn" onClick={toggleMute}>
+                    <span className={volumeIconClass}></span>
+                </button>
                 <input
                     type="range"
                     min="0"
