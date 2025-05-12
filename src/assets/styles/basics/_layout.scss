@@ -1,37 +1,61 @@
-.main-container {
+.station-index {
+
+    height: 100vh;
+    width: 100%;
     display: grid;
-    grid-template-columns: 1rem 1fr 1rem;
-
-    > * {
-        grid-column: 2;
-
-        &.full {
-            grid-column: 1 / -1;
-        }
-    }
-
-    // @include for-narrow-layout {
-    //     grid-template-columns: 
-    //         minmax(20px, 1fr)
-    //         minmax(auto, $mobile-breakpoint)
-    //         minmax(20px, 1fr);
-    // }
-    // @include for-normal-layout {
-    //     grid-template-columns: 
-    //         minmax(20px, 1fr)
-    //         minmax(auto, $narrow-breakpoint)
-    //         minmax(20px, 1fr);
-    // }
-    // @include for-wide-layout {
-    //     grid-template-columns: 
-    //         minmax(20px, 1fr)
-    //         minmax(auto, $normal-breakpoint)
-    //         minmax(20px, 1fr);
-    // }
+    grid-template-columns: minmax(rem(297px), rem(420px)) 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+        "header header"
+        "sidebar main-page"
+        "media-player media-player";
+    gap: 8px;
+    padding: 8px;
+    
 }
 
-.card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    grid-gap: 20px;
+header {
+    grid-area: header;
 }
+
+.sidebar {
+    grid-area: sidebar;
+}
+
+.main-page {
+    grid-area: main-page;
+    // max-height: rem(1057px);
+    overflow-y: auto;
+    background-color: white;
+}
+
+.media-player {
+    grid-area: media-player;
+}
+
+header,
+.sidebar,
+.main-page {
+    border-radius: rem(8px);
+    overflow: hidden;   
+}
+
+
+// @include for-narrow-layout {
+//     grid-template-columns: 
+//         minmax(20px, 1fr)
+//         minmax(auto, $mobile-breakpoint)
+//         minmax(20px, 1fr);
+// }
+// @include for-normal-layout {
+//     grid-template-columns: 
+//         minmax(20px, 1fr)
+//         minmax(auto, $narrow-breakpoint)
+//         minmax(20px, 1fr);
+// }
+// @include for-wide-layout {
+//     grid-template-columns: 
+//         minmax(20px, 1fr)
+//         minmax(auto, $normal-breakpoint)
+//         minmax(20px, 1fr);
+// }
