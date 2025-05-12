@@ -5,11 +5,14 @@ export const ADD_STATION = 'ADD_STATION'
 export const UPDATE_STATION = 'UPDATE_STATION'
 export const SET_NEXT_SONG = 'SET_NEXT_SONG'
 export const SET_PREV_SONG = 'SET_PREV_SONG'
+export const SET_IS_PLAYING = 'SET_IS_PLAYING'
+export const SET_SONG_IDX = 'SET_SONG_IDX'
 
 const initialState = {
     stations: [],
     station: null,
-    currentSongIdx: 0
+    currentSongIdx: 0,
+    isPlaying: false
 }
 
 export function stationReducer(state = initialState, action) {
@@ -35,6 +38,10 @@ export function stationReducer(state = initialState, action) {
             newState = { ...state, stations }
             break
 
+        case SET_IS_PLAYING:
+            newState = { ...state, isPlaying: action.isPlaying }
+            break
+
         case SET_NEXT_SONG: {
             const nextIdx = (state.currentSongIdx + 1) % state.station.songs.length
             return {
@@ -44,13 +51,15 @@ export function stationReducer(state = initialState, action) {
         }
         case SET_PREV_SONG: {
             const prevIdx =
-              (state.currentSongIdx - 1 + state.station.songs.length) %
-              state.station.songs.length
+                (state.currentSongIdx - 1 + state.station.songs.length) %
+                state.station.songs.length
             return {
-              ...state,
-              currentSongIdx: prevIdx,
+                ...state,
+                currentSongIdx: prevIdx,
             }
-          }
+        }
+        case SET_SONG_IDX:
+            return { ...state, currentSongIdx: action.idx }
         default:
     }
     return newState

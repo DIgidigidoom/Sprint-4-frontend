@@ -1,6 +1,6 @@
 import YouTube from 'react-youtube'
 
-export function ReactYouTube({ videoId, onReady }) {
+export function ReactYouTube({ videoId, onReady,onEnd }) {
   const opts = {
     height: '0',
     width: '0',
@@ -13,5 +13,5 @@ export function ReactYouTube({ videoId, onReady }) {
     },
   }
 
-  return <YouTube videoId={videoId} opts={opts} onReady={onReady} />
+  return <YouTube videoId={videoId} opts={opts} onReady={onReady} onEnd={onEnd} />
 }
