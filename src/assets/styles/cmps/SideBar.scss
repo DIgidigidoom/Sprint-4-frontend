@@ -36,16 +36,17 @@
             }
         }
 
-        .sidebar-plus {
+        svg {
             width: 1rem;
             height: 1rem;
+            color: #B3B3B3;
         }
     }
 
     .sidebar-sort-btns {
         display: flex;
         gap: rem(9px);
-        padding: rem(12px) rem(16px) rem(8px) rem(16px);
+        padding: rem(7px) rem(16px) rem(8px) rem(16px);
 
         .sidebar-sort-btn {
             display: flex;
@@ -99,8 +100,8 @@
                 cursor: pointer;
             }
 
-            i {
-                font-size: 1rem;
+            svg {
+                height: 1rem;
             }
 
         }
@@ -144,7 +145,7 @@
     }
 
     .sidebar-followed-content {
-        padding: rem(12px) rem(8px) rem(8px) rem(8px);
+        padding: rem(5px) rem(8px) rem(8px) rem(8px);
         display: flex;
         flex-direction: column;
 

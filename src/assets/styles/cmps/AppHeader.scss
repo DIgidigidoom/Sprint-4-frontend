@@ -41,7 +41,7 @@
             gap: rem(8px);
             justify-content: center;
             align-items: center;
-            margin-left: rem(99px);
+            margin-left: rem(81px);
             flex: 1;
 
             .search-wrapper {
@@ -49,9 +49,9 @@
                 display: flex;
                 align-items: center;
 
-                .magnifying-glass-header-filter {
+                svg {
                     position: absolute;
-                    color: white;
+                    color: #B3B3B3;
                     left: 1rem;
                     top: 50%;
                     transform: translateY(-50%);

@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouse, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { faSpotify } from '@fortawesome/free-brands-svg-icons'
 import HomeIcon from '../assets/icons/home-btn.svg?react'
+import MagnifyingGlassIcon from '../assets/icons/magnifying-glass.svg?react'
 
 export function AppHeader() {
 	const user = useSelector(storeState => storeState.userModule.user)
@@ -35,7 +36,9 @@ export function AppHeader() {
 					</NavLink>
 
 					<div className="search-wrapper">
-						<FontAwesomeIcon icon={faMagnifyingGlass} className="magnifying-glass-header-filter" />
+						
+						<span className='magnifying-glass-header-filter'><MagnifyingGlassIcon/></span>
+						{/* <FontAwesomeIcon icon={faMagnifyingGlass} className="magnifying-glass-header-filter" /> */}
 						<input
 							type="text"
 							className="header-filter"
