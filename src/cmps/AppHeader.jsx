@@ -9,9 +9,17 @@ import { faSpotify } from '@fortawesome/free-brands-svg-icons'
 import HomeIcon from '../assets/icons/home-btn.svg?react'
 import MagnifyingGlassIcon from '../assets/icons/magnifying-glass.svg?react'
 
+import { useDispatch } from 'react-redux'
+import { useLocation } from 'react-router-dom'
+import { SET_STATION } from '../store/reducers/station.reducer'
+
+
 export function AppHeader() {
 	const user = useSelector(storeState => storeState.userModule.user)
 	const navigate = useNavigate()
+	const dispatch = useDispatch()
+	const location = useLocation()
+
 
 	async function onLogout() {
 		try {
@@ -23,21 +31,31 @@ export function AppHeader() {
 		}
 	}
 
+	function onGoHome() {
+		dispatch({ type: SET_STATION, station: null })
+		if (location.pathname !== '/') {
+			navigate('/')
+		}
+	}
+
+
 	return (
 		<header className="app-header full">
 			<nav>
-				<NavLink to="/" className="logo">
+				<button className="logo" onClick={onGoHome}>
 					<FontAwesomeIcon icon={faSpotify} className="logo-icon" />
-				</NavLink>
+				</button>
+
 
 				<div className="middle-header">
-					<NavLink to="/" className="home-btn">
-						<span className='home-btn-icon'><HomeIcon/></span>
-					</NavLink>
+					<button className="home-btn" onClick={onGoHome}>
+						<span className="home-btn-icon"><HomeIcon /></span>
+					</button>
+
 
 					<div className="search-wrapper">
-						
-						<span className='magnifying-glass-header-filter'><MagnifyingGlassIcon/></span>
+
+						<span className='magnifying-glass-header-filter'><MagnifyingGlassIcon /></span>
 						{/* <FontAwesomeIcon icon={faMagnifyingGlass} className="magnifying-glass-header-filter" /> */}
 						<input
 							type="text"
