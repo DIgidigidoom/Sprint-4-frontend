@@ -17,7 +17,6 @@
             padding-inline-start: clamp(24px, 2.4vh, 80px);
             gap: 24px;
 
-
             .station-img {
                 width: 232px;
                 height: 232px;
@@ -55,7 +54,6 @@
         align-items: center;
         gap: 1.5rem;
         padding: 24px;
-
 
         .btn-play {
             background-color: $clr1;
@@ -126,9 +124,9 @@
 
         .col.duration-header {
             width: 32px;
-            
-            
         }
+
+
     }
 
     .song-list {
@@ -148,6 +146,7 @@
             border: 1px solid transparent;
             transition: background-color 0.2s ease;
             cursor: pointer;
+            position: relative;
 
             &:hover {
                 background-color: #2a2a2a;
@@ -207,14 +206,13 @@
             .song-album {
                 flex: 2;
                 min-width: 120px;
-                
-                
+                padding-inline-start: 75px;
             }
 
             .song-date-added {
                 flex: 2;
                 min-width: 120px;
-                padding-left: 27px;
+                padding-left: 75px;
             }
 
             .song-formatted-duration {
@@ -222,7 +220,50 @@
                 margin-inline-end: 11px;
                 justify-content: flex-end;
             }
+
+
+
+            .hovered-like-btn {
+                z-index: -5;
+                pointer-events: none;
+                transition: opacity 0.2s ease;
+                align-self: center;
+                padding-inline-end: 21px;
+
+                button {
+                    display: flex;
+                    background-color: transparent;
+
+                    svg {
+                        justify-content: center;
+                        align-items: center;
+                        width: 1rem;
+                        height: 1rem;
+                        fill: #b3b3b3;
+
+                        &:hover {
+                            scale: 1.03;
+                            cursor: pointer;
+                            fill: #e1e1e1;
+                        }
+                    }
+                }
+            }
+
+            &:hover .hovered-like-btn {
+                z-index: 100;
+                // opacity: 1;
+                pointer-events: auto;
+            }
+
+
+
+
         }
+
+
+
+
     }
 
 

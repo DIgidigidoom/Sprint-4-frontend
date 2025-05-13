@@ -7,6 +7,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { formatDuration, formatSpotifyDate, getCloudinaryImg } from '../services/util.service'
 import { useDispatch } from 'react-redux'
 import { SET_STATION } from '../store/reducers/station.reducer'
+import AddLikedBtn from '../assets/icons/add-liked-btn.svg?react'
 
 export function StationDetails() {
   const station = useSelector(storeState => storeState.stationModule.station)
@@ -142,7 +143,9 @@ export function StationDetails() {
                         </div>
                         <p className="song-album">{song.album}</p>
                         <p className="song-date-added">{formatSpotifyDate(song.addedAt)}</p>
-                        <button onClick={(ev) => onAddToLiked(ev, station._id, song.id)} > like!</button>
+                        <div className="hovered-like-btn">
+                          <button onClick={(ev) => onAddToLiked(ev, station._id, song.id)}><AddLikedBtn/></button>
+                        </div>
                         <p className="song-formatted-duration">{formatDuration(song.duration)}</p>
                       </div>
                     )}

@@ -62,10 +62,10 @@ export function SideBar({ onCreateStation, stations, onSelectStation }) {
                 <div key={likedStation._id} className='sidebar-followed-content' onClick={() => onSelectStation(likedStation._id)}>
                     <div className='sidebar-content-preview'>
                         <img src="https://i.ytimg.com/vi/TLDflhhdPCg/mqdefault.jpg" alt="" />
-                        <HoverPlayBtn/>
+                        <HoverPlayBtn />
                         <div className='sidebar-content-info'>
                             <span className='sidebar-content-info-title'>{likedStation.name}</span>
-                            <span className='sidebar-content-info-description'>Playlist • {likedStation.owner.fullname}</span>
+                            <span className='sidebar-content-info-description'>Playlist • {likedStation.songs.length}</span>
                         </div>
                     </div>
                 </div>
@@ -76,7 +76,7 @@ export function SideBar({ onCreateStation, stations, onSelectStation }) {
                     <div key={station._id} className='sidebar-followed-content' onClick={() => onSelectStation(station._id)}>
                         <div className='sidebar-content-preview'>
                             <img src="https://i.ytimg.com/vi/TLDflhhdPCg/mqdefault.jpg" alt="" />
-                            <HoverPlayBtn/>
+                            <HoverPlayBtn />
                             <div className='sidebar-content-info'>
                                 <span className='sidebar-content-info-title'>{station.name}</span>
                                 <span className='sidebar-content-info-description'>Playlist • {station.owner.fullname}</span>
