@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { loadStation, updateStation } from '../store/actions/station.actions'
+import { loadStation, updateStation, addToLiked } from '../store/actions/station.actions'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
 import { useParams, useNavigate } from 'react-router-dom'
@@ -56,8 +56,22 @@ export function StationDetails() {
     updateStation(updatedStation)
   }
 
+  async function onAddToLiked(ev, stationId, songId) {
+    console.log("onAddToLiked songId: ", songId)
+    console.log("onAddToLiked stationId: ", stationId)
+    ev.stopPropagation()
+    try {
+      await addToLiked(stationId, songId)
+      showSuccessMsg('Added To Liked Songs')
+    } catch (err) {
+      console.error('Failed to add to liked', err)
+      showErrorMsg('Failed To Add To Liked')
+
+    }
+  }
+
   const { createdBy } = station
-  
+
   if (!station) return <div>Loading...</div>
 
   return (
@@ -106,10 +120,11 @@ export function StationDetails() {
               >
                 {songs.map((song, idx) => (
                   <Draggable
-                    key={song._id || idx}
-                    draggableId={song._id || `song-${idx}`}
+                    key={song.id || idx}
+                    draggableId={song.id || `song-${idx}`}
                     index={idx}
                   >
+
                     {(provided) => (
                       <div
                         className="song-row"
@@ -127,6 +142,7 @@ export function StationDetails() {
                         </div>
                         <p className="song-album">{song.album}</p>
                         <p className="song-date-added">{formatSpotifyDate(song.addedAt)}</p>
+                        <button onClick={(ev) => onAddToLiked(ev, station._id, song.id)} > like!</button>
                         <p className="song-formatted-duration">{formatDuration(song.duration)}</p>
                       </div>
                     )}

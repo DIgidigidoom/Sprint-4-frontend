@@ -1,9 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
-import { stationService } from '../services/station/index.js'
-import { addStation } from '../store/actions/station.actions.js'
 import MagnifyingGlassIcon from '../assets/icons/magnifying-glass.svg?react'
 import Plus from '../assets/icons/plus.svg?react'
 
@@ -16,13 +11,19 @@ export function SideBar({ onCreateStation, stations, onSelectStation }) {
     const [isSearchOpen, setIsSearchOpen] = useState(false)
     const [userStations, setUserStations] = useState([])
     const [searchTerm, setSearchTerm] = useState('')
+    const [likedStation, setLikedStation] = useState('')
 
 
 
 
     useEffect(() => {
-        const filteredStations = stations.filter(station => station.owner)
+        const filteredStations = stations.filter(station => station.owner && !station.isLikedSongs)
         setUserStations(filteredStations)
+    }, [stations])
+
+    useEffect(() => {
+        const likedStationExists = stations.find(station => station.isLikedSongs)
+        setLikedStation(likedStationExists)
     }, [stations])
 
     return (
@@ -56,7 +57,17 @@ export function SideBar({ onCreateStation, stations, onSelectStation }) {
                     className={`sidebar-search-input ${isSearchOpen ? 'open' : ''}`}
                 />
             </div>
-
+            {likedStation && (
+                <div key={likedStation._id} className='sidebar-followed-content' onClick={() => onSelectStation(likedStation._id)}>
+                    <div className='sidebar-content-preview'>
+                        <img src="https://i.ytimg.com/vi/TLDflhhdPCg/mqdefault.jpg" alt="" />
+                        <div className='sidebar-content-info'>
+                            <span className='sidebar-content-info-title'>{likedStation.name}</span>
+                            <span className='sidebar-content-info-description'>Playlist • {likedStation.owner.fullname}</span>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {userStations.map(station => {
                 return (
