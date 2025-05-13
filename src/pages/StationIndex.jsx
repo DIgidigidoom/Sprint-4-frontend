@@ -74,9 +74,10 @@ export function StationIndex() {
                 onSelectStation={onSelectStation}
             />
 
-            <SideBar 
-            onCreateStation={onCreateStation} 
-            stations={stations}/>
+            <SideBar
+                onCreateStation={onCreateStation}
+                stations={stations}
+                onSelectStation={onSelectStation} />
 
             <MediaPlayer />
 

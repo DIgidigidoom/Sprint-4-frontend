@@ -12,7 +12,7 @@ import Plus from '../assets/icons/plus.svg?react'
 
 
 
-export function SideBar({ onCreateStation, stations }) {
+export function SideBar({ onCreateStation, stations, onSelectStation }) {
     const [isSearchOpen, setIsSearchOpen] = useState(false)
     const [userStations, setUserStations] = useState([])
     const [searchTerm, setSearchTerm] = useState('')
@@ -47,7 +47,6 @@ export function SideBar({ onCreateStation, stations }) {
             <div className='sidebar-filter'>
                 <div className='sidebar-filter-btn' onClick={() => setIsSearchOpen(prev => !prev)} >
                     <span><MagnifyingGlassIcon /></span>
-
                 </div>
                 <input
                     type='text'
@@ -60,8 +59,8 @@ export function SideBar({ onCreateStation, stations }) {
 
 
             {userStations.map(station => {
-                return ( 
-                    <div className='sidebar-followed-content'>
+                return (
+                    <div key={station._id} className='sidebar-followed-content' onClick={() => onSelectStation(station._id)}>
                         <div className='sidebar-content-preview'>
                             <img src="https://i.ytimg.com/vi/TLDflhhdPCg/mqdefault.jpg" alt="" />
                             <div className='sidebar-content-info'>

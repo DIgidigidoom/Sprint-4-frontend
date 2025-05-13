@@ -55,13 +55,16 @@ async function save(station) {
     if (station._id) {
         savedStation = await storageService.put(STORAGE_KEY, { ...station })
     } else {
+        let stations = await query()
+        const length = stations.filter(station => station.owner).length
+
         const stationToSave = {
             _id: makeId(4),
-            name: 'My Playlist',
-           
+            name: 'My Playlist #' + (length + 1),
+
             createdBy: {
                 imgUrl: 'defaultstation_ov5qip',
-                 fullname: loggedinUser.fullname
+                fullname: loggedinUser.fullname
             },
             songs: [],
             createdAt: Date.now(),
