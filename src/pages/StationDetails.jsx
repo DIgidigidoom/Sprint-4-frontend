@@ -8,6 +8,7 @@ import { formatDuration, formatSpotifyDate, getCloudinaryImg } from '../services
 import { useDispatch } from 'react-redux'
 import { SET_STATION } from '../store/reducers/station.reducer'
 import AddLikedBtn from '../assets/icons/add-liked-btn.svg?react'
+import PlayBtn from '../assets/icons/icon-park-solid--play.svg?react'
 
 export function StationDetails() {
   const station = useSelector(storeState => storeState.stationModule.station)
@@ -91,7 +92,7 @@ export function StationDetails() {
 
 
             <p>
-              {createdBy.fullname} • {songs.length} songs
+              <span style={{ fontWeight: "700" }}> {createdBy.fullname}</span><span style={{ color: "#b3b3b3" }}> • {songs.length} songs</span>
             </p>
 
           </div>
@@ -99,9 +100,7 @@ export function StationDetails() {
       </div>
 
       <div className="controls">
-        <button className="btn-play">
-          <i className="fa-solid fa-play"></i>
-        </button>
+          <PlayBtn/>
       </div>
       <div className="song-list-container">
         <div className="song-list-header">
@@ -144,7 +143,7 @@ export function StationDetails() {
                         <p className="song-album">{song.album}</p>
                         <p className="song-date-added">{formatSpotifyDate(song.addedAt)}</p>
                         <div className="hovered-like-btn">
-                          <button onClick={(ev) => onAddToLiked(ev, station._id, song.id)}><AddLikedBtn/></button>
+                          <button onClick={(ev) => onAddToLiked(ev, station._id, song.id)}><AddLikedBtn /></button>
                         </div>
                         <p className="song-formatted-duration">{formatDuration(song.duration)}</p>
                       </div>

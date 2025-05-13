@@ -16,7 +16,7 @@ export const stations = [
     "_id": "c2f36bbbdd74",
     "name": "Jazz & Chill",
     "tags": ["Jazz", "Relax"],
-    "createdBy": { "_id": "u101", "fullname": "spotify", "imgUrl": "jazzNchill_okhsih" },
+    "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "jazzNchill_okhsih" },
     "likedByUsers": ["{minimal-user}", "{minimal-user}"],
     "songs": [
       {
@@ -88,7 +88,7 @@ export const stations = [
     "_id": "190c4c7d4071",
     "name": "Rock Classics",
     "tags": ["Rock", "Legends"],
-    "createdBy": { "_id": "u101", "fullname": "spotify", "imgUrl": "rockclassics_wt0e6h" },
+    "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "rockclassics_wt0e6h" },
     "likedByUsers": ["{minimal-user}", "{minimal-user}"],
     "songs": [
       {
@@ -124,7 +124,7 @@ export const stations = [
     "_id": "d86fe95a7743",
     "name": "Workout Boost",
     "tags": ["Workout", "Energy"],
-    "createdBy": { "_id": "u101", "fullname": "spotify", "imgUrl": "workoutboosy_gstrn6" },
+    "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "workoutboosy_gstrn6" },
     "likedByUsers": ["{minimal-user}", "{minimal-user}"],
     "songs": [
       {
@@ -160,7 +160,7 @@ export const stations = [
     "_id": "b277701f83e5",
     "name": "Lofi Moods",
     "tags": ["Lofi", "Study"],
-    "createdBy": { "_id": "u101", "fullname": "spotify", "imgUrl": "Lofi_Moods_cqwysk" },
+    "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "Lofi_Moods_cqwysk" },
     "likedByUsers": ["{minimal-user}", "{minimal-user}"],
     "songs": [
       {
@@ -196,7 +196,7 @@ export const stations = [
     "_id": "50fad7a73dc3",
     "name": "Classical Calm",
     "tags": ["Classical", "Piano"],
-    "createdBy": { "_id": "u101", "fullname": "spotify", "imgUrl": "classicalcalm_v0uct2" },
+    "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "classicalcalm_v0uct2" },
     "likedByUsers": ["{minimal-user}", "{minimal-user}"],
     "songs": [
       {
@@ -232,7 +232,7 @@ export const stations = [
     "_id": "734278733651",
     "name": "Reggae Vibes",
     "tags": ["Reggae", "Chill"],
-    "createdBy": { "_id": "u101", "fullname": "spotify", "imgUrl": "ReggaeVibes_o7clhl" },
+    "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "ReggaeVibes_o7clhl" },
     "likedByUsers": ["{minimal-user}", "{minimal-user}"],
     "songs": [
       {
@@ -268,7 +268,7 @@ export const stations = [
     "_id": "ea6685e71e6d",
     "name": "Electronic Pulse",
     "tags": ["EDM", "Party"],
-    "createdBy": { "_id": "u101", "fullname": "spotify", "imgUrl": "ElectronicPulse_kcqv36" },
+    "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "ElectronicPulse_kcqv36" },
     "likedByUsers": ["{minimal-user}", "{minimal-user}"],
     "songs": [
       {
@@ -304,7 +304,7 @@ export const stations = [
     "_id": "93154d18e8c4",
     "name": "Pop Hits",
     "tags": ["Pop", "Top 40"],
-    "createdBy": { "_id": "u101", "fullname": "spotify", "imgUrl": "PopHits_xi3nbd" },
+    "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "PopHits_xi3nbd" },
     "likedByUsers": ["{minimal-user}", "{minimal-user}"],
     "songs": [
       {
@@ -340,7 +340,7 @@ export const stations = [
     "_id": "581e59c62645",
     "name": "Soulful Sundays",
     "tags": ["Soul", "Smooth"],
-    "createdBy": { "_id": "u101", "fullname": "spotify", "imgUrl": "SoulfulSundays_syks3t" },
+    "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "SoulfulSundays_syks3t" },
     "likedByUsers": ["{minimal-user}", "{minimal-user}"],
     "songs": [
       {
