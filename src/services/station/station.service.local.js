@@ -1,8 +1,9 @@
 
-import { storageService } from '../async-storage.service'
-import { makeId } from '../util.service'
-import { userService } from '../user'
+import { storageService } from '../async-storage.service.js'
+import { makeId } from '../util.service.js'
 import { seedStationsToLocalStorage } from './station.seed.js'
+import { demoSongs } from './demo-songs.js'
+import { addToLiked, removeFromLiked } from '../../store/actions/station.actions.js'
 
 const STORAGE_KEY = 'stationDB'
 
@@ -14,7 +15,9 @@ export const stationService = {
     save,
     remove,
     addSongToStation,
-    removeSongFromStation
+    removeSongFromStation,
+    addToLikedSongs,
+    removeFromLikedSongs,
 
 }
 window.cs = stationService
@@ -45,7 +48,10 @@ async function remove(stationId) {
 }
 
 async function save(station) {
-    var savedStation
+    if (station.name === 'Liked Songs' && !station.isLikedSongs) {
+        station.isLikedSongs = true
+    }
+    let savedStation
     if (station._id) {
         savedStation = await storageService.put(STORAGE_KEY, { ...station })
     } else {
@@ -58,6 +64,9 @@ async function save(station) {
             // owner: userService.getLoggedinUser(),
             owner: loggedinUser
 
+        }
+        if (stationToSave.name === 'Liked Songs') {
+            stationToSave.isLikedSongs = true
         }
         savedStation = await storageService.post(STORAGE_KEY, stationToSave)
     }
@@ -86,10 +95,53 @@ export async function removeSongFromStation(stationId, songId) {
     return save(station)
 }
 
+export async function addToLikedSongs(songId) {
+    let stations = await query()
 
-import { demoSongs } from './demo-songs.js'
+    let likedStation = stations.find(station =>
+        station.isLikedSongs && station.owner?._id === loggedinUser._id
+    )
+
+    if (!likedStation) {
+        likedStation = {
+            name: 'Liked Songs',
+            isLikedSongs: true,
+            imgUrl: 'https://res.cloudinary.com/deyotfuqw/image/upload/v1747039279/player_pic_g8cjbv.png',
+            songs: [],
+            createdAt: Date.now(),
+            owner: loggedinUser
+        }
+    }
+
+    const song = demoSongs.find(song => song.id === songId)
+    if (!song) throw new Error('Song not found')
+
+    if (!likedStation.songs.find(s => s.id === songId)) {
+        likedStation.songs.push(song)
+    }
+
+    return save(likedStation)
+}
+
+export async function removeFromLikedSongs(songId) {
+    let stations = await query()
+
+    const likedStation = stations.find(station =>
+        station.isLikedSongs && station.owner?._id === loggedinUser._id
+    )
+
+    if (!likedStation) throw new Error('Liked Songs station not found')
+
+    likedStation.songs = likedStation.songs.filter(song => song.id !== songId)
+
+    return save(likedStation)
+}
+
+// for console
 window.stationService = stationService
 window.demoSongs = demoSongs
+window.addToLiked = addToLiked
+window.removeFromLiked = removeFromLiked
 
 
 

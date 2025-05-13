@@ -104,6 +104,29 @@ export async function removeSong(stationId, songId) {
     }
 }
 
+export async function addToLiked(songId) {
+    try {
+        const updatedStation = await stationService.addToLikedSongs(songId)
+        store.dispatch(getCmdUpdateStation(updatedStation))
+        return updatedStation
+    } catch (err) {
+        console.error('Cannot add to Liked Songs', err)
+        throw err
+    }
+}
+
+export async function removeFromLiked(songId) {
+    try {
+        const updatedStation = await stationService.removeFromLikedSongs(songId)
+        store.dispatch(getCmdUpdateStation(updatedStation))
+        return updatedStation
+    } catch (err) {
+        console.error('Cannot remove from Liked Songs', err)
+        throw err
+    }
+}
+
+
 
 
 // Command Creators:
