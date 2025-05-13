@@ -1,38 +1,66 @@
-.station-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 20px;
-    padding: 2em;
+.station-list {
+    padding: 0px rem(28px);
 
-    .station-card {
-        background-color: transparent;
-        border-radius: 8px;
-        padding: 1em;
-        color: white;
-        text-align: center;
-        transition: background-color 0.2s ease;
+    // .station-list-header {
+    //     position: sticky;
+    //     background-color: $clr3;
+    //     z-index: 1;
+    //     top: 0;
+    //     height: rem(64px);
+    //     display: flex;
+    //     align-items: center;
 
-        &:hover {
-            background-color: #282828;
-        }
+    //     .station-list-header-btns {
+    //         display: flex;
+    //         gap: rem(8px);
 
-        .station-actions {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 1em;
 
-            button {
-                background: none;
-                border: none;
-                color: #b3b3b3;
-                font-size: 1.2em;
+    //         button {
+    //             height: rem(32px);
+    //             padding: rem(4px) rem(12px);
+    //             border-radius: 999px;
+    //             background-color: rgba(255, 255, 255, 0.07);
+    //             color: white;
+
+    //             &:hover {
+    //                 background-color: rgba(255, 255, 255, 0.12);
+    //             }
+
+    //             &.active {
+    //                 background-color: white;
+    //                 color: black;
+    //             }
+    //         }
+
+    //     }
+    // }
+
+    .station-list-stations {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(rem(190px), rem(197px)));
+        position: relative;
+
+
+        .station-card {
+            background-color: transparent;
+            border-radius: 8px;
+            color: white;
+            text-align: center;
+            // transition: background-color 0.2s ease;
+            padding: rem(12px);
+
+            &:hover {
+                background-color: #1f1f1f;
                 cursor: pointer;
-
-                &:hover {
-                    color: #1db954;
-                }
             }
+
+            &:hover svg {
+                // display: flex;
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+
         }
     }
 }

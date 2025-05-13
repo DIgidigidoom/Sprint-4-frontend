@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import PreviewPlayBtn from '../assets/icons/play-btn-preview.svg?react'
 import {getCloudinaryImg} from "../services/util.service"
 
 export function StationPreview({ station, onSelectStation }) {
@@ -12,18 +13,14 @@ export function StationPreview({ station, onSelectStation }) {
                     src={getCloudinaryImg(createdBy.imgUrl) || defaultImgUrl}
                     alt={station.name}
                 />
-                <button className="btn-play"
-                    onClick={(ev) => {
-                        ev.stopPropagation()
-                        console.log('▶️ Play clicked!')
-                    }}>
-                    <i className="fa-solid fa-play"></i>
-                </button>
+                <span><PreviewPlayBtn/></span>
+                {/* <PreviewPlayBtn/> */}
+
             </div>
 
             <div className="station-info" >
-                <h3>{station.name}</h3>
-                <p>Playlist • {station.owner?.fullname || 'Unknown'}</p>
+                <span className='station-preview-title'>{station.name}</span>
+                <span className='station-preview-artist'>Playlist • {station.owner?.fullname || 'Unknown'}</span>
             </div>
         </div>
     )

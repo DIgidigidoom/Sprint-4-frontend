@@ -4,6 +4,8 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 import { stationService } from '../services/station/index.js'
 import { addStation } from '../store/actions/station.actions.js'
+import MagnifyingGlassIcon from '../assets/icons/magnifying-glass.svg?react'
+import Plus from '../assets/icons/plus.svg?react'
 
 
 
@@ -27,8 +29,7 @@ export function SideBar({ onCreateStation }) {
                 <button
                     onClick={onCreateStation}
                     className='sidebar-create-btn'>
-                    <FontAwesomeIcon icon={faPlus} className='sidebar-plus' 
-                    />
+                    <span><Plus/></span>
                     Create
                 </button>
             </div>
@@ -40,7 +41,7 @@ export function SideBar({ onCreateStation }) {
 
             <div className='sidebar-filter'>
                 <div className='sidebar-filter-btn' onClick={() => setIsSearchOpen(prev => !prev)} >
-                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span><MagnifyingGlassIcon/></span>
                     
                 </div>
                 <input
