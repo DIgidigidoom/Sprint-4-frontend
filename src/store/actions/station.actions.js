@@ -82,6 +82,28 @@ export function setPrevSong() {
     }
 }
 
+// songs
+
+export async function addSong(stationId, song) {
+    try {
+        const updatedStation = await stationService.addSongToStation(stationId, song)
+        store.dispatch(getCmdUpdateStation(updatedStation))
+    } catch (err) {
+        console.error('Cannot add song', err)
+        throw err
+    }
+}
+
+export async function removeSong(stationId, songId) {
+    try {
+        const updatedStation = await stationService.removeSongFromStation(stationId, songId)
+        store.dispatch(getCmdUpdateStation(updatedStation))
+    } catch (err) {
+        console.error('Cannot remove song', err)
+        throw err
+    }
+}
+
 
 
 // Command Creators:
