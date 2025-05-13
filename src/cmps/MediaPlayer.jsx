@@ -10,6 +10,11 @@ import PreviousBtn from '../assets/icons/previous-btn-media-player.svg?react'
 import NextBtn from '../assets/icons/next-btn-media-player.svg?react'
 import ShuffleBtn from '../assets/icons/shuffle-btn-media-player.svg?react'
 import RepeatBtn from '../assets/icons/repeat-btn-media-player.svg?react'
+import AddLikedBtn from '../assets/icons/add-liked-btn.svg?react'
+import VolumeMute from '../assets/icons/volume-mute.svg?react'
+import VolumeLow from '../assets/icons/volume-low.svg?react'
+import VolumeMedium from '../assets/icons/volume-medium.svg?react'
+import VolumeLoud from '../assets/icons/volume-loud.svg?react'
 
 export function MediaPlayer() {
 
@@ -119,12 +124,19 @@ export function MediaPlayer() {
         return `${minutes}:${seconds}`
     }
 
-    const volumeIconClass =
-        volume === 0
-            ? 'lucide--volume-x'
-            : volume <= 80
-                ? 'lucide--volume-1'
-                : 'lucide--volume-2'
+    // const volumeIconClass =
+    //     volume === 0
+    //         ? 'lucide--volume-x'
+    //         : volume <= 80
+    //             ? 'lucide--volume-1'
+    //             : 'lucide--volume-2'
+
+    function getVolumeIcon() {
+        if (volume === 0) return <VolumeMute />
+        if (volume <= 40) return <VolumeLow />
+        if (volume <= 80) return <VolumeMedium />
+        return <VolumeLoud />
+    }
 
 
     return (
@@ -134,7 +146,7 @@ export function MediaPlayer() {
                     <React.Fragment>
                         <img src={song.imgUrl} alt={song.title} />
                         <div>{song.title}</div>
-                        <button className="add-liked"> </button>
+                        <AddLikedBtn className="add-liked-btn" />
                     </React.Fragment>
                 )}
             </div>
@@ -146,19 +158,19 @@ export function MediaPlayer() {
                         title="Toggle Shuffle"
                     >
                         {/* <span class={isShuffle ? "shuffle-green" : "shuffle-white"}></span> */}
-                        <ShuffleBtn className={isShuffle ? "shuffle-green shuffle-btn" : "shuffle-white shuffle-btn"}/>
+                        <ShuffleBtn className={isShuffle ? "shuffle-green shuffle-btn" : "shuffle-white shuffle-btn"} />
                     </button>
 
                     <button onClick={prevSong} disabled={!song}>
-                        <PreviousBtn/>
+                        <PreviousBtn />
                     </button>
 
                     <button className="play-btn" onClick={togglePlay} disabled={!song}>
-                        {isPlaying ? <PauseBtnWide className="pause-svg"/> : <PlayBtn/>}
+                        {isPlaying ? <PauseBtnWide className="pause-svg" /> : <PlayBtn />}
                     </button>
 
                     <button onClick={nextSong} disabled={!song}>
-                        <NextBtn className="next-btn"/>
+                        <NextBtn className="next-btn" />
                     </button>
 
                     <button
@@ -166,7 +178,7 @@ export function MediaPlayer() {
                         title="Toggle Repeat"
                     >
                         {/* <span class={isRepeat ? "repeat-green" : "repeat-white"}></span> */}
-                        <RepeatBtn className={isRepeat ? "repeat-green repeat-btn" : "repeat-white repeat-btn"}/>
+                        <RepeatBtn className={isRepeat ? "repeat-green repeat-btn" : "repeat-white repeat-btn"} />
                     </button>
 
                 </div>
@@ -190,7 +202,7 @@ export function MediaPlayer() {
             </div>
             <div className="track-options">
                 <button className="mute-btn" onClick={toggleMute}>
-                    <span className={volumeIconClass}></span>
+                    <span>{getVolumeIcon()}</span>
                 </button>
                 <input
                     type="range"
