@@ -4,7 +4,7 @@ import { loadStation, updateStation } from '../store/actions/station.actions'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
 import { useParams, useNavigate } from 'react-router-dom'
-
+import { formatDuration, formatSpotifyDate, getCloudinaryImg } from '../services/util.service'
 import { useDispatch } from 'react-redux'
 import { SET_STATION } from '../store/reducers/station.reducer'
 
@@ -64,7 +64,7 @@ export function StationDetails() {
 
       <div className="station-header">
         <div className="station-header-content">
-          <img className="station-img" src={station.imgUrl} alt={station.name} />
+          <img className="station-img" src={getCloudinaryImg(createdBy.imgUrl)} alt={station.name} />
           <div className="station-info">
             <p>Public Playlist</p>
             <input
@@ -72,12 +72,12 @@ export function StationDetails() {
               value={name}
               onChange={(ev) => setName(ev.target.value)}
             />
-            
-              
-             <p>
-                {createdBy.fullname} • {songs.length} songs
-              </p>
-            
+
+
+            <p>
+              {createdBy.fullname} • {songs.length} songs
+            </p>
+
           </div>
         </div>
       </div>
@@ -87,49 +87,57 @@ export function StationDetails() {
           <i className="fa-solid fa-play"></i>
         </button>
       </div>
-
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <Droppable droppableId="songList">
-          {(provided) => (
-            <div
-              className="song-list"
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-            >
-              {songs.map((song, idx) => (
-                <Draggable
-                  key={song._id || idx}
-                  draggableId={song._id || `song-${idx}`}
-                  index={idx}
-                >
-                  {(provided) => (
-                    <div
-                      className="song-row"
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                    >
-                      <span className="song-index">{idx + 1}</span>
-                      <div className="song-info">
-                        <p className="song-title">{song.title}</p>
-                        <p className="song-artist">{song.artist}</p>
+      <div className="song-list-container">
+        <div className="song-list-header">
+          <p className="col index-header">#</p>
+          <p className="col title-header">Title</p>
+          <p className="col album-header">Album</p>
+          <p className="col date-added-header">Date Added</p>
+          <p className="col duration-header">duration</p>
+        </div>
+        <DragDropContext onDragEnd={handleDragEnd}>
+          <Droppable droppableId="songList">
+            {(provided) => (
+              <div
+                className="song-list"
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {songs.map((song, idx) => (
+                  <Draggable
+                    key={song._id || idx}
+                    draggableId={song._id || `song-${idx}`}
+                    index={idx}
+                  >
+                    {(provided) => (
+                      <div
+                        className="song-row"
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                      >
+                        <span className="song-index">{idx + 1}</span>
+                        <div className='info-wrapper'>
+                          <img className="song-img" src={song.imgUrl} alt="" />
+                          <div className="song-info">
+                            <p className="song-title">{song.title}</p>
+                            <p className="song-artist">{song.artist}</p>
+                          </div>
+                        </div>
+                        <p className="song-album">{song.album}</p>
+                        <p className="song-date-added">{formatSpotifyDate(song.addedAt)}</p>
+                        <p className="song-formatted-duration">{formatDuration(song.duration)}</p>
                       </div>
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </div>
       <button onClick={onSaveName}>Save</button>
-      <button className="btn-back" onClick={onBackToList}>
-        ← Back to list
-      </button>
-
-
     </section>
   )
 }

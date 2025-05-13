@@ -25,6 +25,7 @@ export function MediaPlayer() {
     const song = station?.songs[songIdx]
 
     useEffect(() => {
+        console.log("playerRef: ", playerRef)
         const interval = setInterval(() => {
             if (playerRef.current && isPlaying) {
                 const currentTime = playerRef.current.getCurrentTime()
