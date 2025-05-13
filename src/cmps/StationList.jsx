@@ -1,11 +1,18 @@
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import { StationPreview } from './StationPreview.jsx'
 
 export function StationList({ stations, onRemoveStation, onUpdateStation, onSelectStation }) {
+
+    const [spotifyStations, setSpotifyStations] = useState(stations)
+    useEffect(() => {
+            const filteredStations = stations.filter(station => !station.owner)
+            setSpotifyStations(filteredStations)
+        }, [stations])
+    
     return (
         <section className="station-list">
             <div className='station-list-stations'>
-                {stations.map(station =>
+                {spotifyStations.map(station =>
                     <div key={station._id} className="station-card">
                         <StationPreview
                             station={station}

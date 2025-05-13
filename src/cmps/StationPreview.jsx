@@ -10,7 +10,7 @@ export function StationPreview({ station, onSelectStation }) {
         <div className="station-preview" onClick={() => onSelectStation(station._id)}>
             <div className="station-img-wrapper">
                 <img
-                    src={getCloudinaryImg(createdBy.imgUrl) || defaultImgUrl}
+                    src={getCloudinaryImg(createdBy.imgUrl) || defaultImgUrl }
                     alt={station.name}
                 />
                 <span><PreviewPlayBtn/></span>

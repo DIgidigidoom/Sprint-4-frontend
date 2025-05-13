@@ -1,6 +1,7 @@
 import { stationService } from '../../services/station/station.service.local.js'
 import { store } from '../store.js'
 import { ADD_STATION, REMOVE_STATION, SET_STATIONS, SET_STATION, UPDATE_STATION, SET_NEXT_SONG, SET_PREV_SONG, SET_IS_PLAYING } from '../reducers/station.reducer.js'
+import { compileString } from 'sass'
 
 
 
@@ -104,15 +105,40 @@ export async function removeSong(stationId, songId) {
     }
 }
 
-export async function addToLiked(songId) {
-    try {
-        const updatedStation = await stationService.addToLikedSongs(songId)
-        store.dispatch(getCmdUpdateStation(updatedStation))
-        return updatedStation
-    } catch (err) {
-        console.error('Cannot add to Liked Songs', err)
-        throw err
-    }
+// export async function addToLiked(stationId, songId) {
+//     console.log("addToLiked songId: ", songId)
+//     console.log("addToLiked stationId: ", stationId)
+//     try {
+//         const updatedStation = await stationService.addToLikedSongs(stationId, songId)
+//         store.dispatch(getCmdUpdateStation(updatedStation))
+//         return updatedStation
+//     } catch (err) {
+//         console.error('Cannot add to Liked Songs', err)
+//         throw err
+//     }
+// }
+
+export async function addToLiked(stationId, songId) {
+  console.log("addToLiked songId: ", songId)
+  console.log("addToLiked stationId: ", stationId)
+
+  try {
+    const updatedStation = await stationService.addToLikedSongs(stationId, songId)
+
+    const state = store.getState()
+    const existing = state.stationModule.stations.find(s => s._id === updatedStation._id)
+
+    const action = existing
+      ? getCmdUpdateStation(updatedStation)
+      : getCmdAddStation(updatedStation)
+
+    store.dispatch(action)
+
+    return updatedStation
+  } catch (err) {
+    console.error('Cannot add to Liked Songs', err)
+    throw err
+  }
 }
 
 export async function removeFromLiked(songId) {
