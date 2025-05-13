@@ -57,9 +57,13 @@ async function save(station) {
     } else {
         const stationToSave = {
             _id: makeId(4),
-            name: station.name || 'My Playlist',
-            imgUrl: station.imgUrl || 'https://res.cloudinary.com/deyotfuqw/image/upload/v1747039279/player_pic_g8cjbv.png',
-            songs: station.songs || [],
+            name: 'My Playlist',
+           
+            createdBy: {
+                imgUrl: 'defaultstation_ov5qip',
+                 fullname: loggedinUser.fullname
+            },
+            songs: [],
             createdAt: Date.now(),
             // owner: userService.getLoggedinUser(),
             owner: loggedinUser
@@ -106,7 +110,10 @@ export async function addToLikedSongs(songId) {
         likedStation = {
             name: 'Liked Songs',
             isLikedSongs: true,
-            imgUrl: 'https://res.cloudinary.com/deyotfuqw/image/upload/v1747039279/player_pic_g8cjbv.png',
+            createdBy: {
+                fullname: loggedinUser.fullname,
+                imgUrl: 'defaultstation_ov5qip'
+            },
             songs: [],
             createdAt: Date.now(),
             owner: loggedinUser

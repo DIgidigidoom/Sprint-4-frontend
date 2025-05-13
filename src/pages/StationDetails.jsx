@@ -57,6 +57,7 @@ export function StationDetails() {
   }
 
   const { createdBy } = station
+  
   if (!station) return <div>Loading...</div>
 
   return (
