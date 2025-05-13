@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { loadStation, updateStation, addToLiked } from '../store/actions/station.actions'
+import { loadStation, updateStation, addToLiked, setIsPlaying } from '../store/actions/station.actions'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
 import { useParams, useNavigate } from 'react-router-dom'
@@ -15,17 +15,21 @@ export function StationDetails() {
   const [name, setName] = useState('')
   const [songs, setSongs] = useState([])
   const { stationId } = useParams()
-
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    if (stationId) loadStation(stationId)
+    if (stationId) {
+      loadStation(stationId)
+
+    }
   }, [stationId])
-  const dispatch = useDispatch()
+
 
   useEffect(() => {
     if (station) {
       setName(station.name)
       setSongs(station.songs || [])
+      dispatch(setIsPlaying(false))
     }
   }, [station])
 
@@ -100,7 +104,7 @@ export function StationDetails() {
       </div>
 
       <div className="controls">
-          <PlayBtn/>
+        <PlayBtn />
       </div>
       <div className="song-list-container">
         <div className="song-list-header">
@@ -156,7 +160,7 @@ export function StationDetails() {
           </Droppable>
         </DragDropContext>
       </div>
-      <button onClick={onSaveName}>Save</button>
+      {/* <button onClick={onSaveName}>Save</button> */}
     </section>
   )
 }

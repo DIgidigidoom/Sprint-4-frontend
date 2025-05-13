@@ -1,7 +1,7 @@
 import { useState,useEffect } from 'react'
 import { StationPreview } from './StationPreview.jsx'
 
-export function StationList({ stations, onRemoveStation, onUpdateStation, onSelectStation }) {
+export function StationList({ stations, onSelectStation }) {
 
     const [spotifyStations, setSpotifyStations] = useState(stations)
     useEffect(() => {

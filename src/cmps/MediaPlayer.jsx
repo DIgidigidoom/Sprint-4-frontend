@@ -31,13 +31,13 @@ export function MediaPlayer() {
     const [isRepeat, setIsRepeat] = useState(false)
     const [isShuffle, setIsShuffle] = useState(false)
     const playerRef = useRef(null)
+    
 
 
 
     const song = station?.songs[songIdx]
 
     useEffect(() => {
-        console.log("playerRef: ", playerRef)
         const interval = setInterval(() => {
             if (playerRef.current && isPlaying) {
                 const currentTime = playerRef.current.getCurrentTime()
@@ -46,7 +46,6 @@ export function MediaPlayer() {
                 setDuration(totalTime)
             }
         }, 500)
-        console.log("song: ", song)
         if (playerRef.current && isPlaying) playerRef.current.playVideo()
         return () => clearInterval(interval)
     }, [song, isPlaying, volume])

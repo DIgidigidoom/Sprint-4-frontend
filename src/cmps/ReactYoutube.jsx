@@ -5,7 +5,7 @@ export function ReactYouTube({ videoId, onReady,onEnd }) {
     height: '0',
     width: '0',
     playerVars: {
-      autoplay: 1,
+      autoplay: 0,
       controls: 0,
       disablekb: 1,
       modestbranding: 1,
