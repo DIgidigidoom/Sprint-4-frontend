@@ -6,6 +6,7 @@ import { stationService } from '../services/station/index.js'
 import { addStation } from '../store/actions/station.actions.js'
 import MagnifyingGlassIcon from '../assets/icons/magnifying-glass.svg?react'
 import Plus from '../assets/icons/plus.svg?react'
+import HoverPlayBtn from '../assets/icons/hover-play-btn.svg?react'
 
 
 
@@ -56,6 +57,7 @@ export function SideBar({ onCreateStation }) {
             <div className='sidebar-followed-content'>
                 <div className='sidebar-content-preview'>
                     <img src="https://i.ytimg.com/vi/TLDflhhdPCg/mqdefault.jpg" alt="" />
+                    <HoverPlayBtn/>
                     <div className='sidebar-content-info'>
                         <span className='sidebar-content-info-title'>content name</span>
                         <span className='sidebar-content-info-description'>type of content</span>
@@ -63,6 +65,7 @@ export function SideBar({ onCreateStation }) {
                 </div>
                 <div className='sidebar-content-preview'>
                     <img src="https://i.ytimg.com/vi/TLDflhhdPCg/mqdefault.jpg" alt="" />
+                    <HoverPlayBtn/>
                     <div className='sidebar-content-info'>
                         <span className='sidebar-content-info-title'>content name</span>
                         <span className='sidebar-content-info-description'>type of content</span>
@@ -70,6 +73,7 @@ export function SideBar({ onCreateStation }) {
                 </div>
                 <div className='sidebar-content-preview'>
                     <img src="https://i.ytimg.com/vi/TLDflhhdPCg/mqdefault.jpg" alt="" />
+                    <HoverPlayBtn/>
                     <div className='sidebar-content-info'>
                         <span className='sidebar-content-info-title'>content name</span>
                         <span className='sidebar-content-info-description'>type of content</span>

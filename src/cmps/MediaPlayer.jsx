@@ -3,6 +3,13 @@ import { useEffect, useRef, useState } from 'react'
 import { setNextSong, setPrevSong, setIsPlaying } from '../store/actions/station.actions.js'
 import { ReactYouTube } from './ReactYoutube.jsx'
 import React from 'react'
+import PlayBtn from '../assets/icons/hover-play-btn.svg?react'
+import PauseBtn from '../assets/icons/pause-btn-media-player.svg?react'
+import PauseBtnWide from '../assets/icons/pause-btn-media-player-wide.svg?react'
+import PreviousBtn from '../assets/icons/previous-btn-media-player.svg?react'
+import NextBtn from '../assets/icons/next-btn-media-player.svg?react'
+import ShuffleBtn from '../assets/icons/shuffle-btn-media-player.svg?react'
+import RepeatBtn from '../assets/icons/repeat-btn-media-player.svg?react'
 
 export function MediaPlayer() {
 
@@ -133,27 +140,35 @@ export function MediaPlayer() {
             </div>
             <div className="track-controls">
                 <div className="track-nav-container">
+
                     <button
                         onClick={() => setIsShuffle(prev => !prev)}
                         title="Toggle Shuffle"
                     >
-                        <span class={isShuffle ? "shuffle-green" : "shuffle-white"}></span>
+                        {/* <span class={isShuffle ? "shuffle-green" : "shuffle-white"}></span> */}
+                        <ShuffleBtn className={isShuffle ? "shuffle-green shuffle-btn" : "shuffle-white shuffle-btn"}/>
                     </button>
+
                     <button onClick={prevSong} disabled={!song}>
-                        <span class="bx--skip-previous"></span>
+                        <PreviousBtn/>
                     </button>
+
                     <button className="play-btn" onClick={togglePlay} disabled={!song}>
-                        <span className={isPlaying ? "icon-park-solid--pause-one" : "icon-park-solid--play"}></span>
+                        {isPlaying ? <PauseBtnWide className="pause-svg"/> : <PlayBtn/>}
                     </button>
+
                     <button onClick={nextSong} disabled={!song}>
-                        <span class="bx--skip-next"></span>
+                        <NextBtn className="next-btn"/>
                     </button>
+
                     <button
                         onClick={() => setIsRepeat(prev => !prev)}
                         title="Toggle Repeat"
                     >
-                        <span class={isRepeat ? "repeat-green" : "repeat-white"}></span>
+                        {/* <span class={isRepeat ? "repeat-green" : "repeat-white"}></span> */}
+                        <RepeatBtn className={isRepeat ? "repeat-green repeat-btn" : "repeat-white repeat-btn"}/>
                     </button>
+
                 </div>
                 <div className="track-seek-container">
                     <div className='track-time'>{formatTime(progress)}</div>
