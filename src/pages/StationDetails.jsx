@@ -56,7 +56,6 @@ export function StationDetails() {
     dispatch({ type: SET_STATION, station: null })
   }
   function onSelectSong(songindx) {
-    console.log("songindx: ", songindx)
     dispatch({ type: SET_SONG_IDX, idx: songindx })
   }
 

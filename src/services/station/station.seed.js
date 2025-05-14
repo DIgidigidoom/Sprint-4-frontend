@@ -655,7 +655,7 @@ export const stations = [
     "_id": "ba64db6f9aab",
     "name": "Biffy Clyro Essentials",
     "tags": ["Rock", "Essential", "Biffy Clyro"],
-    "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "biffyclyro_jcwnzm" },
+    "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "biffyclyro_jcwnzm"},
     "likedByUsers": ["{minimal-user}", "{minimal-user}"],
     "songs": [
       {

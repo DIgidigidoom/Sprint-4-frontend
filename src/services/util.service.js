@@ -100,9 +100,8 @@ export function getCloudinaryImg(picId) {
 }
 
 export function calcStationDuration(songs) {
-  console.log("songs: ", songs)
   const duration = songs.reduce((sum, song) => sum + song.duration, 0)
-  console.log("duration: ", duration)
+  
   return formatDuration(duration)
 }
 
