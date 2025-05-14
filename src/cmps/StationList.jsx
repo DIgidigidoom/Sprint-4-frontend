@@ -11,6 +11,7 @@ export function StationList({ stations, onSelectStation }) {
     
     return (
         <section className="station-list">
+            <h2 className='station-list-title'>Reccomended for you</h2>
             <div className='station-list-stations'>
                 {spotifyStations.map(station =>
                     <div key={station._id} className="station-card">

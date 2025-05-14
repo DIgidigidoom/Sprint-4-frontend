@@ -194,6 +194,9 @@ export function MediaPlayer() {
                             setProgress(newTime)
                         }}
                         className="seek-bar"
+                        style={{
+                            '--seek-fill': duration ? `${(progress / duration) * 100}%` : '0%'
+                        }}
                     />
                     <div className='track-time'>{formatTime(duration)}</div>
                 </div>
@@ -209,6 +212,7 @@ export function MediaPlayer() {
                     value={volume}
                     onChange={handleVolumeChange}
                     className="volume-slider"
+                    style={{ '--vol-fill': `${volume}%` }}
                 />
             </div>
 
