@@ -3,11 +3,9 @@ import { useNavigate } from 'react-router'
 import { useSelector } from 'react-redux'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { logout } from '../store/actions/user.actions'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHouse, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
-import { faSpotify } from '@fortawesome/free-brands-svg-icons'
 import HomeIcon from '../assets/icons/home-btn.svg?react'
 import MagnifyingGlassIcon from '../assets/icons/magnifying-glass.svg?react'
+import SpotifyLogo from '../assets/icons/spotify-logo.svg?react'
 
 import { useDispatch } from 'react-redux'
 import { useLocation } from 'react-router-dom'
@@ -43,7 +41,7 @@ export function AppHeader() {
 		<header className="app-header full">
 			<nav>
 				<button className="logo" onClick={onGoHome}>
-					<FontAwesomeIcon icon={faSpotify} className="logo-icon" />
+					<SpotifyLogo className="logo-icon"/>
 				</button>
 
 

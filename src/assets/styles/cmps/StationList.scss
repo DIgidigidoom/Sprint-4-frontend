@@ -1,6 +1,12 @@
 .station-list {
     padding: 0px rem(28px);
 
+    .station-list-title {
+        color: $clr6;
+        padding: rem(20px) 0 rem(8px) rem(12px);
+
+    }
+
     // .station-list-header {
     //     position: sticky;
     //     background-color: $clr3;
