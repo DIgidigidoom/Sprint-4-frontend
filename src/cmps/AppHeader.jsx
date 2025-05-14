@@ -10,6 +10,8 @@ import { useLocation, Link, useSearchParams } from 'react-router-dom'
 import { SET_STATION } from '../store/reducers/station.reducer'
 import { useState, useEffect } from 'react'
 import { useDebouncedYouTubeSearch } from '../customHooks/useDebouncedYouTubeSearch'
+import { setSearchText } from '../store/actions/youtube.actions'
+import { SET_YOUTUBE_RESULTS } from '../store/reducers/youtube.reducer.js'
 
 
 
@@ -18,16 +20,16 @@ import { useDebouncedYouTubeSearch } from '../customHooks/useDebouncedYouTubeSea
 export function AppHeader() {
 	const user = useSelector(storeState => storeState.userModule.user)
 	const youtubeResults = useSelector(storeState => storeState.youtubeModule.youtubeResults)
+	const searchTxt = useSelector(storeState => storeState.youtubeModule.searchText)
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 	const location = useLocation()
-	const [searchTxt, setSearchTxt] = useState('')
 	const [searchParams, setSearchParams] = useSearchParams()
 	const debouncedSearch = useDebouncedYouTubeSearch()
 
 	useEffect(() => {
 		const param = searchParams.get('search') || ''
-		setSearchTxt(param)
+		setSearchText(param)
 	}, [])
 
 	useEffect(() => {
@@ -46,7 +48,8 @@ export function AppHeader() {
 	}
 
 	function onGoHome() {
-		setSearchTxt('')
+		dispatch(setSearchText(''))
+		dispatch({ type: SET_YOUTUBE_RESULTS, results: [] })
 		setSearchParams('')
 		dispatch({ type: SET_STATION, station: null })
 		if (location.pathname !== '/') {
@@ -78,7 +81,7 @@ export function AppHeader() {
 							value={searchTxt}
 							onChange={(ev) => {
 								const value = ev.target.value
-								setSearchTxt(value)
+								dispatch(setSearchText(value))
 								setSearchParams(value ? { search: value } : {})
 							}}
 						/>

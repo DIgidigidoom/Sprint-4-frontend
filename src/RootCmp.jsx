@@ -12,10 +12,7 @@ import { Signup } from './pages/Signup.jsx'
 export function RootCmp() {
     return (
         <div className="main-container">
-
             <UserMsg />
-
-
             <Routes>
                 <Route path="/" element={<StationIndex />} >
                     <Route path="station/:stationId" element={<StationDetails />} />
@@ -27,7 +24,6 @@ export function RootCmp() {
                     <Route index element={<Login />} />
                     <Route path="signup" element={<Signup />} />
                 </Route>
-
             </Routes>
 
 

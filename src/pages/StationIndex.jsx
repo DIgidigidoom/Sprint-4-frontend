@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { loadStations, loadStation, addStation, removeStation } from '../store/actions/station.actions.js'
 import { useNavigate } from 'react-router-dom'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
@@ -9,13 +9,18 @@ import { AppHeader } from '../cmps/AppHeader.jsx'
 import MainPage from './MainPage.jsx'
 import { EditStationModal } from '../cmps/EditStationModal.jsx'
 import { MediaPlayer } from '../cmps/MediaPlayer.jsx'
+import { SET_SEARCH_TEXT } from '../store/reducers/youtube.reducer.js'
+
 
 export function StationIndex() {
 
-    const [filterBy, setFilterBy] = useState(stationService.getDefaultFilter())
     const stations = useSelector(storeState => storeState.stationModule.stations)
+    const searchTxt = useSelector(storeState => storeState.youtubeModule.searchText)
+
+    const [filterBy, setFilterBy] = useState(stationService.getDefaultFilter())
     const [stationToEdit, setStationToEdit] = useState(null)
 
+    const dispatch = useDispatch()
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -33,10 +38,8 @@ export function StationIndex() {
     }
 
     function onSelectStation(stationId) {
-        // Load the station (as you're already doing)
         loadStation(stationId)
-
-        // Update the URL with stationId (nested routing already in place)
+        dispatch({ type: SET_SEARCH_TEXT, text: '' })
         navigate(`/station/${stationId}`, { replace: false })
     }
 
@@ -83,6 +86,7 @@ export function StationIndex() {
                     station={stationToEdit}
                     onClose={() => setStationToEdit(null)} />
             )}
+
         </main>
     )
 }
