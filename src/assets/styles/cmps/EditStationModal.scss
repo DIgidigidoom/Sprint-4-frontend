@@ -29,6 +29,7 @@
   svg {
     height: 1rem;
     width: 1rem;
+    margin-top: 5px;
     fill: #B3B3B3;
   }
 }
@@ -43,6 +44,7 @@
     justify-content: center;
     align-items: center;
     height: 180px;
+    margin-top: 5px;
 
     .img-container {
       height: 180px;
@@ -83,9 +85,14 @@
   .modal-save-btn-container {
     display: flex;
     justify-content: flex-end;
+    padding-top: 10px;
 
     .modal-save-btn {
-      padding: 8px 32px 8px 32px;
+      display: flex;
+      align-items: center;
+      padding: 8px 32px;
+      width: 100px;
+      height: 48px;
       font-size: 1rem;
       background-color: white;
       color: black;
