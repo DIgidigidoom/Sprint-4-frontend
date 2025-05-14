@@ -117,7 +117,6 @@
             }
         }
 
-
         div {
             font-size: em(14px);
             margin-block-end: rem(16px);
@@ -204,8 +203,6 @@
             margin-inline-end: 15px;
             margin-left: 15px;
 
-
-
             .track-time {
                 font-size: em(12px);
                 margin-top: 4px;
@@ -246,8 +243,6 @@
                 opacity: 1;
             }
         }
-
-
     }
 
     .track-options {
@@ -264,8 +259,6 @@
             width: fit-content;
             padding: 0;
             padding-top: 3px;
-
-
         }
 
         .mute-btn span {
@@ -315,10 +308,8 @@
         }
     }
 
-
     .react-youtube {
         height: 0;
         width: 0;
     }
-
 }

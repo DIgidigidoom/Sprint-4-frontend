@@ -18,7 +18,6 @@ export const stationService = {
     removeSongFromStation,
     addToLikedSongs,
     removeFromLikedSongs,
-
 }
 window.cs = stationService
 
@@ -49,7 +48,6 @@ async function remove(stationId) {
 
 async function save(station) {
 
-    console.log("station", station)
     if (station.name === 'Liked Songs' && !station.isLikedSongs) {
         station.isLikedSongs = true
     }

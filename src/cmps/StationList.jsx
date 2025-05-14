@@ -21,7 +21,6 @@ export function StationList({ stations, onSelectStation }) {
                     </div>
                 )}
             </div>
-
         </section>
     )
 }

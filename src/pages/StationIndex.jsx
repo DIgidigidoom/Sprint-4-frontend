@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-
-import { loadStations, loadStation, addStation, updateStation, removeStation } from '../store/actions/station.actions.js'
+import { loadStations, loadStation, addStation, removeStation } from '../store/actions/station.actions.js'
 import { useNavigate } from 'react-router-dom'
-
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 import { stationService } from '../services/station/index.js'
 import { SideBar } from '../cmps/SideBar.jsx'
@@ -15,7 +13,6 @@ import { MediaPlayer } from '../cmps/MediaPlayer.jsx'
 export function StationIndex() {
 
     const [filterBy, setFilterBy] = useState(stationService.getDefaultFilter())
-
     const stations = useSelector(storeState => storeState.stationModule.stations)
     const [stationToEdit, setStationToEdit] = useState(null)
 
@@ -82,7 +79,6 @@ export function StationIndex() {
                     station={stationToEdit}
                     onClose={() => setStationToEdit(null)} />
             )}
-
         </main>
     )
 }

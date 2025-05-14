@@ -16,8 +16,6 @@ export function SideBar({ onCreateStation, stations, onSelectStation }) {
     const [likedStation, setLikedStation] = useState('')
 
 
-
-
     useEffect(() => {
         const filteredStations = stations.filter(station => station.owner && !station.isLikedSongs)
         setUserStations(filteredStations)
@@ -52,8 +50,6 @@ export function SideBar({ onCreateStation, stations, onSelectStation }) {
         <div className='sidebar'>
             <div className='sidebar-header'>
                 <span>Your Library</span>
-
-
                 <button
                     onClick={onCreateStation}
                     className='sidebar-create-btn'>
@@ -61,6 +57,7 @@ export function SideBar({ onCreateStation, stations, onSelectStation }) {
                     Create
                 </button>
             </div>
+
             <div className='sidebar-sort-btns'>
                 <button className='sidebar-playlist-btn sidebar-sort-btn'>Playlists</button>
                 <button className='sidebar-artists-btn sidebar-sort-btn'>Artists</button>
@@ -88,6 +85,7 @@ export function SideBar({ onCreateStation, stations, onSelectStation }) {
                     </button>
                 )}
             </div>
+
             {likedStation && (
                 <div key={likedStation._id} className='sidebar-followed-content' onClick={() => onSelectStation(likedStation._id)}>
                     <div className='sidebar-content-preview'>
@@ -117,6 +115,5 @@ export function SideBar({ onCreateStation, stations, onSelectStation }) {
             })}
 
         </div>
-
     )
 }

@@ -46,13 +46,11 @@
         grid-template-columns: repeat(auto-fit, minmax(rem(190px), rem(197px)));
         position: relative;
 
-
         .station-card {
             background-color: transparent;
             border-radius: 8px;
             color: $clr6;
             text-align: center;
-            // transition: background-color 0.2s ease;
             padding: rem(12px);
 
             &:hover {
@@ -65,8 +63,6 @@
                 opacity: 1;
                 transform: translateY(0);
             }
-
-
         }
     }
 }

@@ -35,7 +35,6 @@ async function update({ _id, score }) {
     user.score = score
     await storageService.put('user', user)
 
-	// When admin updates other user's details, do not update loggedinUser
     const loggedinUser = getLoggedinUser()
     if (loggedinUser._id === user._id) saveLoggedinUser(user)
 
@@ -56,6 +55,7 @@ async function signup(userCred) {
     const user = await storageService.post('user', userCred)
     return saveLoggedinUser(user)
 }
+
 
 async function logout() {
     sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER)

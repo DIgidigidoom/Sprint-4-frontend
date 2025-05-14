@@ -18,7 +18,6 @@ export function AppHeader() {
 	const dispatch = useDispatch()
 	const location = useLocation()
 
-
 	async function onLogout() {
 		try {
 			await logout()
@@ -44,12 +43,10 @@ export function AppHeader() {
 					<SpotifyLogo className="logo-icon"/>
 				</button>
 
-
 				<div className="middle-header">
 					<button className="home-btn" onClick={onGoHome}>
 						<span className="home-btn-icon"><HomeIcon /></span>
 					</button>
-
 
 					<div className="search-wrapper">
 

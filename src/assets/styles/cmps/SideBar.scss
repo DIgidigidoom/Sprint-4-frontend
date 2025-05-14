@@ -79,7 +79,6 @@
 
     }
 
-
     .sidebar-filter {
         padding: rem(2px) rem(16px) 0 rem(16px);
 
@@ -197,7 +196,7 @@
                 border-radius: rem(3px);
                 background-color: rgba(0, 0, 0, 0);
                 // transition: background-color 0.2s ease;
-                pointer-events: none; // Ensures it doesn't block hover/click
+                pointer-events: none;
             }
 
             &:hover::after {
@@ -219,16 +218,11 @@
                 justify-content: center;
                 align-items: start;
 
-                .sidebar-content-info-title {}
-
                 .sidebar-content-info-description {
                     color: $clr5;
                     font-size: rem(13px);
                 }
-
             }
         }
     }
-
-
 }

@@ -4,7 +4,6 @@ import { setNextSong, setPrevSong, setIsPlaying } from '../store/actions/station
 import { ReactYouTube } from './ReactYoutube.jsx'
 import React from 'react'
 import PlayBtn from '../assets/icons/hover-play-btn.svg?react'
-import PauseBtn from '../assets/icons/pause-btn-media-player.svg?react'
 import PauseBtnWide from '../assets/icons/pause-btn-media-player-wide.svg?react'
 import PreviousBtn from '../assets/icons/previous-btn-media-player.svg?react'
 import NextBtn from '../assets/icons/next-btn-media-player.svg?react'
@@ -31,6 +30,8 @@ export function MediaPlayer() {
     const [isRepeat, setIsRepeat] = useState(false)
     const [isShuffle, setIsShuffle] = useState(false)
     const playerRef = useRef(null)
+
+
 
 
 
@@ -222,9 +223,11 @@ export function MediaPlayer() {
             {song && (
                 <span className="react-youtube">
                     <ReactYouTube
+                        key={song.url}
                         videoId={song.url}
-                        opts={{ width: 0, height: 0 }}
-                        onReady={onReady}
+                        isPlaying={isPlaying}
+                        volume={volume}
+                        playerRef={playerRef}
                         onEnd={onEnd}
                     />
                 </span>
