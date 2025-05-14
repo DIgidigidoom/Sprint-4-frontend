@@ -5,16 +5,11 @@ import HoverPlayBtn from '../assets/icons/hover-play-btn.svg?react'
 
 
 
-
-
-
 export function SideBar({ onCreateStation, stations, onSelectStation }) {
     const [isSearchOpen, setIsSearchOpen] = useState(false)
     const [userStations, setUserStations] = useState([])
     const [searchTerm, setSearchTerm] = useState('')
     const [likedStation, setLikedStation] = useState('')
-
-
 
 
     useEffect(() => {
@@ -31,8 +26,6 @@ export function SideBar({ onCreateStation, stations, onSelectStation }) {
         <div className='sidebar'>
             <div className='sidebar-header'>
                 <span>Your Library</span>
-
-
                 <button
                     onClick={onCreateStation}
                     className='sidebar-create-btn'>
@@ -40,11 +33,11 @@ export function SideBar({ onCreateStation, stations, onSelectStation }) {
                     Create
                 </button>
             </div>
+
             <div className='sidebar-sort-btns'>
                 <button className='sidebar-playlist-btn sidebar-sort-btn'>Playlists</button>
                 <button className='sidebar-artists-btn sidebar-sort-btn'>Artists</button>
             </div>
-
 
             <div className='sidebar-filter'>
                 <div className='sidebar-filter-btn' onClick={() => setIsSearchOpen(prev => !prev)} >
@@ -58,6 +51,7 @@ export function SideBar({ onCreateStation, stations, onSelectStation }) {
                     className={`sidebar-search-input ${isSearchOpen ? 'open' : ''}`}
                 />
             </div>
+
             {likedStation && (
                 <div key={likedStation._id} className='sidebar-followed-content' onClick={() => onSelectStation(likedStation._id)}>
                     <div className='sidebar-content-preview'>
@@ -87,6 +81,5 @@ export function SideBar({ onCreateStation, stations, onSelectStation }) {
             })}
 
         </div>
-
     )
 }

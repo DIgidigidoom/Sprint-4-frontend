@@ -3,12 +3,13 @@ import { useSelector } from 'react-redux'
 import { loadStation, updateStation, addToLiked, setIsPlaying } from '../store/actions/station.actions'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams} from 'react-router-dom'
 import { formatDuration, formatSpotifyDate, getCloudinaryImg } from '../services/util.service'
 import { useDispatch } from 'react-redux'
 import { SET_STATION } from '../store/reducers/station.reducer'
 import AddLikedBtn from '../assets/icons/add-liked-btn.svg?react'
 import PlayBtn from '../assets/icons/icon-park-solid--play.svg?react'
+import ClockIcon from '../assets/icons/clock-icon.svg?react'
 
 export function StationDetails() {
   const station = useSelector(storeState => storeState.stationModule.station)
@@ -20,7 +21,6 @@ export function StationDetails() {
   useEffect(() => {
     if (stationId) {
       loadStation(stationId)
-
     }
   }, [stationId])
 
@@ -48,7 +48,6 @@ export function StationDetails() {
     dispatch({ type: SET_STATION, station: null })
   }
 
-
   function handleDragEnd(result) {
     if (!result.destination) return
 
@@ -57,7 +56,6 @@ export function StationDetails() {
     reordered.splice(result.destination.index, 0, moved)
     setSongs(reordered)
 
-    // Optional: Persist song order in store/database
     const updatedStation = { ...station, songs: reordered }
     updateStation(updatedStation)
   }
@@ -72,7 +70,6 @@ export function StationDetails() {
     } catch (err) {
       console.error('Failed to add to liked', err)
       showErrorMsg('Failed To Add To Liked')
-
     }
   }
 
@@ -82,7 +79,6 @@ export function StationDetails() {
 
   return (
     <section className="station-details">
-
       <div className="station-header">
         <div className="station-header-content">
           <img className="station-img" src={getCloudinaryImg(createdBy.imgUrl)} alt={station.name} />
@@ -93,16 +89,12 @@ export function StationDetails() {
               value={name}
               onChange={(ev) => setName(ev.target.value)}
             />
-
-
             <p>
               <span style={{ fontWeight: "700" }}> {createdBy.fullname}</span><span style={{ color: "#b3b3b3" }}> • {songs.length} songs</span>
             </p>
-
           </div>
         </div>
       </div>
-
       <div className="controls">
         <PlayBtn />
       </div>
@@ -112,7 +104,7 @@ export function StationDetails() {
           <p className="col title-header">Title</p>
           <p className="col album-header">Album</p>
           <p className="col date-added-header">Date Added</p>
-          <p className="col duration-header">duration</p>
+          <ClockIcon />
         </div>
         <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable droppableId="songList">
@@ -128,7 +120,6 @@ export function StationDetails() {
                     draggableId={song.id || `song-${idx}`}
                     index={idx}
                   >
-
                     {(provided) => (
                       <div
                         className="song-row"
@@ -160,7 +151,6 @@ export function StationDetails() {
           </Droppable>
         </DragDropContext>
       </div>
-      {/* <button onClick={onSaveName}>Save</button> */}
     </section>
   )
 }

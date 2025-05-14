@@ -1,8 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
-
 import { signup } from '../store/actions/user.actions'
-
 import { ImgUploader } from '../cmps/ImgUploader'
 import { userService } from '../services/user'
 
@@ -21,7 +19,7 @@ export function Signup() {
         const value = ev.target.value
         setCredentials({ ...credentials, [field]: value })
     }
-    
+
     async function onSignup(ev = null) {
         if (ev) ev.preventDefault()
 

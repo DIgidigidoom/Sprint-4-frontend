@@ -79,7 +79,6 @@
 
     }
 
-
     .sidebar-filter {
         padding: rem(2px) rem(16px) 0 rem(16px);
 
@@ -103,7 +102,6 @@
             svg {
                 height: 1rem;
             }
-
         }
 
         .sidebar-search-input {
@@ -128,8 +126,6 @@
 
             &::placeholder {
                 color: #b3b3b3;
-
-
             }
 
             &.open {
@@ -141,7 +137,6 @@
                 margin-left: rem(8px);
             }
         }
-
     }
 
     .sidebar-followed-content {
@@ -185,7 +180,7 @@
                 border-radius: rem(3px);
                 background-color: rgba(0, 0, 0, 0);
                 // transition: background-color 0.2s ease;
-                pointer-events: none; // Ensures it doesn't block hover/click
+                pointer-events: none;
             }
 
             &:hover::after {
@@ -207,16 +202,11 @@
                 justify-content: center;
                 align-items: start;
 
-                .sidebar-content-info-title {}
-
                 .sidebar-content-info-description {
                     color: #B3B3B3;
                     font-size: rem(13px);
                 }
-
             }
         }
     }
-
-
 }

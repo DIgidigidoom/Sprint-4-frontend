@@ -1,7 +1,7 @@
 export function seedStationsToLocalStorage() {
   const STORAGE_KEY = 'stationDB'
 
-  // Only seed if not already present
+  
   if (!localStorage.getItem(STORAGE_KEY)) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(stations))
     console.log(`✅ Seeded ${stations.length} stations to localStorage`)
@@ -9,7 +9,6 @@ export function seedStationsToLocalStorage() {
     console.log('ℹ️ Stations already exist in localStorage, skipping seed.')
   }
 }
-
 
 export const stations = [
   {

@@ -1,7 +1,7 @@
 import { stationService } from '../../services/station/station.service.local.js'
 import { store } from '../store.js'
 import { ADD_STATION, REMOVE_STATION, SET_STATIONS, SET_STATION, UPDATE_STATION, SET_NEXT_SONG, SET_PREV_SONG, SET_IS_PLAYING } from '../reducers/station.reducer.js'
-import { compileString } from 'sass'
+
 
 
 
@@ -86,7 +86,6 @@ export function setPrevSong() {
 }
 
 // songs
-
 export async function addSong(stationId, song) {
     try {
         const updatedStation = await stationService.addSongToStation(stationId, song)
@@ -106,19 +105,6 @@ export async function removeSong(stationId, songId) {
         throw err
     }
 }
-
-// export async function addToLiked(stationId, songId) {
-//     console.log("addToLiked songId: ", songId)
-//     console.log("addToLiked stationId: ", stationId)
-//     try {
-//         const updatedStation = await stationService.addToLikedSongs(stationId, songId)
-//         store.dispatch(getCmdUpdateStation(updatedStation))
-//         return updatedStation
-//     } catch (err) {
-//         console.error('Cannot add to Liked Songs', err)
-//         throw err
-//     }
-// }
 
 export async function addToLiked(stationId, songId) {
   console.log("addToLiked songId: ", songId)
@@ -155,8 +141,6 @@ export async function removeFromLiked(songId) {
 }
 
 
-
-
 // Command Creators:
 function getCmdSetStations(stations) {
     return {
@@ -164,24 +148,28 @@ function getCmdSetStations(stations) {
         stations
     }
 }
+
 function getCmdSetStation(station) {
     return {
         type: SET_STATION,
         station
     }
 }
+
 function getCmdRemoveStation(stationId) {
     return {
         type: REMOVE_STATION,
         stationId
     }
 }
+
 function getCmdAddStation(station) {
     return {
         type: ADD_STATION,
         station
     }
 }
+
 function getCmdUpdateStation(station) {
     return {
         type: UPDATE_STATION,

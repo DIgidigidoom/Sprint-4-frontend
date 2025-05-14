@@ -4,11 +4,9 @@ import { useSelector } from 'react-redux'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { logout } from '../store/actions/user.actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHouse, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { faSpotify } from '@fortawesome/free-brands-svg-icons'
 import HomeIcon from '../assets/icons/home-btn.svg?react'
 import MagnifyingGlassIcon from '../assets/icons/magnifying-glass.svg?react'
-
 import { useDispatch } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import { SET_STATION } from '../store/reducers/station.reducer'
@@ -19,7 +17,6 @@ export function AppHeader() {
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 	const location = useLocation()
-
 
 	async function onLogout() {
 		try {
@@ -46,12 +43,10 @@ export function AppHeader() {
 					<FontAwesomeIcon icon={faSpotify} className="logo-icon" />
 				</button>
 
-
 				<div className="middle-header">
 					<button className="home-btn" onClick={onGoHome}>
 						<span className="home-btn-icon"><HomeIcon /></span>
 					</button>
-
 
 					<div className="search-wrapper">
 

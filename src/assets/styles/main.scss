@@ -8,14 +8,12 @@
 @import "basics/helpers";
 @import "basics/layout";
 @import "basics/base";
-@import "basics/icons.scss";
 // @import "basics/links";
 @import "basics/forms";
 
 
 // pages
 @import "RootCmp";
-
 @import "pages/AboutUs";
 @import "pages/StationIndex";
 @import "pages/UserDetails";
@@ -31,7 +29,6 @@
 @import "cmps/UserMsg";
 @import "cmps/SideBar";
 @import "cmps/MediaPlayer.scss";
-
 @import "cmps/StationFilter";
 @import "cmps/StationList";
 @import "cmps/StationPreview";

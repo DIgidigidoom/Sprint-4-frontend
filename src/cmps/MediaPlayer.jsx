@@ -4,7 +4,6 @@ import { setNextSong, setPrevSong, setIsPlaying } from '../store/actions/station
 import { ReactYouTube } from './ReactYoutube.jsx'
 import React from 'react'
 import PlayBtn from '../assets/icons/hover-play-btn.svg?react'
-import PauseBtn from '../assets/icons/pause-btn-media-player.svg?react'
 import PauseBtnWide from '../assets/icons/pause-btn-media-player-wide.svg?react'
 import PreviousBtn from '../assets/icons/previous-btn-media-player.svg?react'
 import NextBtn from '../assets/icons/next-btn-media-player.svg?react'

@@ -2,9 +2,10 @@
     color: $clr6;
     background-color: $clr3;
     min-height: 100vh;
+    background: linear-gradient(to top, $clr3 55%, $clr9 100%);
 
     .station-header {
-        background: linear-gradient(to right, $clr4, $clr1);
+        background: linear-gradient(to bottom, $clr1, $clr10);
         height: fit-content;
 
         .station-header-content {
@@ -42,7 +43,6 @@
                 p {
                     margin: 3px 0;
                     font-size: rem(14px);
-
                 }
             }
         }
@@ -61,8 +61,8 @@
             align-items: center;
             width: 58px;
             height: 58px;
-            color:$clr1;
-            
+            color: $clr1;
+
             &:hover {
                 transform: scale(1.03);
                 cursor: pointer;
@@ -101,8 +101,6 @@
         border-bottom: 1px solid $gray4;
         font-size: rem(14px);
 
-
-
         .col {
             margin: 0;
             margin-bottom: 2px;
@@ -110,7 +108,8 @@
 
         .song-list-header .col {
             display: flex;
-            align-items: center;
+            justify-content: space-between;
+
             white-space: nowrap;
         }
 
@@ -123,25 +122,28 @@
         .col.title-header {
             flex: 3;
             min-width: 120px;
+            margin-inline-end: 15px;
         }
 
         .col.album-header {
             flex: 2;
             min-width: 120px;
-            padding-inline-end: 6px;
+            padding-inline-end: 10px;
         }
 
         .col.date-added-header {
             flex: 2;
             min-width: 120px;
-            padding-inline-end: 4px;
+
         }
 
-        .col.duration-header {
-            width: 32px;
+        svg {
+            justify-content: center;
+            align-items: center;
+            width: 16px;
+            fill: $clr5 ;
+            margin-inline-end: 35px;
         }
-
-
     }
 
     .song-list {
@@ -175,7 +177,6 @@
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
-
             }
 
             .song-index {
@@ -183,7 +184,6 @@
                 color: $clr5;
                 padding-inline-start: 2px;
                 margin-inline-end: 1rem;
-
             }
 
             .info-wrapper {
@@ -192,7 +192,6 @@
                 min-width: 120px;
                 align-items: center;
                 margin-inline-end: 33px;
-
 
                 .song-img {
                     width: 40px;
@@ -219,15 +218,12 @@
                         font-size: rem(16px);
                         color: $clr6;
                         margin: 0;
-
                     }
 
                     .song-artist {
                         color: $clr5;
                         margin: 0;
                         justify-self: center;
-
-
                     }
                 }
             }
@@ -284,17 +280,8 @@
                 // opacity: 1;
                 pointer-events: auto;
             }
-
-
-
-
         }
-
-
-
-
     }
-
 
     .station-name-input {
         color: $clr6;
