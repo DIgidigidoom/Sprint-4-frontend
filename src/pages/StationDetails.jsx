@@ -9,6 +9,7 @@ import { SET_STATION, SET_SONG_IDX } from '../store/reducers/station.reducer'
 import AddLikedBtn from '../assets/icons/add-liked-btn.svg?react'
 import PlayBtn from '../assets/icons/play-btn-preview.svg?react'
 import ClockIcon from '../assets/icons/clock-icon.svg?react'
+import { EditStationModal } from '../cmps/EditStationModal'
 
 export function StationDetails() {
   const station = useSelector(storeState => storeState.stationModule.station)
@@ -17,6 +18,7 @@ export function StationDetails() {
   const [songs, setSongs] = useState(station.songs)
   const [stationDuration, setStationDuration] = useState('')
 
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const { stationId } = useParams()
   const dispatch = useDispatch()
 
@@ -95,11 +97,16 @@ export function StationDetails() {
           <img className="station-img" src={getCloudinaryImg(createdBy.imgUrl)} alt={station.name} />
           <div className="station-info">
             <p>Public Playlist</p>
-            <input
-              className="station-name-input"
-              value={name}
-              onChange={(ev) => setName(ev.target.value)}
-            />
+            <h1 className="station-name-input" onClick={() => setIsEditModalOpen(true)}>{name}</h1>
+
+            {isEditModalOpen && (
+              <EditStationModal
+                // playlist={playlist}
+                onClose={() => setIsEditModalOpen(false)}
+                // onSave={handleSave}
+              />
+            )}
+    
             <p>
               <span style={{ fontWeight: "700" }}> {createdBy.fullname}</span><span style={{ color: "#b3b3b3" }}> • {songs.length} songs, about {stationDuration} </span>
             </p>

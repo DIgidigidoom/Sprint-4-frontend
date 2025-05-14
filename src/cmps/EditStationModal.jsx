@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { updateStation } from '../store/actions/station.actions'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
+import ModalX from '../assets/icons/sidebar-input-x.svg?react'
 
 export function EditStationModal({ station, onClose }) {
-  const [name, setName] = useState(station.name || '')
+  // const [name, setName] = useState(station.name || '')
 
   async function onSave(ev) {
     ev.preventDefault()
@@ -22,8 +23,35 @@ export function EditStationModal({ station, onClose }) {
   return (
     <section className="modal-overlay">
       <div className="edit-station-modal">
-        <h2>Edit Station</h2>
-        <form onSubmit={onSave}>
+        <div className='modal-header'>
+          <h2>Edit details</h2>
+          <ModalX />
+        </div>
+
+        <div className='modal-body'>
+
+          <div className='middle-modal'>
+            <div className='img-container'>
+              <img src="https://i.ytimg.com/vi/TLDflhhdPCg/mqdefault.jpg" alt="" />
+            </div>
+
+            <div className='modal-inputs-container'>
+              <input type="text" className='title-input' />
+              <input type="text" className='description-input' />
+            </div>
+
+          </div>
+
+          <div className='modal-save-btn-container'>
+            <span className='modal-save-btn'>Save</span>
+          </div>
+
+
+
+
+
+
+          {/* <form onSubmit={onSave}>
           <label>Station Name:</label>
           <input
             type="text"
@@ -31,11 +59,14 @@ export function EditStationModal({ station, onClose }) {
             onChange={ev => setName(ev.target.value)}
             placeholder="Enter station name"
           />
+          
           <div className="modal-actions">
             <button type="submit">Save</button>
             <button type="button" onClick={onClose}>Cancel</button>
           </div>
-        </form>
+        </form> */}
+        </div>
+
       </div>
     </section>
   )

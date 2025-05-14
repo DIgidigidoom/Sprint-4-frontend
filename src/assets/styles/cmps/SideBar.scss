@@ -1,6 +1,6 @@
 .sidebar {
     background-color: $clr3;
-    color: white;
+    color: $clr6;
 
     .sidebar-header {
         display: flex;
@@ -28,7 +28,7 @@
             gap: rem(8px);
             font-weight: 700;
             transition: background-color 0.1s ease;
-            color: white;
+            color: $clr6;
 
             &:hover {
                 background-color: lighten($gray5, 5%);
@@ -39,7 +39,7 @@
         svg {
             width: 1rem;
             height: 1rem;
-            color: #B3B3B3;
+            color: $clr5;
         }
     }
 
@@ -57,7 +57,7 @@
             line-height: rem(14px);
             background-color: $gray6;
             border-radius: 999px;
-            color: white;
+            color: $clr6;
             transition: background-color 0.1s ease;
 
             &:hover {
@@ -91,7 +91,7 @@
             border-radius: 50%;
             width: rem(32px);
             height: rem(32px);
-            color: #B3B3B3;
+            color: $clr5;
             background-color: transparent;
 
             &:hover {
@@ -104,37 +104,53 @@
             }
         }
 
+        .sidebar-clear-btn {
+            color: transparent;
+            background-color: transparent;
+            top: 175px;
+            left: 180px;
+            position: absolute;
+            cursor: default;
+
+            .sidebar-clear-btn-svg {
+                height: 1rem;
+                width: 1rem;
+                fill: #B3B3B3;
+                
+                // top: 162px;
+                // left: 180px;
+            }
+        }
+
+
         .sidebar-search-input {
+            height: rem(34px);
             width: 0;
             opacity: 0;
             padding: 0;
-
             position: absolute;
             top: rem(168px);
             left: rem(16px);
-
-            margin-left: 0;
+            margin-left: rem(8px);
             background-color: rgba(255, 255, 255, 0.1);
             border: none;
             border-radius: rem(5px);
-            color: white;
+            color: $clr6;
             font-size: 0.875rem;
             outline: none;
-            transition: all 0.3s ease;
+            transition: opacity 0.33s ease, width 0.33s ease, padding 0.33s ease;
             overflow: hidden;
 
-
             &::placeholder {
-                color: #b3b3b3;
+                color: $clr5;
             }
 
             &.open {
                 width: rem(188px);
-                height: rem(34px);
                 opacity: 1;
                 padding: rem(6px) rem(12px);
                 padding-left: rem(31px);
-                margin-left: rem(8px);
+
             }
         }
     }
@@ -203,7 +219,7 @@
                 align-items: start;
 
                 .sidebar-content-info-description {
-                    color: #B3B3B3;
+                    color: $clr5;
                     font-size: rem(13px);
                 }
             }

@@ -4,7 +4,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.6);
+  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,13 +12,92 @@
 }
 
 .edit-station-modal {
-  background-color: white;
-  padding: 2em;
-  border-radius: 1em;
-  width: 400px;
+  background-color: #2c2c2c;
+  border-radius: 8px;
+  width: 524px;
+  height: 384px;
   max-width: 90%;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
+
+.modal-header {
+  padding: rem(24px);
+  display: flex;
+  justify-content: space-between;
+
+
+  svg {
+    height: 1rem;
+    width: 1rem;
+    fill: #B3B3B3;
+  }
+}
+
+.modal-body {
+  padding: rem(0px) rem(24px) rem(24px) rem(24px);
+
+  .middle-modal {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    height: 180px;
+
+    .img-container {
+      height: 180px;
+      width: 180px;
+      flex-shrink: 0;
+
+      img {
+        height: 100%;
+        width: 100%;
+        border-radius: 8px;
+      }
+    }
+    .modal-inputs-container {
+      width: 280px;
+      display: flex;
+      gap: 16px;
+      flex-direction: column;
+
+        .title-input {
+          height: 40px;
+          border-radius: 4px;
+          border: none;
+          padding: 0 12px;
+          background: #3a3a3a;
+          margin: 0px !important;
+        }
+        .description-input {
+          height: 124px;
+          border-radius: 4px;
+          border: none;
+          padding: 8px 8px 28px;
+          background: #3a3a3a;
+          margin: 0px !important;
+        }
+    }
+  }
+
+  .modal-save-btn-container {
+    display: flex;
+    justify-content: flex-end;
+
+    .modal-save-btn {
+      padding: 8px 32px 8px 32px;
+      font-size: 1rem;
+      background-color: white;
+      color: black;
+      font-weight: 700;
+      border-radius: 999px;
+
+    }
+  }
+
+}
+
+
 
 .edit-station-modal h2 {
   margin-top: 0;

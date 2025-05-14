@@ -23,50 +23,80 @@
         }
     }
 
-
-
-    // input[type='range'] {
-    //     -webkit-appearance: none;
-    //     appearance: none;
-    //     background-color: #505050;
-    //     border-radius: 15px;
-    // }
-
-
-    .repeat-green {
-        color: #1db954;
-    }
-
-    .repeat-white {
-        color: #B3B3B3;
-    }
-
-    .shuffle-green {
-        color: #1db954;
-
-
-    }
-
-    .shuffle-white {
-        color: #B3B3B3;
-    }
-
     .next-btn {
         margin-right: rem(2px);
     }
 
     .repeat-btn {
-        margin-left: rem(6px);
-        color: darken($color: $clr5, $amount: 20%);
-        
+        position: relative;
+
+        .repeat-btn-svg {
+            margin-left: rem(6px);
+            color: darken($color: $clr5, $amount: 20%);
+        }
+
+        .repeat-green {
+            color: $clr1 ;
+            fill: $clr1 ;
+        }
+
+
     }
+
+    .repeat-active::after {
+        content: '';
+        position: absolute;
+        display: block;
+        width: 4px;
+        height: 4px;
+        background-color: $clr1;
+        border-radius: 50%;
+        margin: 30px 0 0 7px;
+
+        &:hover {
+            scale: 1.08
+        }
+    }
+
+    .repeat-btn:active,
+    .shuffle-btn:active,
+    .previous-btn:active,
+    .next-btn:active,
+    .play-btn:active {
+        transform: scale(0.90);
+    }
+
+    // .previous-btn:active,
+    // .next-btn:active,
+    // .play-btn:active {
+
+    // }
 
     .shuffle-btn {
-        margin-right: rem(7px);
-        color: darken($color: $clr5, $amount: 15%);
+        position: relative;
+
+        .shuffle-btn-svg {
+            margin-right: rem(7px);
+            color: darken($color: $clr5, $amount: 15%);
+        }
+
+        .shuffle-green {
+            color: $clr1;
+            fill: $clr1;
+        }
+
     }
 
-
+    .shuffle-active::after {
+        content: '';
+        position: absolute;
+        display: block;
+        width: 4px;
+        height: 4px;
+        background-color: $clr1;
+        border-radius: 50%;
+        margin: 30px 7px 0 0;
+    }
 
     .track-info {
         display: flex;
@@ -78,12 +108,12 @@
             width: 1rem;
             height: 1rem;
             margin-left: rem(2px);
-            fill: #b3b3b3;
+            fill: $clr5;
 
             &:hover {
                 scale: 1.03;
                 cursor: pointer;
-                fill: #e1e1e1;
+                fill: $gray8;
             }
         }
 
@@ -145,7 +175,7 @@
                     height: rem(20px);
                     width: rem(20px);
 
-                    &:hover{
+                    &:hover {
                         scale: 1;
                     }
                 }
@@ -185,8 +215,8 @@
                 margin-top: 7px;
                 cursor: pointer;
                 background: linear-gradient(to right,
-                        white var(--seek-fill, 100%),
-                        #535353 var(--seek-fill, 100%));
+                        $clr6 var(--seek-fill, 100%),
+                        $clr4 var(--seek-fill, 100%));
                 -webkit-appearance: none;
                 appearance: none;
                 outline: none;
@@ -194,8 +224,8 @@
 
             .seek-bar:hover {
                 background: linear-gradient(to right,
-                        #1db954 var(--seek-fill, 100%),
-                        #535353 var(--seek-fill, 100%));
+                        $clr1 var(--seek-fill, 100%),
+                        $clr4 var(--seek-fill, 100%));
             }
 
             // Thumb styling
@@ -204,7 +234,7 @@
                 width: 12px;
                 height: 12px;
                 border-radius: 50%;
-                background: white;
+                background: $clr6;
                 border: none;
                 opacity: 0;
             }
@@ -221,7 +251,7 @@
         justify-content: flex-end;
         gap: 2px;
         margin-bottom: 11px;
-        
+
 
         button {
             background-color: transparent;
@@ -234,7 +264,7 @@
         .mute-btn span {
             width: 1rem;
             height: 1rem;
-            fill: #b3b3b3;
+            fill: $clr5;
             margin-right: rem(3px);
         }
 
@@ -263,7 +293,7 @@
             width: 12px;
             height: 12px;
             border-radius: 50%;
-            background: white;
+            background: $clr6;
             border: none;
             opacity: 0;
         }
