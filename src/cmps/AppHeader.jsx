@@ -1,4 +1,4 @@
-import { Link, NavLink } from 'react-router-dom'
+import { Link} from 'react-router-dom'
 import { useNavigate } from 'react-router'
 import { useSelector } from 'react-redux'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import { SET_STATION } from '../store/reducers/station.reducer'
 
-
+const API_Key = "AIzaSyBc-QFw-FOHqiesLtRz1hXTJ5MpOwdMya8"
 export function AppHeader() {
 	const user = useSelector(storeState => storeState.userModule.user)
 	const navigate = useNavigate()
