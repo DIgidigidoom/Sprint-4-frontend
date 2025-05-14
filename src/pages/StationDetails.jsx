@@ -95,13 +95,7 @@ export function StationDetails() {
                 // onSave={handleSave}
               />
             )}
-            {/* <input
-              className="station-name-input"
-              value={name}
-              onChange={(ev) => setName(ev.target.value)}
-            /> */}
-
-
+    
             <p>
               <span style={{ fontWeight: "700" }}> {createdBy.fullname}</span><span style={{ color: "#b3b3b3" }}> • {songs.length} songs</span>
             </p>
