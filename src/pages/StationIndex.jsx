@@ -45,7 +45,7 @@ export function StationIndex() {
 
     async function onCreateStation() {
         const station = stationService.getEmptyStation()
-        // station.createdBy.fullname = 'Tom Shahar'
+        
         try {
             const savedStation = await addStation(station)
             console.log('Saved station:', savedStation)
@@ -62,11 +62,7 @@ export function StationIndex() {
     return (
         <main className="station-index">
             <AppHeader />
-            {/* <StationFilter filterBy={filterBy} setFilterBy={setFilterBy} /> */}
-            {/* <StationList
-                stations={stations}
-                onRemoveStation={onRemoveStation}
-                onUpdateStation={onUpdateStation} /> */}
+    
             <MainPage
                 stations={stations}
                 onRemoveStation={onRemoveStation}
