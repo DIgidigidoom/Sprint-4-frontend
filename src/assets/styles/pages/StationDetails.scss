@@ -298,13 +298,14 @@
 
     .station-name-input {
         color: $clr6;
-        font-size: 1.5em;
+        font-size: 6rem;
         font-weight: bold;
         border: none;
         outline: none;
         background: transparent;
         width: 100%;
         margin-bottom: 0.5em;
+        cursor: pointer;
     }
 
     .station-name-input:focus {

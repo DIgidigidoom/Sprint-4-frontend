@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import MagnifyingGlassIcon from '../assets/icons/magnifying-glass.svg?react'
 import Plus from '../assets/icons/plus.svg?react'
 import HoverPlayBtn from '../assets/icons/hover-play-btn.svg?react'
+import SidebarInputX from '../assets/icons/sidebar-input-x.svg?react'
 
 
 
@@ -27,6 +28,26 @@ export function SideBar({ onCreateStation, stations, onSelectStation }) {
         setLikedStation(likedStationExists)
     }, [stations])
 
+
+    const searchRef = useRef(null)
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (
+                searchRef.current &&
+                !searchRef.current.contains(event.target) &&
+                searchTerm.trim() === ''
+            ) {
+                setIsSearchOpen(false)
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside)
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside)
+        }
+    }, [searchTerm])
+
     return (
         <div className='sidebar'>
             <div className='sidebar-header'>
@@ -46,7 +67,7 @@ export function SideBar({ onCreateStation, stations, onSelectStation }) {
             </div>
 
 
-            <div className='sidebar-filter'>
+            <div className='sidebar-filter' ref={searchRef}>
                 <div className='sidebar-filter-btn' onClick={() => setIsSearchOpen(prev => !prev)} >
                     <span><MagnifyingGlassIcon /></span>
                 </div>
@@ -57,6 +78,15 @@ export function SideBar({ onCreateStation, stations, onSelectStation }) {
                     onChange={ev => setSearchTerm(ev.target.value)}
                     className={`sidebar-search-input ${isSearchOpen ? 'open' : ''}`}
                 />
+                {searchTerm && (
+                    <button
+                        className='sidebar-clear-btn'
+                        onClick={() => setSearchTerm('')}
+                        aria-label='Clear search'
+                    >
+                        <SidebarInputX className="sidebar-clear-btn-svg" />
+                    </button>
+                )}
             </div>
             {likedStation && (
                 <div key={likedStation._id} className='sidebar-followed-content' onClick={() => onSelectStation(likedStation._id)}>

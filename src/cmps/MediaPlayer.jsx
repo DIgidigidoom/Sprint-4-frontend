@@ -31,7 +31,7 @@ export function MediaPlayer() {
     const [isRepeat, setIsRepeat] = useState(false)
     const [isShuffle, setIsShuffle] = useState(false)
     const playerRef = useRef(null)
-    
+
 
 
 
@@ -155,13 +155,14 @@ export function MediaPlayer() {
                     <button
                         onClick={() => setIsShuffle(prev => !prev)}
                         title="Toggle Shuffle"
+                        className={`shuffle-btn ${isShuffle ? 'shuffle-active' : ''}`}
                     >
                         {/* <span class={isShuffle ? "shuffle-green" : "shuffle-white"}></span> */}
-                        <ShuffleBtn className={isShuffle ? "shuffle-green shuffle-btn" : "shuffle-white shuffle-btn"} />
+                        <ShuffleBtn className={isShuffle ? "shuffle-green shuffle-btn-svg" : "shuffle-white shuffle-btn-svg"} />
                     </button>
 
                     <button onClick={prevSong} disabled={!song}>
-                        <PreviousBtn />
+                        <PreviousBtn className="previous-btn"/>
                     </button>
 
                     <button className="play-btn" onClick={togglePlay} disabled={!song}>
@@ -175,9 +176,10 @@ export function MediaPlayer() {
                     <button
                         onClick={() => setIsRepeat(prev => !prev)}
                         title="Toggle Repeat"
+                        className={`repeat-btn ${isRepeat ? 'repeat-active' : ''}`}
                     >
                         {/* <span class={isRepeat ? "repeat-green" : "repeat-white"}></span> */}
-                        <RepeatBtn className={isRepeat ? "repeat-green repeat-btn" : "repeat-white repeat-btn"} />
+                        <RepeatBtn className={isRepeat ? "repeat-green repeat-btn-svg" : "repeat-white repeat-btn-svg"} />
                     </button>
 
                 </div>

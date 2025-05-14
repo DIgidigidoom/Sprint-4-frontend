@@ -9,11 +9,13 @@ import { useDispatch } from 'react-redux'
 import { SET_STATION } from '../store/reducers/station.reducer'
 import AddLikedBtn from '../assets/icons/add-liked-btn.svg?react'
 import PlayBtn from '../assets/icons/icon-park-solid--play.svg?react'
+import { EditStationModal } from '../cmps/EditStationModal'
 
 export function StationDetails() {
   const station = useSelector(storeState => storeState.stationModule.station)
   const [name, setName] = useState('')
   const [songs, setSongs] = useState([])
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const { stationId } = useParams()
   const dispatch = useDispatch()
 
@@ -88,11 +90,20 @@ export function StationDetails() {
           <img className="station-img" src={getCloudinaryImg(createdBy.imgUrl)} alt={station.name} />
           <div className="station-info">
             <p>Public Playlist</p>
-            <input
+            <h1 className="station-name-input" onClick={() => setIsEditModalOpen(true)}>{name}</h1>
+
+            {isEditModalOpen && (
+              <EditStationModal
+                // playlist={playlist}
+                onClose={() => setIsEditModalOpen(false)}
+                // onSave={handleSave}
+              />
+            )}
+            {/* <input
               className="station-name-input"
               value={name}
               onChange={(ev) => setName(ev.target.value)}
-            />
+            /> */}
 
 
             <p>
