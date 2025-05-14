@@ -48,7 +48,7 @@ export function MediaPlayer() {
         }, 500)
         if (playerRef.current && isPlaying) playerRef.current.playVideo()
         return () => clearInterval(interval)
-    }, [song, isPlaying, volume])
+    }, [song, isPlaying, volume, songIdx])
 
     function onReady(event) {
         const player = event?.target

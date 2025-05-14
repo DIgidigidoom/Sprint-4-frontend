@@ -6,13 +6,14 @@ import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
 import { useParams } from 'react-router-dom'
 import { formatDuration, formatSpotifyDate, getCloudinaryImg, calcStationDuration } from '../services/util.service'
 import { useDispatch } from 'react-redux'
-import { SET_STATION } from '../store/reducers/station.reducer'
+import { SET_STATION, SET_SONG_IDX } from '../store/reducers/station.reducer'
 import AddLikedBtn from '../assets/icons/add-liked-btn.svg?react'
 import PlayBtn from '../assets/icons/play-btn-preview.svg?react'
 import ClockIcon from '../assets/icons/clock-icon.svg?react'
 
 export function StationDetails() {
   const station = useSelector(storeState => storeState.stationModule.station)
+  const songIdx = useSelector(storeState => storeState.stationModule.currentSongIdx)
   const [name, setName] = useState('')
   const [songs, setSongs] = useState(station.songs)
   const [stationDuration, setStationDuration] = useState('')
@@ -22,7 +23,7 @@ export function StationDetails() {
   useEffect(() => {
     if (stationId) {
       loadStation(stationId)
-      
+
     }
   }, [stationId])
 
@@ -51,6 +52,10 @@ export function StationDetails() {
 
   function onBackToList() {
     dispatch({ type: SET_STATION, station: null })
+  }
+  function onSelectSong(songindx) {
+    console.log("songindx: ", songindx)
+    dispatch({ type: SET_SONG_IDX, idx: songindx })
   }
 
   function handleDragEnd(result) {
@@ -131,6 +136,7 @@ export function StationDetails() {
                     {(provided) => (
                       <div
                         className="song-row"
+                        onClick={() => onSelectSong(idx)}
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
