@@ -30,7 +30,8 @@ export function MediaPlayer() {
     const [isRepeat, setIsRepeat] = useState(false)
     const [isShuffle, setIsShuffle] = useState(false)
     const playerRef = useRef(null)
-    
+
+
 
 
 
@@ -219,9 +220,11 @@ export function MediaPlayer() {
             {song && (
                 <span className="react-youtube">
                     <ReactYouTube
+                        key={song.url}
                         videoId={song.url}
-                        opts={{ width: 0, height: 0 }}
-                        onReady={onReady}
+                        isPlaying={isPlaying}
+                        volume={volume}
+                        playerRef={playerRef}
                         onEnd={onEnd}
                     />
                 </span>
