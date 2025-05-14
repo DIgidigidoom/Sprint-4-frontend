@@ -3,24 +3,26 @@ import { useSelector } from 'react-redux'
 import { loadStation, updateStation, addToLiked, setIsPlaying } from '../store/actions/station.actions'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
-import { useParams} from 'react-router-dom'
-import { formatDuration, formatSpotifyDate, getCloudinaryImg } from '../services/util.service'
+import { useParams } from 'react-router-dom'
+import { formatDuration, formatSpotifyDate, getCloudinaryImg, calcStationDuration } from '../services/util.service'
 import { useDispatch } from 'react-redux'
 import { SET_STATION } from '../store/reducers/station.reducer'
 import AddLikedBtn from '../assets/icons/add-liked-btn.svg?react'
-import PlayBtn from '../assets/icons/icon-park-solid--play.svg?react'
+import PlayBtn from '../assets/icons/play-btn-preview.svg?react'
 import ClockIcon from '../assets/icons/clock-icon.svg?react'
 
 export function StationDetails() {
   const station = useSelector(storeState => storeState.stationModule.station)
   const [name, setName] = useState('')
-  const [songs, setSongs] = useState([])
+  const [songs, setSongs] = useState(station.songs)
+  const [stationDuration, setStationDuration] = useState('')
   const { stationId } = useParams()
   const dispatch = useDispatch()
 
   useEffect(() => {
     if (stationId) {
       loadStation(stationId)
+      
     }
   }, [stationId])
 
@@ -30,7 +32,10 @@ export function StationDetails() {
       setName(station.name)
       setSongs(station.songs || [])
       dispatch(setIsPlaying(false))
+      setStationDuration(calcStationDuration(songs))
     }
+
+
   }, [station])
 
   async function onSaveName() {
@@ -73,7 +78,8 @@ export function StationDetails() {
     }
   }
 
-  const { createdBy } = station
+  const { createdBy, } = station
+
 
   if (!station) return <div>Loading...</div>
 
@@ -90,7 +96,7 @@ export function StationDetails() {
               onChange={(ev) => setName(ev.target.value)}
             />
             <p>
-              <span style={{ fontWeight: "700" }}> {createdBy.fullname}</span><span style={{ color: "#b3b3b3" }}> • {songs.length} songs</span>
+              <span style={{ fontWeight: "700" }}> {createdBy.fullname}</span><span style={{ color: "#b3b3b3" }}> • {songs.length} songs, about {stationDuration} </span>
             </p>
           </div>
         </div>
@@ -99,12 +105,14 @@ export function StationDetails() {
         <PlayBtn />
       </div>
       <div className="song-list-container">
-        <div className="song-list-header">
-          <p className="col index-header">#</p>
-          <p className="col title-header">Title</p>
-          <p className="col album-header">Album</p>
-          <p className="col date-added-header">Date Added</p>
-          <ClockIcon />
+        <div className='list-header-container'>
+          <div className="song-list-header">
+            <p className="col index-header">#</p>
+            <p className="col title-header">Title</p>
+            <p className="col album-header">Album</p>
+            <p className="col date-added-header">Date Added</p>
+            <ClockIcon />
+          </div>
         </div>
         <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable droppableId="songList">

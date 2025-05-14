@@ -2,7 +2,7 @@
     color: $clr6;
     background-color: $clr3;
     min-height: 100vh;
-    background: linear-gradient(to top, $clr3 55%, $clr9 100%);
+    background: linear-gradient(to top, $clr3 55vh, $clr9 100vh);
 
     .station-header {
         background: linear-gradient(to bottom, $clr1, $clr10);
@@ -14,7 +14,7 @@
             height: fit-content;
             align-items: flex-end;
             padding-block-start: clamp(24px, 6.2vh, 80px);
-            padding-block-end: 24px;
+            padding-block-end: 22px;
             padding-inline-start: clamp(24px, 2.4vh, 80px);
             gap: 24px;
 
@@ -54,13 +54,14 @@
         display: flex;
         align-items: center;
         gap: 1.5rem;
-        padding: 24px;
+        padding: 20px;
+        margin-block-end: 2px;
 
         svg {
             justify-content: center;
             align-items: center;
-            width: 58px;
-            height: 58px;
+            width: 65px;
+            height: 65px;
             color: $clr1;
 
             &:hover {
@@ -69,80 +70,63 @@
                 color: $clr7;
             }
         }
-
-        .btn-play {
-            border: none;
-            width: 58px;
-            height: 58px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-
-            &:hover {
-                transform: scale(1.05);
-            }
-
-            i {
-                font-size: 24px;
-                color: $clr6;
-            }
-        }
     }
 
-    .song-list-header {
-        display: flex;
-        align-items: center;
-        margin-inline-start: clamp(44px, 4.4vh, 80px);
-        color: $clr5;
-        padding-inline-end: 24px;
-        height: 36px;
-        border-bottom: 1px solid $gray4;
-        font-size: rem(14px);
+    .list-header-container {
+        padding: 0 24px;
 
-        .col {
-            margin: 0;
-            margin-bottom: 2px;
-        }
-
-        .song-list-header .col {
+        .song-list-header {
             display: flex;
-            justify-content: space-between;
-
-            white-space: nowrap;
-        }
-
-        .col.index-header {
-            width: 16px;
-            font-size: rem(16px);
-            margin-inline-end: 11px;
-        }
-
-        .col.title-header {
-            flex: 3;
-            min-width: 120px;
-            margin-inline-end: 15px;
-        }
-
-        .col.album-header {
-            flex: 2;
-            min-width: 120px;
-            padding-inline-end: 10px;
-        }
-
-        .col.date-added-header {
-            flex: 2;
-            min-width: 120px;
-
-        }
-
-        svg {
-            justify-content: center;
             align-items: center;
-            width: 16px;
-            fill: $clr5 ;
-            margin-inline-end: 35px;
+            color: $clr5;
+            padding: 0 22px;
+            height: 36px;
+            border-bottom: 1px solid $gray4;
+            font-size: rem(14px);
+
+            .col {
+                margin: 0;
+                margin-bottom: 2px;
+            }
+
+            .song-list-header .col {
+                display: flex;
+                justify-content: space-between;
+
+                white-space: nowrap;
+            }
+
+            .col.index-header {
+                width: 16px;
+                font-size: rem(18px);
+                margin-inline-end: 12px;
+            }
+
+            .col.title-header {
+                flex: 3;
+                min-width: 120px;
+                margin-inline-end: 38px;
+            }
+
+            .col.album-header {
+                flex: 2;
+                min-width: 120px;
+                padding-inline-end: 32px;
+            }
+
+            .col.date-added-header {
+                flex: 2;
+                min-width: 120px;
+                padding-inline-end: 10px;
+            }
+
+            svg {
+                justify-content: center;
+                align-items: center;
+                width: 16px;
+                fill: $clr5 ;
+                margin-inline-end: 11px;
+            }
         }
     }
 
@@ -265,7 +249,7 @@
                         width: 1rem;
                         height: 1rem;
                         fill: $clr5;
-                        color:$clr5;
+                        color: $clr5;
 
                         &:hover {
                             scale: 1.03;
