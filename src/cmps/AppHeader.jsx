@@ -1,22 +1,32 @@
-import { Link} from 'react-router-dom'
+
 import { useNavigate } from 'react-router'
-import { useSelector } from 'react-redux'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { logout } from '../store/actions/user.actions'
 import HomeIcon from '../assets/icons/home-btn.svg?react'
 import MagnifyingGlassIcon from '../assets/icons/magnifying-glass.svg?react'
 import SpotifyLogo from '../assets/icons/spotify-logo.svg?react'
-
-import { useDispatch } from 'react-redux'
-import { useLocation } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { useLocation, Link } from 'react-router-dom'
 import { SET_STATION } from '../store/reducers/station.reducer'
+import { useState, useEffect, } from 'react'
+import { useDebouncedYouTubeSearch } from '../customHooks/useDebouncedYouTubeSearch'
 
-const API_Key = "AIzaSyBc-QFw-FOHqiesLtRz1hXTJ5MpOwdMya8"
+
+
+
 export function AppHeader() {
 	const user = useSelector(storeState => storeState.userModule.user)
+	const youtubeResults = useSelector(storeState => storeState.youtubeModule.youtubeResults)
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 	const location = useLocation()
+	const [searchTxt, setSearchTxt] = useState('')
+	const debouncedSearch = useDebouncedYouTubeSearch()
+
+	useEffect(() => {
+	debouncedSearch(searchTxt)
+	return () => debouncedSearch.cancel()
+}, [searchTxt])
 
 	async function onLogout() {
 		try {
@@ -40,7 +50,7 @@ export function AppHeader() {
 		<header className="app-header full">
 			<nav>
 				<button className="logo" onClick={onGoHome}>
-					<SpotifyLogo className="logo-icon"/>
+					<SpotifyLogo className="logo-icon" />
 				</button>
 
 				<div className="middle-header">
@@ -51,11 +61,13 @@ export function AppHeader() {
 					<div className="search-wrapper">
 
 						<span className='magnifying-glass-header-filter'><MagnifyingGlassIcon /></span>
-						{/* <FontAwesomeIcon icon={faMagnifyingGlass} className="magnifying-glass-header-filter" /> */}
+
 						<input
 							type="text"
 							className="header-filter"
 							placeholder="What do you want to play?"
+							value={searchTxt}
+							onChange={(ev) => setSearchTxt(ev.target.value)}
 						/>
 					</div>
 				</div>
@@ -73,6 +85,17 @@ export function AppHeader() {
 					</div>
 				)}
 			</nav>
+			{youtubeResults.length > 0 && (
+				<ul className="search-results">
+					{youtubeResults.map(video => (
+						<li key={video.id}>
+							<img src={video.thumbnail} alt={video.title} />
+							<div>{video.title}</div>
+						</li>
+					))}
+				</ul>
+			)}
 		</header>
+
 	)
 }
