@@ -56,6 +56,7 @@ async function signup(userCred) {
     return saveLoggedinUser(user)
 }
 
+
 async function logout() {
     sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER)
 }
