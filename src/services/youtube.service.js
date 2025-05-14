@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { parse, toSeconds } from 'iso8601-duration'
 
-const YOUTUBE_API_KEY = 'AIzaSyBc-QFw-FOHqiesLtRz1hXTJ5MpOwdMya8'
+const YOUTUBE_API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY
 
 function isoDurationToSeconds(iso) {
 	const durationObj = parse(iso)
