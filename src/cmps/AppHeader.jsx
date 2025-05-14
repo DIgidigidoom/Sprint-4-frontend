@@ -8,7 +8,7 @@ import SpotifyLogo from '../assets/icons/spotify-logo.svg?react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, Link } from 'react-router-dom'
 import { SET_STATION } from '../store/reducers/station.reducer'
-import { useState, useEffect, } from 'react'
+import { useState, useEffect } from 'react'
 import { useDebouncedYouTubeSearch } from '../customHooks/useDebouncedYouTubeSearch'
 
 

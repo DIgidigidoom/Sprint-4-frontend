@@ -6,20 +6,40 @@ import { SET_YOUTUBE_RESULTS } from '../store/reducers/youtube.reducer'
 import { showErrorMsg } from '../services/event-bus.service'
 
 export function useDebouncedYouTubeSearch(delay = 400) {
-	const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
-	const debouncedSearch = useCallback(
-		debounce(async (query) => {
-			if (!query.trim()) return dispatch({ type: SET_YOUTUBE_RESULTS, results: [] })
-			try {
-				const results = await searchYouTube(query)
-				dispatch({ type: SET_YOUTUBE_RESULTS, results })
-			} catch {
-				showErrorMsg('YouTube search failed')
-			}
-		}, delay),
-		[]
-	)
+    const debouncedSearch = useCallback(
+        debounce(async (query) => {
+            const cleanQuery = query.trim()
+            if (!cleanQuery) {
+                dispatch({ type: SET_YOUTUBE_RESULTS, results: [] })
+                return
+            }
 
-	return debouncedSearch
+            // Load the full cache object
+            const cacheStr = localStorage.getItem('yt-search-cache')
+            const cache = cacheStr ? JSON.parse(cacheStr) : {}
+
+            // Return cached results if found
+            if (cache[cleanQuery]) {
+                dispatch({ type: SET_YOUTUBE_RESULTS, results: cache[cleanQuery] })
+                return
+            }
+
+            // Else fetch and cache
+            try {
+                const results = await searchYouTube(cleanQuery)
+                dispatch({ type: SET_YOUTUBE_RESULTS, results })
+
+                // Update cache and save back to localStorage
+                cache[cleanQuery] = results
+                localStorage.setItem('yt-search-cache', JSON.stringify(cache))
+            } catch {
+                showErrorMsg('YouTube search failed')
+            }
+        }, delay),
+        []
+    )
+
+    return debouncedSearch
 }
