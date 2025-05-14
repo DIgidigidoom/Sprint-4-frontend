@@ -39,9 +39,9 @@ export async function searchYouTube(query) {
 			id: item.id,
 			title: item.snippet.title,
 			description: item.snippet.description,
-			channelTitle: item.snippet.channelTitle,
-			publishedAt: new Date(item.snippet.publishedAt).getTime(),
-			thumbnail: item.snippet.thumbnails.default.url,
+			artist: item.snippet.channelTitle,
+			addedAt: new Date(item.snippet.publishedAt).getTime(),
+			imgUrl: item.snippet.thumbnails.default.url,
 			duration: isoDurationToSeconds(item.contentDetails.duration), 
 		}))
 	} catch (err) {
