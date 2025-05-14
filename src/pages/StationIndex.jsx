@@ -33,7 +33,11 @@ export function StationIndex() {
     }
 
     function onSelectStation(stationId) {
+        // Load the station (as you're already doing)
         loadStation(stationId)
+
+        // Update the URL with stationId (nested routing already in place)
+        navigate(`/station/${stationId}`, { replace: false })
     }
 
     function onUpdateStation(station) {
@@ -42,7 +46,7 @@ export function StationIndex() {
 
     async function onCreateStation() {
         const station = stationService.getEmptyStation()
-        
+
         try {
             const savedStation = await addStation(station)
             console.log('Saved station:', savedStation)
@@ -59,7 +63,7 @@ export function StationIndex() {
     return (
         <main className="station-index">
             <AppHeader />
-    
+
             <MainPage
                 stations={stations}
                 onRemoveStation={onRemoveStation}

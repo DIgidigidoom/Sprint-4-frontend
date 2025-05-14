@@ -6,10 +6,11 @@ import HomeIcon from '../assets/icons/home-btn.svg?react'
 import MagnifyingGlassIcon from '../assets/icons/magnifying-glass.svg?react'
 import SpotifyLogo from '../assets/icons/spotify-logo.svg?react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation, Link } from 'react-router-dom'
+import { useLocation, Link, useSearchParams } from 'react-router-dom'
 import { SET_STATION } from '../store/reducers/station.reducer'
 import { useState, useEffect } from 'react'
 import { useDebouncedYouTubeSearch } from '../customHooks/useDebouncedYouTubeSearch'
+
 
 
 
@@ -21,12 +22,18 @@ export function AppHeader() {
 	const dispatch = useDispatch()
 	const location = useLocation()
 	const [searchTxt, setSearchTxt] = useState('')
+	const [searchParams, setSearchParams] = useSearchParams()
 	const debouncedSearch = useDebouncedYouTubeSearch()
 
 	useEffect(() => {
-	debouncedSearch(searchTxt)
-	return () => debouncedSearch.cancel()
-}, [searchTxt])
+		const param = searchParams.get('search') || ''
+		setSearchTxt(param)
+	}, [])
+
+	useEffect(() => {
+		debouncedSearch(searchTxt)
+		return () => debouncedSearch.cancel()
+	}, [searchTxt])
 
 	async function onLogout() {
 		try {
@@ -39,6 +46,8 @@ export function AppHeader() {
 	}
 
 	function onGoHome() {
+		setSearchTxt('')
+		setSearchParams('')
 		dispatch({ type: SET_STATION, station: null })
 		if (location.pathname !== '/') {
 			navigate('/')
@@ -67,7 +76,11 @@ export function AppHeader() {
 							className="header-filter"
 							placeholder="What do you want to play?"
 							value={searchTxt}
-							onChange={(ev) => setSearchTxt(ev.target.value)}
+							onChange={(ev) => {
+								const value = ev.target.value
+								setSearchTxt(value)
+								setSearchParams(value ? { search: value } : {})
+							}}
 						/>
 					</div>
 				</div>
@@ -85,16 +98,6 @@ export function AppHeader() {
 					</div>
 				)}
 			</nav>
-			{youtubeResults.length > 0 && (
-				<ul className="search-results">
-					{youtubeResults.map(video => (
-						<li key={video.id}>
-							<img src={video.thumbnail} alt={video.title} />
-							<div>{video.title}</div>
-						</li>
-					))}
-				</ul>
-			)}
 		</header>
 
 	)

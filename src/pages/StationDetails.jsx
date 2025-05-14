@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { loadStation, updateStation, addToLiked, setIsPlaying } from '../store/actions/station.actions'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
 import { useParams } from 'react-router-dom'
 import { formatDuration, formatSpotifyDate, getCloudinaryImg, calcStationDuration } from '../services/util.service'
-import { useDispatch } from 'react-redux'
 import { SET_STATION, SET_SONG_IDX } from '../store/reducers/station.reducer'
 import AddLikedBtn from '../assets/icons/add-liked-btn.svg?react'
 import PlayBtn from '../assets/icons/play-btn-preview.svg?react'
@@ -13,17 +12,17 @@ import ClockIcon from '../assets/icons/clock-icon.svg?react'
 
 export function StationDetails() {
   const station = useSelector(storeState => storeState.stationModule.station)
-  const songIdx = useSelector(storeState => storeState.stationModule.currentSongIdx)
+ 
   const [name, setName] = useState('')
   const [songs, setSongs] = useState(station.songs)
   const [stationDuration, setStationDuration] = useState('')
+
   const { stationId } = useParams()
   const dispatch = useDispatch()
 
   useEffect(() => {
     if (stationId) {
       loadStation(stationId)
-
     }
   }, [stationId])
 
@@ -31,9 +30,10 @@ export function StationDetails() {
   useEffect(() => {
     if (station) {
       setName(station.name)
-      setSongs(station.songs || [])
+      const stationSongs = station.songs || []
+      setSongs(stationSongs)
       dispatch(setIsPlaying(false))
-      setStationDuration(calcStationDuration(songs))
+      setStationDuration(calcStationDuration(stationSongs))
     }
 
 

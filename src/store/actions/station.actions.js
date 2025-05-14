@@ -2,9 +2,6 @@ import { stationService } from '../../services/station/station.service.local.js'
 import { store } from '../store.js'
 import { ADD_STATION, REMOVE_STATION, SET_STATIONS, SET_STATION, UPDATE_STATION, SET_NEXT_SONG, SET_PREV_SONG, SET_IS_PLAYING } from '../reducers/station.reducer.js'
 
-
-
-
 export async function loadStations(filterBy) {
     try {
         const stations = await stationService.query(filterBy)
@@ -25,8 +22,6 @@ export async function loadStation(stationId) {
         throw err
     }
 }
-
-
 
 
 export async function removeStation(stationId) {
