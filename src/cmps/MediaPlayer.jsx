@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useRef, useState } from 'react'
-import { setNextSong, setPrevSong, setIsPlaying } from '../store/actions/station.actions.js'
+import { setIsPlaying } from '../store/actions/station.actions.js'
+import { SET_NEXT_SONG, SET_PREV_SONG } from '../store/reducers/station.reducer'
 import { ReactYouTube } from './ReactYoutube.jsx'
 import React from 'react'
 import PlayBtn from '../assets/icons/hover-play-btn.svg?react'
@@ -17,8 +18,9 @@ import VolumeLoud from '../assets/icons/volume-loud.svg?react'
 
 export function MediaPlayer() {
 
-    const station = useSelector(storeState => storeState.stationModule.station)
+
     const songIdx = useSelector(storeState => storeState.stationModule.currentSongIdx)
+    const currentSong = useSelector(storeState => storeState.stationModule.currentSong)
     const isPlaying = useSelector(storeState => storeState.stationModule.isPlaying)
     const dispatch = useDispatch()
 
@@ -33,23 +35,22 @@ export function MediaPlayer() {
 
 
 
-
-
-
-    const song = station?.songs[songIdx]
+    const song = currentSong
 
     useEffect(() => {
         const interval = setInterval(() => {
-            if (playerRef.current && isPlaying) {
-                const currentTime = playerRef.current.getCurrentTime()
-                const totalTime = playerRef.current.getDuration()
+            if (!playerRef.current || !isPlaying) return
+
+            const currentTime = playerRef.current.getCurrentTime?.()
+            const totalTime = playerRef.current.getDuration?.()
+            if (typeof currentTime === 'number' && typeof totalTime === 'number') {
                 setProgress(currentTime)
                 setDuration(totalTime)
             }
         }, 500)
-        if (playerRef.current && isPlaying) playerRef.current.playVideo()
+
         return () => clearInterval(interval)
-    }, [song, isPlaying, volume])
+    }, [song, isPlaying, volume, songIdx])
 
     function onReady(event) {
         const player = event?.target
@@ -72,27 +73,19 @@ export function MediaPlayer() {
 
         if (isPlaying) {
             playerRef.current.pauseVideo()
+            dispatch(setIsPlaying(false))
         } else {
             playerRef.current.playVideo()
+            dispatch(setIsPlaying(true))
         }
-        dispatch(setIsPlaying(!isPlaying))
     }
 
     function nextSong() {
-        if (isShuffle && station?.songs?.length > 1) {
-            let nextIdx
-            do {
-                nextIdx = Math.floor(Math.random() * station.songs.length)
-            } while (nextIdx === songIdx)
-
-            dispatch({ type: 'SET_SONG_IDX', idx: nextIdx })
-        } else {
-            dispatch(setNextSong())
-        }
+        dispatch({ type: SET_NEXT_SONG })
     }
 
     function prevSong() {
-        dispatch(setPrevSong())
+        dispatch({ type: SET_PREV_SONG })
     }
 
     function handleVolumeChange(ev) {
@@ -105,7 +98,6 @@ export function MediaPlayer() {
 
     function toggleMute() {
         if (volume === 0) {
-
             setVolume(prevVolume)
             if (playerRef.current) playerRef.current.setVolume(prevVolume)
         } else {
@@ -163,7 +155,7 @@ export function MediaPlayer() {
                     </button>
 
                     <button onClick={prevSong} disabled={!song}>
-                        <PreviousBtn className="previous-btn"/>
+                        <PreviousBtn className="previous-btn" />
                     </button>
 
                     <button className="play-btn" onClick={togglePlay} disabled={!song}>

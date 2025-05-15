@@ -1,14 +1,14 @@
 import { legacy_createStore as createStore, combineReducers } from 'redux'
-
 import { stationReducer } from './reducers/station.reducer.js'
 import { userReducer } from './reducers/user.reducer.js'
-
+import { youtubeReducer } from './reducers/youtube.reducer.js'
 import { systemReducer } from './reducers/system.reducer.js'
 
 const rootReducer = combineReducers({
     stationModule: stationReducer,
     userModule: userReducer,
     systemModule: systemReducer,
+    youtubeModule: youtubeReducer 
     
 })
 

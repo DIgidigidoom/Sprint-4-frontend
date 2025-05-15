@@ -7,12 +7,16 @@ export const SET_NEXT_SONG = 'SET_NEXT_SONG'
 export const SET_PREV_SONG = 'SET_PREV_SONG'
 export const SET_IS_PLAYING = 'SET_IS_PLAYING'
 export const SET_SONG_IDX = 'SET_SONG_IDX'
+export const SET_CURRENT_SONG = 'SET_CURRENT_SONG'
+export const SET_CURRENT_PLAYLIST = 'SET_CURRENT_PLAYLIST'
 
 const initialState = {
     stations: [],
     station: null,
     currentSongIdx: 0,
-    isPlaying: false
+    isPlaying: false,
+    currentSong: null,
+    SET_CURRENT_PLAYLIST: []
 }
 
 export function stationReducer(state = initialState, action) {
@@ -38,29 +42,49 @@ export function stationReducer(state = initialState, action) {
             newState = { ...state, stations }
             break
 
+        case SET_CURRENT_SONG:
+            newState = {
+                ...state,
+                currentSong: action.song,
+                isPlaying: typeof action.isPlaying === 'boolean' ? action.isPlaying : state.isPlaying
+            }
+            break
+
+        case SET_CURRENT_PLAYLIST:
+            newState = { ...state, currentPlaylist: action.songs }
+            break
+
         case SET_IS_PLAYING:
             newState = { ...state, isPlaying: action.isPlaying }
             break
 
         case SET_NEXT_SONG: {
-            const nextIdx = (state.currentSongIdx + 1) % state.station.songs.length
+            const playlist = state.currentPlaylist
+            const currentIdx = playlist.findIndex(song => song.id === state.currentSong?.id)
+
+            if (currentIdx === -1 || currentIdx === playlist.length - 1) return state
+            const nextSong = playlist[currentIdx + 1]
+
             return {
                 ...state,
-                currentSongIdx: nextIdx,
+                currentSong: nextSong,
+                isPlaying: true,
             }
         }
+
         case SET_PREV_SONG: {
-            const prevIdx =
-                (state.currentSongIdx - 1 + state.station.songs.length) %
-                state.station.songs.length
+            const playlist = state.currentPlaylist
+            const currentIdx = playlist.findIndex(song => song.id === state.currentSong?.id)
+
+            if (currentIdx <= 0) return state
+            const prevSong = playlist[currentIdx - 1]
+
             return {
                 ...state,
-                currentSongIdx: prevIdx,
+                currentSong: prevSong,
+                isPlaying: true,
             }
         }
-        case SET_SONG_IDX:
-            return { ...state, currentSongIdx: action.idx }
-        default:
     }
     return newState
 }

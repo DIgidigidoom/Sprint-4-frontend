@@ -1,24 +1,30 @@
-import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useEffect, useState, useRef } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { loadStation, updateStation, addToLiked, setIsPlaying } from '../store/actions/station.actions'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
 import { useParams } from 'react-router-dom'
-import { formatDuration, formatSpotifyDate, getCloudinaryImg } from '../services/util.service'
-import { useDispatch } from 'react-redux'
-import { SET_STATION } from '../store/reducers/station.reducer'
+import { formatDuration, formatSpotifyDate, getCloudinaryImg, calcStationDuration } from '../services/util.service'
+import { SET_STATION, SET_CURRENT_PLAYLIST, SET_CURRENT_SONG } from '../store/reducers/station.reducer'
 import AddLikedBtn from '../assets/icons/add-liked-btn.svg?react'
-import PlayBtn from '../assets/icons/icon-park-solid--play.svg?react'
+import PlayBtn from '../assets/icons/play-btn-preview.svg?react'
 import ClockIcon from '../assets/icons/clock-icon.svg?react'
 import { EditStationModal } from '../cmps/EditStationModal'
+import { ColorThief } from '../cmps/ColorThief'
 
 export function StationDetails() {
   const station = useSelector(storeState => storeState.stationModule.station)
+
+
   const [name, setName] = useState('')
-  const [songs, setSongs] = useState([])
+  const [songs, setSongs] = useState(station.songs)
+  const [stationDuration, setStationDuration] = useState('')
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const [dominantColor, setDominantColor] = useState(null)
+
   const { stationId } = useParams()
   const dispatch = useDispatch()
+  const colorThief = useRef()
 
   useEffect(() => {
     if (stationId) {
@@ -30,9 +36,13 @@ export function StationDetails() {
   useEffect(() => {
     if (station) {
       setName(station.name)
-      setSongs(station.songs || [])
+      const stationSongs = station.songs || []
+      setSongs(stationSongs)
       dispatch(setIsPlaying(false))
+      setStationDuration(calcStationDuration(stationSongs))
     }
+
+
   }, [station])
 
   async function onSaveName() {
@@ -48,6 +58,10 @@ export function StationDetails() {
 
   function onBackToList() {
     dispatch({ type: SET_STATION, station: null })
+  }
+  function onPlaySongFromStation(songIdx) {
+    dispatch({ type: SET_CURRENT_PLAYLIST, songs })
+    dispatch({ type: SET_CURRENT_SONG, song: station.songs[0], isPlaying: false })
   }
 
   function handleDragEnd(result) {
@@ -82,7 +96,12 @@ export function StationDetails() {
 
   return (
     <section className="station-details">
-      <div className="station-header">
+      <ColorThief imgSrc={getCloudinaryImg(createdBy.imgUrl)} onColorReady={setDominantColor}/>
+      <div className="station-header"
+        style={{
+          background: `linear-gradient(to bottom, ${dominantColor} 0%, hsl(0, 0.80%, 25.70%) 100%)`,
+          boxShadow: `0 1px 1000px 0  ${dominantColor}`
+        }}>
         <div className="station-header-content">
           <img
             className="station-img"
@@ -106,7 +125,7 @@ export function StationDetails() {
             )}
 
             <p>
-              <span style={{ fontWeight: "700" }}> {createdBy.fullname}</span><span style={{ color: "#b3b3b3" }}> • {songs.length} songs</span>
+              <span style={{ fontWeight: "700" }}> {createdBy.fullname}</span><span style={{ color: "#b3b3b3" }}> • {songs.length} songs, about {stationDuration} </span>
             </p>
           </div>
         </div>
@@ -115,12 +134,14 @@ export function StationDetails() {
         <PlayBtn />
       </div>
       <div className="song-list-container">
-        <div className="song-list-header">
-          <p className="col index-header">#</p>
-          <p className="col title-header">Title</p>
-          <p className="col album-header">Album</p>
-          <p className="col date-added-header">Date Added</p>
-          <ClockIcon />
+        <div className='list-header-container'>
+          <div className="song-list-header">
+            <p className="col index-header">#</p>
+            <p className="col title-header">Title</p>
+            <p className="col album-header">Album</p>
+            <p className="col date-added-header">Date Added</p>
+            <ClockIcon />
+          </div>
         </div>
         <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable droppableId="songList">
@@ -139,6 +160,7 @@ export function StationDetails() {
                     {(provided) => (
                       <div
                         className="song-row"
+                        onClick={() => onPlaySongFromStation(idx)}
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}

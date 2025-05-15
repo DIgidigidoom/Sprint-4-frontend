@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { loadStations, loadStation, addStation, removeStation } from '../store/actions/station.actions.js'
 import { useNavigate } from 'react-router-dom'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
@@ -9,13 +9,17 @@ import { AppHeader } from '../cmps/AppHeader.jsx'
 import MainPage from './MainPage.jsx'
 import { EditStationModal } from '../cmps/EditStationModal.jsx'
 import { MediaPlayer } from '../cmps/MediaPlayer.jsx'
+import { SET_SEARCH_TEXT } from '../store/reducers/youtube.reducer.js'
+
 
 export function StationIndex() {
 
-    const [filterBy, setFilterBy] = useState(stationService.getDefaultFilter())
     const stations = useSelector(storeState => storeState.stationModule.stations)
+
+    const [filterBy, setFilterBy] = useState(stationService.getDefaultFilter())
     const [stationToEdit, setStationToEdit] = useState(null)
 
+    const dispatch = useDispatch()
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -34,6 +38,8 @@ export function StationIndex() {
 
     function onSelectStation(stationId) {
         loadStation(stationId)
+        dispatch({ type: SET_SEARCH_TEXT, text: '' })
+        navigate(`/station/${stationId}`, { replace: false })
     }
 
     function onUpdateStation(station) {
@@ -42,7 +48,7 @@ export function StationIndex() {
 
     async function onCreateStation() {
         const station = stationService.getEmptyStation()
-        
+
         try {
             const savedStation = await addStation(station)
             console.log('Saved station:', savedStation)
@@ -59,7 +65,7 @@ export function StationIndex() {
     return (
         <main className="station-index">
             <AppHeader />
-    
+
             <MainPage
                 stations={stations}
                 onRemoveStation={onRemoveStation}
@@ -79,6 +85,7 @@ export function StationIndex() {
                     station={stationToEdit}
                     onClose={() => setStationToEdit(null)} />
             )}
+
         </main>
     )
 }
