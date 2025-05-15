@@ -3,8 +3,10 @@ import MagnifyingGlassIcon from '../assets/icons/magnifying-glass.svg?react'
 import Plus from '../assets/icons/plus.svg?react'
 import HoverPlayBtn from '../assets/icons/hover-play-btn.svg?react'
 import SidebarInputX from '../assets/icons/sidebar-input-x.svg?react'
-
-
+import { userService } from '../services/user'
+import { showErrorMsg } from '../services/event-bus.service'
+import LikedSongsStationPic from "../assets/imgs/liked-songs-station-pic.png"
+import LikedSongsPin from "../assets/icons/liked-songs-pin.svg?react"
 
 
 
@@ -14,10 +16,13 @@ export function SideBar({ onCreateStation, stations, onSelectStation }) {
     const [userStations, setUserStations] = useState([])
     const [searchTerm, setSearchTerm] = useState('')
     const [likedStation, setLikedStation] = useState('')
+    const user = userService.getLoggedinUser()
+    console.log("user: ", user)
+    console.log("stations: ", stations)
 
 
     useEffect(() => {
-        const filteredStations = stations.filter(station => station.owner && !station.isLikedSongs)
+        const filteredStations = stations.filter(station => (station.createdBy._id === user?._id) && !station.isLikedSongs)
         setUserStations(filteredStations)
     }, [stations])
 
@@ -51,7 +56,13 @@ export function SideBar({ onCreateStation, stations, onSelectStation }) {
             <div className='sidebar-header'>
                 <span>Your Library</span>
                 <button
-                    onClick={onCreateStation}
+                    onClick={() => {
+                        if (!user) {
+                            showErrorMsg('Log in first!')
+                            return
+                        }
+                        onCreateStation()
+                    }}
                     className='sidebar-create-btn'>
                     <span><Plus /></span>
                     Create
@@ -89,11 +100,11 @@ export function SideBar({ onCreateStation, stations, onSelectStation }) {
             {likedStation && (
                 <div key={likedStation._id} className='sidebar-followed-content' onClick={() => onSelectStation(likedStation._id)}>
                     <div className='sidebar-content-preview'>
-                        <img src="https://i.ytimg.com/vi/TLDflhhdPCg/mqdefault.jpg" alt="" />
-                        <HoverPlayBtn />
+                        <img src={LikedSongsStationPic} alt="" />
+                        <HoverPlayBtn className="hover-play-btn"/>
                         <div className='sidebar-content-info'>
                             <span className='sidebar-content-info-title'>{likedStation.name}</span>
-                            <span className='sidebar-content-info-description'>Playlist • {likedStation.songs.length}</span>
+                            <span className='sidebar-content-info-description sidebar-content-info-description-liked-songs'><span className="liked-songs-pin"><LikedSongsPin className="liked-songs-pin-svg" /></span>Playlist • {likedStation.songs.length}</span>
                         </div>
                     </div>
                 </div>
@@ -104,10 +115,10 @@ export function SideBar({ onCreateStation, stations, onSelectStation }) {
                     <div key={station._id} className='sidebar-followed-content' onClick={() => onSelectStation(station._id)}>
                         <div className='sidebar-content-preview'>
                             <img src="https://i.ytimg.com/vi/TLDflhhdPCg/mqdefault.jpg" alt="" />
-                            <HoverPlayBtn />
+                            <HoverPlayBtn className="hover-play-btn"/>
                             <div className='sidebar-content-info'>
                                 <span className='sidebar-content-info-title'>{station.name}</span>
-                                <span className='sidebar-content-info-description'>Playlist • {station.owner.fullname}</span>
+                                <span className='sidebar-content-info-description'>Playlist • {station.createdBy.fullname}</span>
                             </div>
                         </div>
                     </div>

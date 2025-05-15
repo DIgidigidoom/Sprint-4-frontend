@@ -4,6 +4,7 @@ import { makeId } from '../util.service.js'
 import { seedStationsToLocalStorage } from './station.seed.js'
 import { demoSongs } from './demo-songs.js'
 import { addToLiked, removeFromLiked } from '../../store/actions/station.actions.js'
+import { userService } from '../user/index.js'
 
 const STORAGE_KEY = 'stationDB'
 
@@ -63,7 +64,9 @@ async function save(station) {
     }
     else {
         let stations = await query()
-        const length = stations.filter(station => station.owner).length
+        const { fullname, _id } = userService.getLoggedinUser()
+        const length = stations.filter(station => station.createdBy.fullname === fullname).length
+        console.log('user: ', userService.getLoggedinUser())
 
         const stationToSave = {
             _id: makeId(4),
@@ -71,18 +74,18 @@ async function save(station) {
 
             createdBy: {
                 imgUrl: 'defaultstation_ov5qip',
-                fullname: loggedinUser.fullname
+                fullname: fullname,
+                _id: _id
             },
             songs: [],
             createdAt: Date.now(),
-            // owner: userService.getLoggedinUser(),
-            owner: loggedinUser
-
         }
         if (stationToSave.name === 'Liked Songs') {
             stationToSave.isLikedSongs = true
         }
         console.log("savedStation ", savedStation)
+        console.log("stationToSave ", stationToSave)
+        console.log("stations ", stations)
         savedStation = await storageService.post(STORAGE_KEY, stationToSave)
     }
     return savedStation

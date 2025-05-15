@@ -98,8 +98,15 @@ export function AppHeader() {
 
 				{!user && (
 					<div className="auth-buttons">
-						<button className="signup-btn">Sign up</button>
-						<button className="login-btn">Log in</button>
+
+						<Link to={`signup`}>
+							<button className="signup-btn">Sign up</button>
+						</Link>
+
+						<Link to={`login`}>
+							<button className="login-btn">Log in</button>
+						</Link>
+
 					</div>
 				)}
 				{user && (
