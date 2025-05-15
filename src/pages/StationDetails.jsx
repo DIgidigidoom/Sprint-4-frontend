@@ -1,14 +1,13 @@
 import { useEffect, useState, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { userService } from '../services/user/user.service.local'
-import { loadStation, updateStation, attachSongIdToUser, setIsPlaying } from '../store/actions/station.actions'
+import { loadStation, updateStation, setIsPlaying } from '../store/actions/station.actions'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
 import { useParams } from 'react-router-dom'
 import { formatDuration, formatSpotifyDate, getCloudinaryImg, calcStationDuration } from '../services/util.service'
 import { SET_STATION, SET_CURRENT_PLAYLIST, SET_CURRENT_SONG } from '../store/reducers/station.reducer'
-import { addSongToLiked } from '../store/actions/user.actions'
-import { SET_USER } from '../store/reducers/user.reducer'
+import { likeSongForUser, unlikeSongForUser } from '../store/actions/user.actions'
+import { stationService } from '../services/station/station.service.local'
 import AddLikedBtn from '../assets/icons/add-liked-btn.svg?react'
 import PlayBtn from '../assets/icons/play-btn-preview.svg?react'
 import ClockIcon from '../assets/icons/clock-icon.svg?react'
@@ -26,13 +25,13 @@ export function StationDetails() {
   const [stationDuration, setStationDuration] = useState('')
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [dominantColor, setDominantColor] = useState(null)
-  // const loggedInUser = userService.getLoggedinUser()
+
 
   const { stationId } = useParams()
   const dispatch = useDispatch()
-  const colorThief = useRef()
 
   useEffect(() => {
+
     if (stationId) {
       loadStation(stationId)
     }
@@ -50,6 +49,7 @@ export function StationDetails() {
 
 
   }, [station])
+
 
   async function onSaveName() {
     try {
@@ -82,25 +82,33 @@ export function StationDetails() {
     updateStation(updatedStation)
   }
 
-  async function onAddToLiked(ev, song) {
-  ev.stopPropagation()
 
-  try {
+  async function onToggleLike(ev, song) {
+    ev.stopPropagation()
+
+    const isLiked = loggedInUser.likedSongsIds.includes(song.id)
     const likedStation = stations.find(
-      station =>
-        station.createdBy._id === loggedInUser._id &&
-        station.type === 'liked station'
+      s => s.type === 'liked station' && s.createdBy._id === loggedInUser._id
     )
 
-    await attachSongIdToUser(likedStation, song)
-    await addSongToLiked(loggedInUser, song.id) 
-
-    showSuccessMsg('Added To Liked Songs')
-  } catch (err) {
-    console.error('Failed to add to liked', err)
-    showErrorMsg('Failed To Add To Liked')
+    try {
+      let updatedLikedStation
+      if (isLiked) {
+       updatedLikedStation= await stationService.removeSongFromLikedStation(likedStation, song.id)
+        await unlikeSongForUser(loggedInUser, song.id)
+        showSuccessMsg('Removed from Liked Songs')
+      } else {
+       updatedLikedStation= await stationService.addSongToLikedStation(likedStation, song)
+        await likeSongForUser(loggedInUser, song.id)
+        showSuccessMsg('Added to Liked Songs')
+      }
+      if(station.type === 'liked station') dispatch({type:SET_STATION, station: updatedLikedStation})
+      
+    } catch (err) {
+      console.error('Like/unlike failed', err)
+      showErrorMsg(err.message || 'Something went wrong')
+    }
   }
-}
 
   const { createdBy } = station
 
@@ -189,7 +197,7 @@ export function StationDetails() {
                         <p className="song-album">{song.album}</p>
                         <p className="song-date-added">{formatSpotifyDate(song.addedAt)}</p>
                         <div className="hovered-like-btn">
-                          <button onClick={(ev) => onAddToLiked(ev, song)}><AddLikedBtn /></button>
+                          <button onClick={(ev) => onToggleLike(ev, song)}><AddLikedBtn /></button>
                         </div>
                         <p className="song-formatted-duration">{formatDuration(song.duration)}</p>
                       </div>

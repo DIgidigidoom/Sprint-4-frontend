@@ -100,20 +100,12 @@ export async function loadUser(userId) {
     }
 }
 
-export async function addSongToLiked(user, songId) {
-  try {
-    // Prevent duplicates
-    if (user.likedSongsIds.includes(songId)) return
+export async function likeSongForUser(user, songId) {
+  const updatedUser = await userService.addSongIdToUser(user, songId)
+  store.dispatch({ type: SET_USER, user: updatedUser })
+}
 
-    const updatedUser = {
-      ...user,
-      likedSongsIds: [...user.likedSongsIds, songId]
-    }
-
-    await userService.update(updatedUser)
-    store.dispatch({ type: SET_USER, user: updatedUser })
-  } catch (err) {
-    console.error('user.actions -> Cannot add to liked', err)
-    throw err
-  }
+export async function unlikeSongForUser(user, songId) {
+  const updatedUser = await userService.removeSongIdFromUser(user, songId)
+  store.dispatch({ type: SET_USER, user: updatedUser })
 }
