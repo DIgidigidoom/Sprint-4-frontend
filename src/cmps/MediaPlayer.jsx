@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useRef, useState } from 'react'
 import { setIsPlaying } from '../store/actions/station.actions.js'
 import { SET_NEXT_SONG, SET_PREV_SONG } from '../store/reducers/station.reducer'
+import { toggleLike } from '../store/actions/user.actions'
 import { ReactYouTube } from './ReactYoutube.jsx'
 import React from 'react'
 import PlayBtn from '../assets/icons/hover-play-btn.svg?react'
@@ -22,6 +23,9 @@ export function MediaPlayer() {
     const songIdx = useSelector(storeState => storeState.stationModule.currentSongIdx)
     const currentSong = useSelector(storeState => storeState.stationModule.currentSong)
     const isPlaying = useSelector(storeState => storeState.stationModule.isPlaying)
+    const stations = useSelector(storeState => storeState.stationModule.stations)
+    const loggedInUser = useSelector(storeState => storeState.userModule.user)
+    const station = useSelector(storeState => storeState.stationModule.station)
     const dispatch = useDispatch()
 
 
@@ -116,12 +120,6 @@ export function MediaPlayer() {
         return `${minutes}:${seconds}`
     }
 
-    // const volumeIconClass =
-    //     volume === 0
-    //         ? 'lucide--volume-x'
-    //         : volume <= 80
-    //             ? 'lucide--volume-1'
-    //             : 'lucide--volume-2'
 
     function getVolumeIcon() {
         if (volume === 0) return <VolumeMute />
@@ -138,7 +136,24 @@ export function MediaPlayer() {
                     <React.Fragment>
                         <img src={song.imgUrl} alt={song.title} />
                         <div>{song.title}</div>
-                        <AddLikedBtn className="add-liked-btn" />
+                        {/* <button onClick={(ev) => {
+                            ev.stopPropagation()
+                            toggleSongLike({
+                              song,
+                              user: loggedInUser,
+                              station,
+                              stations
+                            })
+                          }}><AddLikedBtn /></button> */}
+                        <AddLikedBtn className="add-liked-btn" onClick={(ev) => {
+                            ev.stopPropagation()
+                            toggleLike(
+                                song,
+                                loggedInUser,
+                                station,
+                                stations
+                            )
+                        }} />
                     </React.Fragment>
                 )}
             </div>
@@ -150,7 +165,6 @@ export function MediaPlayer() {
                         title="Toggle Shuffle"
                         className={`shuffle-btn ${isShuffle ? 'shuffle-active' : ''}`}
                     >
-                        {/* <span class={isShuffle ? "shuffle-green" : "shuffle-white"}></span> */}
                         <ShuffleBtn className={isShuffle ? "shuffle-green shuffle-btn-svg" : "shuffle-white shuffle-btn-svg"} />
                     </button>
 
@@ -171,7 +185,7 @@ export function MediaPlayer() {
                         title="Toggle Repeat"
                         className={`repeat-btn ${isRepeat ? 'repeat-active' : ''}`}
                     >
-                        {/* <span class={isRepeat ? "repeat-green" : "repeat-white"}></span> */}
+
                         <RepeatBtn className={isRepeat ? "repeat-green repeat-btn-svg" : "repeat-white repeat-btn-svg"} />
                     </button>
 
