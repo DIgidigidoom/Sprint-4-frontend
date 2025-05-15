@@ -19,7 +19,7 @@ export function StationList({ stations, onSelectStation }) {
         station => station.type === 'album' && station.tags.includes("Pop")
     )
     const hipHopStations = spotifyStations.filter(
-        station => station.type === 'album' && station.tags.includes("Hip hop")
+        station => station.type === 'album' && station.tags.includes("Hip Hop")
     )
     return (
         <section className="station-list">
