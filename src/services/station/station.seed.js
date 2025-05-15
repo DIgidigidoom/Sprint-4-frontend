@@ -13,6 +13,7 @@ export function seedStationsToLocalStorage() {
 export const stations = [
   {
     "_id": "c2f36bbbdd74",
+    "type" : "playlist",
     "name": "Jazz & Chill",
     "tags": ["Jazz", "Relax"],
     "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "jazzNchill_okhsih" },
@@ -85,6 +86,7 @@ export const stations = [
   },
   {
     "_id": "190c4c7d4071",
+    "type" : "playlist",
     "name": "Rock Classics",
     "tags": ["Rock", "Legends"],
     "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "rockclassics_wt0e6h" },
@@ -121,6 +123,7 @@ export const stations = [
   },
   {
     "_id": "d86fe95a7743",
+    "type" : "playlist",
     "name": "Workout Boost",
     "tags": ["Workout", "Energy"],
     "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "workoutboosy_gstrn6" },
@@ -157,6 +160,7 @@ export const stations = [
   },
   {
     "_id": "b277701f83e5",
+    "type" : "playlist",
     "name": "Lofi Moods",
     "tags": ["Lofi", "Study"],
     "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "Lofi_Moods_cqwysk" },
@@ -193,6 +197,7 @@ export const stations = [
   },
   {
     "_id": "50fad7a73dc3",
+    "type" : "playlist",
     "name": "Classical Calm",
     "tags": ["Classical", "Piano"],
     "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "classicalcalm_v0uct2" },
@@ -229,6 +234,7 @@ export const stations = [
   },
   {
     "_id": "734278733651",
+    "type" : "playlist",
     "name": "Reggae Vibes",
     "tags": ["Reggae", "Chill"],
     "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "ReggaeVibes_o7clhl" },
@@ -265,6 +271,7 @@ export const stations = [
   },
   {
     "_id": "ea6685e71e6d",
+    "type" : "playlist",
     "name": "Electronic Pulse",
     "tags": ["EDM", "Party"],
     "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "ElectronicPulse_kcqv36" },
@@ -301,6 +308,7 @@ export const stations = [
   },
   {
     "_id": "93154d18e8c4",
+    "type" : "playlist",
     "name": "Pop Hits",
     "tags": ["Pop", "Top 40"],
     "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "PopHits_xi3nbd" },
@@ -337,6 +345,7 @@ export const stations = [
   },
   {
     "_id": "581e59c62645",
+    "type" : "playlist",
     "name": "Soulful Sundays",
     "tags": ["Soul", "Smooth"],
     "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "SoulfulSundays_syks3t" },
@@ -373,6 +382,7 @@ export const stations = [
   },
   {
     "_id": "db3acaae283a",
+    "type" : "album",
     "name": "Led Zeppelin Essentials",
     "tags": ["Rock", "Essential", "Led Zeppelin"],
     "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "ledzeppelin_ugkqoa" },
@@ -443,6 +453,7 @@ export const stations = [
   },
   {
     "_id": "1ba7b03b018d",
+    "type" : "album",
     "name": "Pink Floyd Essentials",
     "tags": ["Rock", "Essential", "Pink Floyd"],
     "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "pink_floyd_bbjyas" },
@@ -513,6 +524,7 @@ export const stations = [
   },
   {
     "_id": "65638b90bbf2",
+    "type" : "album",
     "name": "Muse Essentials",
     "tags": ["Rock", "Essential", "Muse"],
     "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "muse_ygjmw3" },
@@ -583,6 +595,7 @@ export const stations = [
   },
   {
     "_id": "fc509f5781c0",
+    "type" : "album",
     "name": "Queens of the Stone Age Essentials",
     "tags": ["Rock", "Essential", "Queens of the Stone Age"],
     "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "qotsa_fqnowt" },
@@ -653,6 +666,7 @@ export const stations = [
   },
   {
     "_id": "ba64db6f9aab",
+    "type" : "album",
     "name": "Biffy Clyro Essentials",
     "tags": ["Rock", "Essential", "Biffy Clyro"],
     "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "biffyclyro_jcwnzm"},
@@ -723,6 +737,7 @@ export const stations = [
   },
   {
   "_id": "0de87268ae9c",
+  "type" : "album",
   "name": "Rihanna Essentials",
   "tags": ["Pop", "Essential", "Rihanna"],
   "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "rihanah_smfacv" },
@@ -793,6 +808,7 @@ export const stations = [
 },
 {
   "_id": "b47f701bf6f8",
+  "type" : "album",
   "name": "Justin Timberlake Essentials",
   "tags": ["Pop", "Essential", "Justin Timberlake"],
   "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "justin_jzufds" },
@@ -863,6 +879,7 @@ export const stations = [
 },
 {
   "_id": "67d145dabba4",
+  "type" : "album",
   "name": "Michael Jackson Essentials",
   "tags": ["Pop", "Essential", "Michael Jackson"],
   "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "jackson_pzqdgu" },
@@ -934,6 +951,7 @@ export const stations = [
 
 {
   "_id": "fa24802f275e",
+  "type" : "album",
   "name": "Beyoncé Essentials",
   "tags": ["Pop", "Essential", "Beyoncé"],
   "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "beyonce_kxezil" },
@@ -1004,6 +1022,7 @@ export const stations = [
 },
 {
   "_id": "72794c955084",
+  "type" : "album",
   "name": "Ed Sheeran Essentials",
   "tags": ["Pop", "Essential", "Ed Sheeran"],
   "createdBy": { "_id": "u101", "fullname": "Spotify", "imgUrl": "sheeran_kmm8sm" },
