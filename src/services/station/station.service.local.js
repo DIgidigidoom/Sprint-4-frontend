@@ -22,10 +22,7 @@ export const stationService = {
 }
 window.cs = stationService
 
-const loggedinUser = {
-    _id: 'u101',
-    fullname: 'Hadar Sabag'
-}
+
 
 async function query(filterBy = { txt: '' }) {
     var stations = await storageService.query(STORAGE_KEY)
@@ -48,48 +45,43 @@ async function remove(stationId) {
 }
 
 async function save(station) {
+    console.log("station (save in service): ", station)
 
-    if (station.name === 'Liked Songs' && !station.isLikedSongs) {
-        station.isLikedSongs = true
-    }
     let savedStation
-    if (station._id && !station.isLikedSongs) {
-        savedStation = await storageService.put(STORAGE_KEY, { ...station })
-    } else if (station.isLikedSongs) {
-        if (station.songs.length > 1) {
+
+    if (station.type === 'liked station') {
+        if (station._id) savedStation = await storageService.put(STORAGE_KEY, { ...station })
+        else savedStation = await storageService.post(STORAGE_KEY,  station )
+    } else {
+        if (station._id) {
             savedStation = await storageService.put(STORAGE_KEY, { ...station })
-        } else {
-            savedStation = await storageService.post(STORAGE_KEY, station)
         }
-    }
-    else {
-        let stations = await query()
-        const { fullname, _id } = userService.getLoggedinUser()
-        const length = stations.filter(station => station.createdBy.fullname === fullname).length
-        console.log('user: ', userService.getLoggedinUser())
+        else {
+            let stations = await query()
+            const { fullname, _id } = userService.getLoggedinUser()
+            const length = stations.filter(station => station.createdBy._id === _id).length
 
-        const stationToSave = {
-            _id: makeId(4),
-            name: 'My Playlist #' + (length + 1),
 
-            createdBy: {
-                imgUrl: 'defaultstation_ov5qip',
-                fullname: fullname,
-                _id: _id
-            },
-            songs: [],
-            createdAt: Date.now(),
+            const stationToSave = {
+                _id: makeId(4),
+                type:'user playlist',
+                name: 'My Playlist #' + (length),
+                createdBy: {
+                    imgUrl: 'defaultstation_ov5qip',
+                    fullname: fullname,
+                    _id: _id
+                },
+                songs: [],
+                createdAt: Date.now(),
+            }
+           
+
+            savedStation = await storageService.post(STORAGE_KEY, stationToSave)
         }
-        if (stationToSave.name === 'Liked Songs') {
-            stationToSave.isLikedSongs = true
-        }
-        console.log("savedStation ", savedStation)
-        console.log("stationToSave ", stationToSave)
-        console.log("stations ", stations)
-        savedStation = await storageService.post(STORAGE_KEY, stationToSave)
     }
     return savedStation
 }
+
 
 export async function addSongToStation(stationId, songId) {
     const station = await getById(stationId)
@@ -114,40 +106,19 @@ export async function removeSongFromStation(stationId, songId) {
     return save(station)
 }
 
-export async function addToLikedSongs(stationId, songId) {
-    console.log("addToLikedSongs songId: ", songId)
-    console.log("addToLikedSongs stationId: ", stationId)
-    const station = await getById(stationId)
+export async function addToLikedSongs(station, song) {
     const { songs } = station
-    let stations = await query()
+
+    if(songs.find(likedSong=> likedSong.id === song.id))  throw new Error('Song is already in liked songs')
+
+    station.songs.push(song)
+    
+    // const song = songs.find(song => song.id === songId)
+
+    
 
 
-    let likedStation = stations.find(station =>
-        station.isLikedSongs && station.owner?._id === loggedinUser._id
-    )
-
-    if (!likedStation) {
-        likedStation = {
-            name: 'Liked Songs',
-            isLikedSongs: true,
-            createdBy: {
-                fullname: loggedinUser.fullname,
-                imgUrl: 'defaultstation_ov5qip'
-            },
-            songs: [],
-            createdAt: Date.now(),
-            owner: loggedinUser
-        }
-    }
-
-    const song = songs.find(song => song.id === songId)
-    if (!song) throw new Error('Song not found')
-
-    if (!likedStation.songs.find(s => s.id === songId)) {
-        likedStation.songs.push(song)
-    }
-
-    return save(likedStation)
+    return save(station)
 }
 
 export async function removeFromLikedSongs(songId) {

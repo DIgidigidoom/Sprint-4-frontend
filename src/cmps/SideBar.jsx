@@ -17,19 +17,14 @@ export function SideBar({ onCreateStation, stations, onSelectStation }) {
     const [searchTerm, setSearchTerm] = useState('')
     const [likedStation, setLikedStation] = useState('')
     const user = userService.getLoggedinUser()
-    console.log("user: ", user)
-    console.log("stations: ", stations)
+    
 
 
     useEffect(() => {
-        const filteredStations = stations.filter(station => (station.createdBy._id === user?._id) && !station.isLikedSongs)
+        const filteredStations = stations.filter(station => (station.createdBy._id === user?._id))
         setUserStations(filteredStations)
     }, [stations])
 
-    useEffect(() => {
-        const likedStationExists = stations.find(station => station.isLikedSongs)
-        setLikedStation(likedStationExists)
-    }, [stations])
 
 
     const searchRef = useRef(null)

@@ -1,10 +1,12 @@
-import { userService } from '../../services/user'
-// import { socketService } from '../../services/socket.service'
+import { userService } from '../../services/user/index.js'
+import { stationService } from '../../services/station/station.service.local'
 import { store } from '../store'
 
 import { showErrorMsg } from '../../services/event-bus.service'
 import { LOADING_DONE, LOADING_START } from '../reducers/system.reducer'
 import { REMOVE_USER, SET_USER, SET_USERS, SET_WATCHED_USER } from '../reducers/user.reducer'
+import { makeId } from '../../services/util.service.js'
+
 
 export async function loadUsers() {
     try {
@@ -42,14 +44,31 @@ export async function login(credentials) {
     }
 }
 
+
+
 export async function signup(credentials) {
+    console.log("credentials (user.actions.js): ", credentials)
     try {
         const user = await userService.signup(credentials)
-        store.dispatch({
-            type: SET_USER,
-            user
-        })
-        // socketService.login(user._id)
+        console.log("user (user.actions.js) ", user)
+        store.dispatch({ type: SET_USER, user })
+
+        const newStation = {
+            name: `Liked Songs`,
+            type: 'liked station',
+            tags: ['Personal'],
+            createdBy: {
+                _id: user._id,
+                fullname: user.fullname,
+                imgUrl: user.imgUrl || 'default-user-img'
+            },
+            likedByUsers: [],
+            songs: [],
+            msgs: []
+        }
+
+     await stationService.save(newStation)
+
         return user
     } catch (err) {
         console.log('Cannot signup', err)
@@ -79,4 +98,22 @@ export async function loadUser(userId) {
         showErrorMsg('Cannot load user')
         console.log('Cannot load user', err)
     }
+}
+
+export async function addSongToLiked(user, songId) {
+  try {
+    // Prevent duplicates
+    if (user.likedSongsIds.includes(songId)) return
+
+    const updatedUser = {
+      ...user,
+      likedSongsIds: [...user.likedSongsIds, songId]
+    }
+
+    await userService.update(updatedUser)
+    store.dispatch({ type: SET_USER, user: updatedUser })
+  } catch (err) {
+    console.error('user.actions -> Cannot add to liked', err)
+    throw err
+  }
 }

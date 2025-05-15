@@ -15,7 +15,7 @@ export async function loadStations(filterBy) {
 export async function loadStation(stationId) {
     try {
         const station = await stationService.getById(stationId)
-        console.log('📻 Station songs:', station.songs)
+      
         store.dispatch({ type: SET_STATION, station })
 
         const { currentSong } = store.getState().stationModule
@@ -24,9 +24,7 @@ export async function loadStation(stationId) {
             store.dispatch({ type: SET_CURRENT_PLAYLIST, songs: station.songs })
             store.dispatch({ type: SET_CURRENT_SONG, song: station.songs[0] })
             store.dispatch({ type: SET_IS_PLAYING, isPlaying: false })
-            console.log('🎯 currentPlaylist set to:', station.songs)
-            console.log('🎯 currentSong set to:', station.songs[0])
-            console.log('🎯 Final state:', store.getState().stationModule)
+           
         }
 
     } catch (err) {
@@ -125,12 +123,10 @@ export async function removeSong(stationId, songId) {
     }
 }
 
-export async function addToLiked(stationId, songId) {
-    console.log("addToLiked songId: ", songId)
-    console.log("addToLiked stationId: ", stationId)
-
+export async function addToLiked(station, song) {
+   
     try {
-        const updatedStation = await stationService.addToLikedSongs(stationId, songId)
+        const updatedStation = await stationService.addToLikedSongs(station, song)
 
         const state = store.getState()
         const existing = state.stationModule.stations.find(s => s._id === updatedStation._id)

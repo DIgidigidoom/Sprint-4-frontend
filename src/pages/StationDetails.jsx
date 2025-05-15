@@ -1,11 +1,14 @@
 import { useEffect, useState, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { userService } from '../services/user/user.service.local'
 import { loadStation, updateStation, addToLiked, setIsPlaying } from '../store/actions/station.actions'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
 import { useParams } from 'react-router-dom'
 import { formatDuration, formatSpotifyDate, getCloudinaryImg, calcStationDuration } from '../services/util.service'
 import { SET_STATION, SET_CURRENT_PLAYLIST, SET_CURRENT_SONG } from '../store/reducers/station.reducer'
+import { addSongToLiked } from '../store/actions/user.actions'
+import { SET_USER } from '../store/reducers/user.reducer'
 import AddLikedBtn from '../assets/icons/add-liked-btn.svg?react'
 import PlayBtn from '../assets/icons/play-btn-preview.svg?react'
 import ClockIcon from '../assets/icons/clock-icon.svg?react'
@@ -14,6 +17,8 @@ import { ColorThief } from '../cmps/ColorThief'
 
 export function StationDetails() {
   const station = useSelector(storeState => storeState.stationModule.station)
+  const stations = useSelector(storeState => storeState.stationModule.stations)
+  const loggedInUser = useSelector(storeState => storeState.userModule.user)
 
 
   const [name, setName] = useState('')
@@ -21,6 +26,7 @@ export function StationDetails() {
   const [stationDuration, setStationDuration] = useState('')
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [dominantColor, setDominantColor] = useState(null)
+  // const loggedInUser = userService.getLoggedinUser()
 
   const { stationId } = useParams()
   const dispatch = useDispatch()
@@ -76,18 +82,25 @@ export function StationDetails() {
     updateStation(updatedStation)
   }
 
-  async function onAddToLiked(ev, stationId, songId) {
-    console.log("onAddToLiked songId: ", songId)
-    console.log("onAddToLiked stationId: ", stationId)
-    ev.stopPropagation()
-    try {
-      await addToLiked(stationId, songId)
-      showSuccessMsg('Added To Liked Songs')
-    } catch (err) {
-      console.error('Failed to add to liked', err)
-      showErrorMsg('Failed To Add To Liked')
-    }
+  async function onAddToLiked(ev, song) {
+  ev.stopPropagation()
+
+  try {
+    const likedStation = stations.find(
+      station =>
+        station.createdBy._id === loggedInUser._id &&
+        station.type === 'liked station'
+    )
+
+    await addToLiked(likedStation, song)
+    await addSongToLiked(loggedInUser, song.id) 
+
+    showSuccessMsg('Added To Liked Songs')
+  } catch (err) {
+    console.error('Failed to add to liked', err)
+    showErrorMsg('Failed To Add To Liked')
   }
+}
 
   const { createdBy } = station
 
@@ -96,7 +109,7 @@ export function StationDetails() {
 
   return (
     <section className="station-details">
-      <ColorThief imgSrc={getCloudinaryImg(createdBy.imgUrl)} onColorReady={setDominantColor}/>
+      <ColorThief imgSrc={getCloudinaryImg(createdBy.imgUrl)} onColorReady={setDominantColor} />
       <div className="station-header"
         style={{
           background: `linear-gradient(to bottom, ${dominantColor} 0%, hsl(0, 0.80%, 25.70%) 100%)`,
@@ -176,7 +189,7 @@ export function StationDetails() {
                         <p className="song-album">{song.album}</p>
                         <p className="song-date-added">{formatSpotifyDate(song.addedAt)}</p>
                         <div className="hovered-like-btn">
-                          <button onClick={(ev) => onAddToLiked(ev, station._id, song.id)}><AddLikedBtn /></button>
+                          <button onClick={(ev) => onAddToLiked(ev, song)}><AddLikedBtn /></button>
                         </div>
                         <p className="song-formatted-duration">{formatDuration(song.duration)}</p>
                       </div>
