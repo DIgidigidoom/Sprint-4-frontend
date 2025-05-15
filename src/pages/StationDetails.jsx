@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { loadStation, updateStation, addToLiked, setIsPlaying } from '../store/actions/station.actions'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
-import { useParams} from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { formatDuration, formatSpotifyDate, getCloudinaryImg } from '../services/util.service'
 import { useDispatch } from 'react-redux'
 import { SET_STATION } from '../store/reducers/station.reducer'
@@ -77,6 +77,7 @@ export function StationDetails() {
 
   const { createdBy } = station
 
+
   if (!station) return <div>Loading...</div>
 
   return (
@@ -90,12 +91,16 @@ export function StationDetails() {
 
             {isEditModalOpen && (
               <EditStationModal
-                // playlist={playlist}
-                onClose={() => setIsEditModalOpen(false)}
-                // onSave={handleSave}
+                stationName={station.name}
+                onClose={(updated) => {
+                  setIsEditModalOpen(false)
+                  if (updated?.name) setName(updated.name) 
+                }}
+                station={station}
+                stationImg={createdBy.imgUrl}
               />
             )}
-    
+
             <p>
               <span style={{ fontWeight: "700" }}> {createdBy.fullname}</span><span style={{ color: "#b3b3b3" }}> • {songs.length} songs</span>
             </p>
