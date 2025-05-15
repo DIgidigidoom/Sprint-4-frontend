@@ -1,17 +1,18 @@
-
+import { useDispatch, useSelector } from 'react-redux'
+import { useLocation, Link, useSearchParams } from 'react-router-dom'
+import { SET_STATION } from '../store/reducers/station.reducer'
+import { useEffect } from 'react'
+import { useDebouncedYouTubeSearch } from '../customHooks/useDebouncedYouTubeSearch'
+import { setSearchText } from '../store/actions/youtube.actions'
+import { SET_YOUTUBE_RESULTS } from '../store/reducers/youtube.reducer.js'
 import { useNavigate } from 'react-router'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { logout } from '../store/actions/user.actions'
 import HomeIcon from '../assets/icons/home-btn.svg?react'
+import HomeIconEmpty from '../assets/icons/homepage-no-fill.svg?react'
 import MagnifyingGlassIcon from '../assets/icons/magnifying-glass.svg?react'
 import SpotifyLogo from '../assets/icons/spotify-logo.svg?react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useLocation, Link, useSearchParams } from 'react-router-dom'
-import { SET_STATION } from '../store/reducers/station.reducer'
-import { useState, useEffect } from 'react'
-import { useDebouncedYouTubeSearch } from '../customHooks/useDebouncedYouTubeSearch'
-import { setSearchText } from '../store/actions/youtube.actions'
-import { SET_YOUTUBE_RESULTS } from '../store/reducers/youtube.reducer.js'
+
 
 
 
@@ -19,7 +20,6 @@ import { SET_YOUTUBE_RESULTS } from '../store/reducers/youtube.reducer.js'
 
 export function AppHeader() {
 	const user = useSelector(storeState => storeState.userModule.user)
-	const youtubeResults = useSelector(storeState => storeState.youtubeModule.youtubeResults)
 	const searchTxt = useSelector(storeState => storeState.youtubeModule.searchText)
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
@@ -27,8 +27,10 @@ export function AppHeader() {
 	const [searchParams, setSearchParams] = useSearchParams()
 	const debouncedSearch = useDebouncedYouTubeSearch()
 
+
 	useEffect(() => {
 		const param = searchParams.get('search') || ''
+
 		setSearchText(param)
 	}, [])
 
@@ -59,6 +61,7 @@ export function AppHeader() {
 
 
 	return (
+
 		<header className="app-header full">
 			<nav>
 				<button className="logo" onClick={onGoHome}>
@@ -67,7 +70,7 @@ export function AppHeader() {
 
 				<div className="middle-header">
 					<button className="home-btn" onClick={onGoHome}>
-						<span className="home-btn-icon"><HomeIcon /></span>
+						{location.pathname === '/' ? <span className="home-btn-icon"><HomeIcon /> </span> : <span className="home-btn-icon"> <HomeIconEmpty /> </span>}
 					</button>
 
 					<div className="search-wrapper">
@@ -82,7 +85,12 @@ export function AppHeader() {
 							onChange={(ev) => {
 								const value = ev.target.value
 								dispatch(setSearchText(value))
-								setSearchParams(value ? { search: value } : {})
+								if (value) {
+									navigate(`/?search=${encodeURIComponent(value)}`)
+									
+								} else {
+									navigate('/')
+								}
 							}}
 						/>
 					</div>
@@ -100,6 +108,7 @@ export function AppHeader() {
 						<button onClick={onLogout}>Logout</button>
 					</div>
 				)}
+
 			</nav>
 		</header>
 

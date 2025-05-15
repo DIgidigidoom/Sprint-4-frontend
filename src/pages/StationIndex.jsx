@@ -15,7 +15,6 @@ import { SET_SEARCH_TEXT } from '../store/reducers/youtube.reducer.js'
 export function StationIndex() {
 
     const stations = useSelector(storeState => storeState.stationModule.stations)
-    const searchTxt = useSelector(storeState => storeState.youtubeModule.searchText)
 
     const [filterBy, setFilterBy] = useState(stationService.getDefaultFilter())
     const [stationToEdit, setStationToEdit] = useState(null)

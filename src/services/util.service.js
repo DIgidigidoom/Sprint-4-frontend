@@ -100,9 +100,22 @@ export function getCloudinaryImg(picId) {
 }
 
 export function calcStationDuration(songs) {
-  console.log("songs: ", songs)
   const duration = songs.reduce((sum, song) => sum + song.duration, 0)
-  console.log("duration: ", duration)
+
   return formatDuration(duration)
+}
+
+export function darkenHexColor(hex, percent = 10) {
+  const amt = Math.round(2.55 * percent)
+  const r = Math.max(0, parseInt(hex.slice(1, 3), 16) - amt)
+  const g = Math.max(0, parseInt(hex.slice(3, 5), 16) - amt)
+  const b = Math.max(0, parseInt(hex.slice(5, 7), 16) - amt)
+
+  return (
+    '#' +
+    [r, g, b]
+      .map(x => x.toString(16).padStart(2, '0'))
+      .join('')
+  )
 }
 

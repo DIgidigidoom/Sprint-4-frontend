@@ -1,0 +1,211 @@
+.sidebar-sort-btns {
+    display: flex;
+    gap: rem(12px);
+    padding: rem(12px) 0 rem(12px) 0;
+
+    .sidebar-sort-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: rem(4px) rem(12px);
+        font-size: rem(14px);
+        line-height: rem(14px);
+        background-color: $gray6;
+        border-radius: 999px;
+        color: $clr6;
+        transition: background-color 0.1s ease;
+
+
+        &:hover {
+            background-color: lighten($gray6, 5%);
+            cursor: pointer;
+        }
+
+    }
+
+    .sidebar-playlist-btn {
+        width: fit-content;
+        height: rem(32px);
+    }
+}
+
+.list-header-container {
+
+    .song-list-header {
+        display: flex;
+        align-items: center;
+        color: $clr5;
+        padding: 0 22px;
+        margin-block-end: 13px;
+        height: 36px;
+        border-bottom: 1px solid $gray4;
+        font-size: rem(14px);
+
+        .col {
+            margin: 0;
+            margin-bottom: 2px;
+        }
+
+        .song-list-header .col {
+            display: flex;
+            justify-content: space-between;
+
+            white-space: nowrap;
+        }
+
+        .col.index-header {
+            width: 16px;
+            font-size: rem(18px);
+            margin-inline-end: 9px;
+            
+        }
+
+        .col.title-header {
+            flex: 3;
+            min-width: 120px;
+            
+        }
+
+        .col.date-added-header {
+            flex: 2;
+            min-width: 120px;
+            padding-inline-end: 22px;
+            
+        }
+
+        svg {
+            justify-content: center;
+            align-items: center;
+            width: 16px;
+            fill: $clr5 ;
+            margin-inline-end: 28px;
+            margin-block-end: 2px;
+        }
+    }
+}
+
+.song-list {
+    display: flex;
+    flex-direction: column;
+    padding-inline-start: clamp(24px, 2.4vh, 80px);
+    padding-inline-end: 24px;
+    gap: 2px;
+
+    .song-row {
+
+        display: flex;
+        align-items: center;
+        height: 54px;
+        padding-inline: 15px;
+        border-radius: 4px;
+        border: 1px solid transparent;
+        transition: background-color 0.2s ease;
+        color: $clr5;
+        cursor: pointer;
+        position: relative;
+
+        &:hover {
+            background-color: #2a2a2a;
+        }
+
+        >* {
+            margin-bottom: 0;
+            font-size: rem(14px);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .song-index {
+            min-width: 16px;
+            color: $clr5;
+            padding-inline-start: 2px;
+            margin-inline-end: 1rem;
+        }
+
+        .info-wrapper {
+            display: flex;
+            flex: 3;
+            min-width: 120px;
+            align-items: center;
+            margin-inline-end: 33px;
+
+            .song-img {
+                width: 40px;
+                height: 40px;
+                border-radius: 4px;
+                margin-inline-end: 12px;
+            }
+
+
+
+            .song-info {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                min-width: 120px;
+
+                >* {
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                .song-title {
+                    font-size: rem(16px);
+                    color: $clr6;
+                    margin: 0;
+                }
+
+                .song-artist {
+                    color: $clr5;
+                    margin: 0;
+                    justify-self: center;
+                }
+            }
+        }
+
+        .song-date-added {
+            flex: 2;
+            min-width: 120px;
+            padding-inline-start: 22px;
+            
+        }
+
+        .song-formatted-duration {
+            width: 32px;
+            margin-inline-end: 28px;
+            justify-content: flex-end;
+        }
+
+
+
+        .hovered-like-btn {
+            z-index: -5;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+            align-self: center;
+            padding-inline-end: 21px;
+
+            button {
+                display: flex;
+                background-color: transparent;
+
+                svg {
+                    justify-content: center;
+                    align-items: center;
+                    width: 1rem;
+                    height: 1rem;
+                    fill: $clr5;
+                    color: $clr5;
+
+                    &:hover {
+                        scale: 1.03;
+                        cursor: pointer;
+                        fill: gray1;
+                    }
+                }
+            }
+        }
+    }
+}
