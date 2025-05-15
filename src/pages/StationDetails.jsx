@@ -84,7 +84,11 @@ export function StationDetails() {
     <section className="station-details">
       <div className="station-header">
         <div className="station-header-content">
-          <img className="station-img" src={getCloudinaryImg(createdBy.imgUrl)} alt={station.name} />
+          <img
+            className="station-img"
+            src={createdBy.imgUrl?.startsWith('http') ? createdBy.imgUrl : getCloudinaryImg(createdBy.imgUrl)}
+            alt={station.name}
+          />
           <div className="station-info">
             <p>Public Playlist</p>
             <h1 className="station-name-input" onClick={() => setIsEditModalOpen(true)}>{name}</h1>
@@ -94,7 +98,7 @@ export function StationDetails() {
                 stationName={station.name}
                 onClose={(updated) => {
                   setIsEditModalOpen(false)
-                  if (updated?.name) setName(updated.name) 
+                  if (updated?.name) setName(updated.name)
                 }}
                 station={station}
                 stationImg={createdBy.imgUrl}

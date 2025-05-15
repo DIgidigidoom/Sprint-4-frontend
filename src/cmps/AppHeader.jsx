@@ -40,7 +40,7 @@ export function AppHeader() {
 		<header className="app-header full">
 			<nav>
 				<button className="logo" onClick={onGoHome}>
-					<SpotifyLogo className="logo-icon"/>
+					<SpotifyLogo className="logo-icon" />
 				</button>
 
 				<div className="middle-header">
@@ -62,8 +62,15 @@ export function AppHeader() {
 
 				{!user && (
 					<div className="auth-buttons">
-						<button className="signup-btn">Sign up</button>
-						<button className="login-btn">Log in</button>
+
+						<Link to={`signup`}>
+							<button className="signup-btn">Sign up</button>
+						</Link>
+
+						<Link to={`login`}>
+							<button className="login-btn">Log in</button>
+						</Link>
+
 					</div>
 				)}
 				{user && (
