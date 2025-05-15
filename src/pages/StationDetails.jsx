@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { loadStation, updateStation, addToLiked, setIsPlaying } from '../store/actions/station.actions'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
@@ -10,6 +10,7 @@ import AddLikedBtn from '../assets/icons/add-liked-btn.svg?react'
 import PlayBtn from '../assets/icons/play-btn-preview.svg?react'
 import ClockIcon from '../assets/icons/clock-icon.svg?react'
 import { EditStationModal } from '../cmps/EditStationModal'
+import { ColorThief } from '../cmps/ColorThief'
 
 export function StationDetails() {
   const station = useSelector(storeState => storeState.stationModule.station)
@@ -18,10 +19,12 @@ export function StationDetails() {
   const [name, setName] = useState('')
   const [songs, setSongs] = useState(station.songs)
   const [stationDuration, setStationDuration] = useState('')
-
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const [dominantColor, setDominantColor] = useState(null)
+
   const { stationId } = useParams()
   const dispatch = useDispatch()
+  const colorThief = useRef()
 
   useEffect(() => {
     if (stationId) {
@@ -93,7 +96,12 @@ export function StationDetails() {
 
   return (
     <section className="station-details">
-      <div className="station-header">
+      <ColorThief imgSrc={getCloudinaryImg(createdBy.imgUrl)} onColorReady={setDominantColor}/>
+      <div className="station-header"
+        style={{
+          background: `linear-gradient(to bottom, ${dominantColor} 0%, hsl(0, 0.80%, 25.70%) 100%)`,
+          boxShadow: `0 1px 1000px 0  ${dominantColor}`
+        }}>
         <div className="station-header-content">
           <img className="station-img" src={getCloudinaryImg(createdBy.imgUrl)} alt={station.name} />
           <div className="station-info">
