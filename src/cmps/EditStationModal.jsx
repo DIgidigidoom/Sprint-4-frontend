@@ -17,26 +17,9 @@ export function EditStationModal({ onClose }) {
   const [previewImg, setPreviewImg] = useState(getCloudinaryImg(stationImg))
   const [imageFile, setImageFile] = useState(null)
   const fileInputRef = useRef(null)
-  console.log(station)
+  
 
-  // useEffect(() => {
-  //     setName(stationName)
-  //   }, [name])
-
-  // async function onSave(ev) {
-  //   ev.preventDefault()
-  //   const stationToSave = { ...station, name }
-
-  //   try {
-  //     await updateStation(stationToSave)
-  //     dispatch({ type: SET_STATION, station: stationToSave })
-  //     showSuccessMsg('Station updated successfully')
-  //     onClose(stationToSave)
-  //   } catch (err) {
-  //     console.error('Failed to update station', err)
-  //     showErrorMsg('Could not update station')
-  //   }
-  // }
+  
 
   async function onSave(ev) {
     ev.preventDefault()

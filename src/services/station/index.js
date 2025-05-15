@@ -6,13 +6,15 @@ import { stationService as remote } from './station.service.remote'
 function getEmptyStation() {
     return {
         name: '',
+        type: '',
         createdBy: {
+            _id: '',
             imgUrl: '',
-            fullname:''
+            fullname: ''
         },
         songs: [],
         createdAt: '',
-        owner:''
+
     }
 }
 

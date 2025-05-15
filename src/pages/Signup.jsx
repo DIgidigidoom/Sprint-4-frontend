@@ -22,7 +22,7 @@ export function Signup() {
 
     async function onSignup(ev = null) {
         if (ev) ev.preventDefault()
-
+        console.log("credentials (signup.jsx): ", credentials)
         if (!credentials.username || !credentials.password || !credentials.fullname) return
         await signup(credentials)
         clearState()
