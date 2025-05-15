@@ -71,7 +71,7 @@ export function EditStationModal({ onClose }) {
   async function uploadImage(file) {
     const formData = new FormData()
     formData.append('file', file)
-    formData.append('upload_preset', 'your_upload_preset') // replace with your Cloudinary preset
+    formData.append('upload_preset', 'react_uploads') // replace with your Cloudinary preset
 
     const res = await fetch('https://api.cloudinary.com/v1_1/dzgjtsmav/image/upload', {
       method: 'POST',
