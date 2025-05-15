@@ -5,7 +5,7 @@ import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
 import { useParams } from 'react-router-dom'
 import { formatDuration, formatSpotifyDate, getCloudinaryImg, calcStationDuration } from '../services/util.service'
-import { SET_STATION, SET_SONG_IDX } from '../store/reducers/station.reducer'
+import { SET_STATION, SET_CURRENT_PLAYLIST, SET_CURRENT_SONG } from '../store/reducers/station.reducer'
 import AddLikedBtn from '../assets/icons/add-liked-btn.svg?react'
 import PlayBtn from '../assets/icons/play-btn-preview.svg?react'
 import ClockIcon from '../assets/icons/clock-icon.svg?react'
@@ -13,7 +13,8 @@ import { EditStationModal } from '../cmps/EditStationModal'
 
 export function StationDetails() {
   const station = useSelector(storeState => storeState.stationModule.station)
- 
+
+
   const [name, setName] = useState('')
   const [songs, setSongs] = useState(station.songs)
   const [stationDuration, setStationDuration] = useState('')
@@ -55,8 +56,9 @@ export function StationDetails() {
   function onBackToList() {
     dispatch({ type: SET_STATION, station: null })
   }
-  function onSelectSong(songindx) {
-    dispatch({ type: SET_SONG_IDX, idx: songindx })
+  function onPlaySongFromStation(songIdx) {
+    dispatch({ type: SET_CURRENT_PLAYLIST, songs })
+    dispatch({ type: SET_CURRENT_SONG, song: station.songs[0], isPlaying: false })
   }
 
   function handleDragEnd(result) {
@@ -102,10 +104,10 @@ export function StationDetails() {
               <EditStationModal
                 // playlist={playlist}
                 onClose={() => setIsEditModalOpen(false)}
-                // onSave={handleSave}
+              // onSave={handleSave}
               />
             )}
-    
+
             <p>
               <span style={{ fontWeight: "700" }}> {createdBy.fullname}</span><span style={{ color: "#b3b3b3" }}> • {songs.length} songs, about {stationDuration} </span>
             </p>
@@ -142,7 +144,7 @@ export function StationDetails() {
                     {(provided) => (
                       <div
                         className="song-row"
-                        onClick={() => onSelectSong(idx)}
+                        onClick={() => onPlaySongFromStation(idx)}
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}

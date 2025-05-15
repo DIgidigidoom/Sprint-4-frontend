@@ -1,23 +1,24 @@
-import { formatDuration, formatSpotifyDate, getCloudinaryImg, calcStationDuration } from '../services/util.service'
+import { formatDuration, formatSpotifyDate, } from '../services/util.service'
 import AddLikedBtn from '../assets/icons/add-liked-btn.svg?react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import ClockIcon from '../assets/icons/clock-icon.svg?react'
+import { SET_STATION, SET_CURRENT_SONG, SET_CURRENT_PLAYLIST } from '../store/reducers/station.reducer'
+
 
 export function StaitionSearch() {
 
 	const youtubeResults = useSelector(storeState => storeState.youtubeModule.youtubeResults)
 
+	const dispatch = useDispatch()
+
+	function onSelectSong(song) {
+		dispatch({ type: SET_STATION, station: null })
+		dispatch({ type: SET_CURRENT_PLAYLIST, songs: [song] ,isPlaying: true })
+		dispatch({ type: SET_CURRENT_SONG, song })
+	}
+
 	return (
-		// youtubeResults.length > 0 && (
-		// 		<ul className="search-results">
-		// 			{youtubeResults.map(video => (
-		// 				<li key={video.id}>
-		// 					<img src={video.thumbnail} alt={video.title} />
-		// 					<div>{video.title}</div>
-		// 				</li>
-		// 			))}
-		// 		</ul>
-		// 	)
+
 		youtubeResults.length > 0 && (
 			<div className="song-list">
 				<div className='sidebar-sort-btns'>
@@ -29,7 +30,7 @@ export function StaitionSearch() {
 					<div className="song-list-header">
 						<p className="col index-header">#</p>
 						<p className="col title-header">Title</p>
-						
+
 						<p className="col date-added-header">Date Added</p>
 						<ClockIcon />
 					</div>
@@ -38,7 +39,7 @@ export function StaitionSearch() {
 					<div className="song-row"
 						key={song.id || idx}
 						index={idx}
-						onClick={() => onSelectSong(idx)}>
+						onClick={() => onSelectSong(song)}>
 						<span className="song-index">{idx + 1}</span>
 						<div className='info-wrapper'>
 							<img className="song-img" src={song.imgUrl} alt="" />
@@ -50,7 +51,10 @@ export function StaitionSearch() {
 						<p className="song-album">{song.album}</p>
 						<p className="song-date-added">{formatSpotifyDate(song.addedAt)}</p>
 						<div className="hovered-like-btn">
-							<button onClick={(ev) => onAddToLiked(ev, station._id, song.id)}><AddLikedBtn /></button>
+							<button onClick={(ev) => {
+								ev.stopPropagation()
+								onAddToLiked(ev, song.id)
+							}}><AddLikedBtn /></button>
 						</div>
 						<p className="song-formatted-duration">{formatDuration(song.duration)}</p>
 

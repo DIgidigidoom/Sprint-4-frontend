@@ -70,7 +70,7 @@ export function AppHeader() {
 
 				<div className="middle-header">
 					<button className="home-btn" onClick={onGoHome}>
-						{location.pathname === '/' ? <HomeIcon /> : <HomeIconEmpty />}
+						{location.pathname === '/' ? <span className="home-btn-icon"><HomeIcon /> </span> : <span className="home-btn-icon"> <HomeIconEmpty /> </span>}
 					</button>
 
 					<div className="search-wrapper">
@@ -87,6 +87,7 @@ export function AppHeader() {
 								dispatch(setSearchText(value))
 								if (value) {
 									navigate(`/?search=${encodeURIComponent(value)}`)
+									
 								} else {
 									navigate('/')
 								}

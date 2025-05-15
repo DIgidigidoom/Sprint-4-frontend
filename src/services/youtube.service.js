@@ -37,6 +37,7 @@ export async function searchYouTube(query) {
 		// Step 3: normalize the data
 		return detailsRes.data.items.map(item => ({
 			id: item.id,
+			url:item.id,
 			title: item.snippet.title,
 			description: item.snippet.description,
 			artist: item.snippet.channelTitle,
