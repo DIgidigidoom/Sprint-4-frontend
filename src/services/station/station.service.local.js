@@ -3,7 +3,7 @@ import { storageService } from '../async-storage.service.js'
 import { makeId } from '../util.service.js'
 import { seedStationsToLocalStorage } from './station.seed.js'
 import { demoSongs } from './demo-songs.js'
-import { addToLiked, removeFromLiked } from '../../store/actions/station.actions.js'
+import { attachSongIdToUser, removeFromLiked } from '../../store/actions/station.actions.js'
 import { userService } from '../user/index.js'
 
 const STORAGE_KEY = 'stationDB'
@@ -17,7 +17,7 @@ export const stationService = {
     remove,
     addSongToStation,
     removeSongFromStation,
-    addToLikedSongs,
+    attachSongIdToUserSongsStation,
     removeFromLikedSongs,
 }
 window.cs = stationService
@@ -106,7 +106,7 @@ export async function removeSongFromStation(stationId, songId) {
     return save(station)
 }
 
-export async function addToLikedSongs(station, song) {
+export async function attachSongIdToUserSongsStation(station, song) {
     const { songs } = station
 
     if(songs.find(likedSong=> likedSong.id === song.id))  throw new Error('Song is already in liked songs')
@@ -138,7 +138,7 @@ export async function removeFromLikedSongs(songId) {
 // for console
 window.stationService = stationService
 window.demoSongs = demoSongs
-window.addToLiked = addToLiked
+window.attachSongIdToUser = attachSongIdToUser
 window.removeFromLiked = removeFromLiked
 
 

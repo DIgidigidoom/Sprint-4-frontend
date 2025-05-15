@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { userService } from '../services/user/user.service.local'
-import { loadStation, updateStation, addToLiked, setIsPlaying } from '../store/actions/station.actions'
+import { loadStation, updateStation, attachSongIdToUser, setIsPlaying } from '../store/actions/station.actions'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
 import { useParams } from 'react-router-dom'
@@ -92,7 +92,7 @@ export function StationDetails() {
         station.type === 'liked station'
     )
 
-    await addToLiked(likedStation, song)
+    await attachSongIdToUser(likedStation, song)
     await addSongToLiked(loggedInUser, song.id) 
 
     showSuccessMsg('Added To Liked Songs')
