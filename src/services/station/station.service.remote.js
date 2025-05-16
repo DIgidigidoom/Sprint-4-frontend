@@ -5,6 +5,8 @@ export const stationService = {
     getById,
     save,
     remove,
+    addSongToStation,
+    removeSongFromStation,
     addStationMsg
 }
 
@@ -30,6 +32,14 @@ async function save(station) {
 }
 
 async function addStationMsg(stationId, txt) {
-    const savedMsg = await httpService.post(`station/${stationId}/msg`, {txt})
+    const savedMsg = await httpService.post(`station/${stationId}/msg`, { txt })
     return savedMsg
+}
+
+async function addSongToStation(stationId, song) {
+  return httpService.post(`station/${stationId}/song`, song)
+}
+
+async function removeSongFromStation(stationId, songId) {
+  return httpService.delete(`station/${stationId}/song/${songId}`)
 }

@@ -1,5 +1,5 @@
 import { userService } from '../../services/user/index.js'
-import { stationService } from '../../services/station/station.service.local'
+import { stationService } from '../../services/station'
 import { store } from '../store'
 import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service'
 import { LOADING_DONE, LOADING_START } from '../reducers/system.reducer'

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { loadStations, loadStation, addStation, removeStation } from '../store/actions/station.actions.js'
 import { useNavigate } from 'react-router-dom'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
-import { stationService } from '../services/station/index.js'
+import { stationService } from '../services/station'
 import { SideBar } from '../cmps/SideBar.jsx'
 import { AppHeader } from '../cmps/AppHeader.jsx'
 import MainPage from './MainPage.jsx'
@@ -19,11 +19,18 @@ export function StationIndex() {
     const [filterBy, setFilterBy] = useState(stationService.getDefaultFilter())
     const [stationToEdit, setStationToEdit] = useState(null)
 
+
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
     useEffect(() => {
-        loadStations(filterBy)
+        stationService.query(filterBy)
+            .then(stations => dispatch({ type: 'SET_STATIONS', stations }))
+            .catch(err => {
+                console.error('Failed to load stations', err)
+                showErrorMsg('Could not load stations')
+            })
     }, [filterBy])
 
     async function onRemoveStation(stationId) {
@@ -48,15 +55,34 @@ export function StationIndex() {
     }
 
     async function onCreateStation() {
-        const station = stationService.getEmptyStation()
+        const loggedInUser = userService.getLoggedinUser()
+
+        // Optional: Get the user's current playlist count to generate a name
+        const allStations = await stationService.query()
+        const userPlaylists = allStations.filter(station =>
+            station.createdBy._id === loggedInUser._id
+        )
+        const playlistNumber = userPlaylists.length
+
+        const newStation = {
+            type: 'user playlist',
+            name: `My Playlist #${playlistNumber}`,
+            createdBy: {
+                _id: loggedInUser._id,
+                fullname: loggedInUser.fullname,
+                imgUrl: loggedInUser.imgUrl || 'defaultstation_ov5qip',
+            },
+            songs: [],
+            createdAt: Date.now(),
+        }
 
         try {
-            const savedStation = await addStation(station)
-            console.log('Saved station:', savedStation)
-            console.log('🆕 Saved station ID:', savedStation._id)
-
-            await loadStation(savedStation._id)
+            const savedStation = await addStation(newStation)
             showSuccessMsg('Station created')
+
+            // Refresh the list to include the new one
+            const updatedStations = await stationService.query()
+            dispatch({ type: 'SET_STATIONS', stations: updatedStations })
         } catch (err) {
             showErrorMsg('Cannot create station')
             console.error(err)
