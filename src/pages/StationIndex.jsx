@@ -70,7 +70,7 @@ export function StationIndex() {
             createdBy: {
                 _id: loggedInUser._id,
                 fullname: loggedInUser.fullname,
-                imgUrl: loggedInUser.imgUrl || 'defaultstation_ov5qip',
+                imgUrl: 'defaultstation_ov5qip',
             },
             songs: [],
             createdAt: Date.now(),

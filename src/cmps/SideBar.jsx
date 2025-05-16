@@ -35,8 +35,7 @@ export function SideBar({ onCreateStation, onSelectStation }) {
     }, [stations, likedStation])
 
 
-    console.log('likedStation:', likedStation)
-    console.log('stations:', stations)
+   
 
 
 
