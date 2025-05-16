@@ -2,12 +2,12 @@
     color: $clr6;
     background-color: $clr3;
     min-height: 100vh;
-    
-    
+
+
 
     .station-header {
         // background: linear-gradient(to bottom, $clr1, $clr10);
-        box-shadow: 0 80px 100px 50px rgba(36, 211, 51, 0.2) ;
+        box-shadow: 0 80px 100px 50px rgba(36, 211, 51, 0.2);
         height: fit-content;
 
         .station-header-content {
@@ -285,5 +285,59 @@
         border-bottom: 2px solid $clr1;
     }
 
+    .playlist-srch-header {
+        margin: 22px 0 15px 0;
+        padding: 24px 24px 0 clamp(24px, 2.3vh, 80px);
+        font-size: rem(24px);
+        font-weight: 700;
+         word-spacing: -1.5px;
+         letter-spacing: -0.3px;
+    }
+
+    .search-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+        padding-inline-start: clamp(24px, 2.4vh, 80px);
+
+        svg {
+            position: absolute;
+            color: $clr5;
+            left: rem(13px);
+            top: 50%;
+            transform: translateY(-50%);
+            height: rem(22px);
+            pointer-events: none;
+            padding-inline-start: clamp(24px, 2.4vh, 80px);
+        }
+
+        .header-filter {
+            width: rem(474px);
+            height: 3rem;
+            // border-radius: 999px;
+            background-color: darken($color: $gray4, $amount: 5%);
+            border: 2px solid transparent;
+            padding-top: rem(3px);
+            padding-left: rem(47px);
+            padding-right: 1rem;
+            color: $clr6;
+            font-size: 1rem;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+
+            &::placeholder {
+                color: $clr5;
+            }
+
+            &:hover {
+                background-color: lighten($gray4, 3%);
+            }
+
+            &:focus {
+                background-color: lighten($gray4, 5%);
+                border-color: $clr6;
+                outline: none;
+            }
+        }
+    }
 
 }

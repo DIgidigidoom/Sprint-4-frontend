@@ -44,3 +44,17 @@ export function useDebouncedYouTubeSearch(delay = 400) {
 
     return debouncedSearch
 }
+
+export function useDebouncedYouTubeSearchInsidePlaylist(delay = 400) {
+  return debounce((txt, resolve) => {
+    (async () => {
+      try {
+        const results = await searchYouTube(txt)
+        resolve(results)
+      } catch (err) {
+        console.error('Search failed', err)
+        resolve([]) // fallback on error
+      }
+    })()
+  }, delay)
+}

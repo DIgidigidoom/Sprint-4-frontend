@@ -1,9 +1,12 @@
 import { useEffect, useState, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { loadStation, updateStation, setIsPlaying } from '../store/actions/station.actions'
+import { SET_YOUTUBE_RESULTS } from '../store/reducers/youtube.reducer.js'
+import { useDebouncedYouTubeSearch, useDebouncedYouTubeSearchInsidePlaylist } from '../customHooks/useDebouncedYouTubeSearch'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
-import { Navigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
+
 import { formatDuration, formatSpotifyDate, getCloudinaryImg, calcStationDuration } from '../services/util.service'
 import { SET_STATION, SET_CURRENT_PLAYLIST, SET_CURRENT_SONG } from '../store/reducers/station.reducer'
 import { toggleLike } from '../store/actions/user.actions'
@@ -11,6 +14,7 @@ import AddLikedBtn from '../assets/icons/add-liked-btn.svg?react'
 import LikedSongCheckmark from '../assets/icons/liked-song-checkmark.svg?react'
 import PlayBtn from '../assets/icons/play-btn-preview.svg?react'
 import ClockIcon from '../assets/icons/clock-icon.svg?react'
+import MagnifyingGlassIcon from '../assets/icons/magnifying-glass.svg?react'
 import { EditStationModal } from '../cmps/EditStationModal'
 import { ColorThief } from '../cmps/ColorThief'
 
@@ -18,6 +22,8 @@ export function StationDetails({ onRemoveStation }) {
   const station = useSelector(storeState => storeState.stationModule.station)
   const stations = useSelector(storeState => storeState.stationModule.stations)
   const loggedInUser = useSelector(storeState => storeState.userModule.user)
+  // const youtubeResults = useSelector(storeState => storeState.youtubeModule.youtubeResults)
+
 
 
   const [name, setName] = useState('')
@@ -25,11 +31,14 @@ export function StationDetails({ onRemoveStation }) {
   const [stationDuration, setStationDuration] = useState('')
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [dominantColor, setDominantColor] = useState(null)
+  const [searchTxt, setSearchTxt] = useState('')
+  const [stationSearchResults, setStationSearchResults] = useState([])
 
 
   const { stationId } = useParams()
   const dispatch = useDispatch()
   const colorThief = useRef()
+  const debouncedSearch = useDebouncedYouTubeSearchInsidePlaylist()
 
 
   useEffect(() => {
@@ -48,10 +57,20 @@ export function StationDetails({ onRemoveStation }) {
       dispatch(setIsPlaying(false))
       setStationDuration(calcStationDuration(stationSongs))
     }
-
-
   }, [station])
 
+  useEffect(() => {
+    if (!searchTxt) {
+      setStationSearchResults([])
+      return
+    }
+
+    debouncedSearch(searchTxt, (results) => {
+      setStationSearchResults(results)
+    })
+
+    return () => debouncedSearch.cancel()
+  }, [searchTxt])
 
   async function onSaveName() {
     try {
@@ -201,6 +220,47 @@ export function StationDetails({ onRemoveStation }) {
           </Droppable>
         </DragDropContext>
       </div>
-    </section>
+      <p className='playlist-srch-header'>Let's find something for your playlist</p>
+      <div className="search-wrapper">
+        <span className='magnifying-glass-header-filter'><MagnifyingGlassIcon /></span>
+        <div className='playlist-search-container'></div>
+        <input
+          type="text"
+          className="header-filter"
+          placeholder="What do you want to play?"
+          value={searchTxt}
+          onChange={(ev) => {
+            const value = ev.target.value
+            setSearchTxt(value)
+          }}
+        />
+      </div>
+      {stationSearchResults.length > 0 && (
+        <div className="song-list">
+       
+          {stationSearchResults.map((song, idx) => (
+            <div className="song-row"
+              key={song.id || idx}
+              index={idx}
+              onClick={() => onSelectSong(song)}>
+              <span className="song-index">{idx + 1}</span>
+              <div className='info-wrapper'>
+                <img className="song-img" src={song.imgUrl} alt="" />
+                <div className="song-info">
+                  <p className="song-title">{song.title}</p>
+                  <p className="song-artist">{song.artist}</p>
+                </div>
+              </div>
+
+              <p className="song-date-added">{formatSpotifyDate(song.addedAt)}</p>
+
+              <button>Add</button>
+
+            </div>
+          ))
+          }
+        </div >
+      )}
+    </section >
   )
 }
