@@ -129,7 +129,7 @@ console.log("loggedInUser ", loggedInUser)
         await likeSongForUser(loggedInUser, song.id)
         showSuccessMsg('Added to Liked Songs')
       }
-      if(station.type === 'liked station') store.dispatch({type:SET_STATION, station: updatedLikedStation})
+      if(station?.type === 'liked station') store.dispatch({type:SET_STATION, station: updatedLikedStation})
       
     } catch (err) {
       console.error('Like/unlike failed', err)
