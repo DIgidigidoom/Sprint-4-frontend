@@ -145,7 +145,7 @@ export function MediaPlayer() {
                                 toggleLike(song, loggedInUser, station, stations)
                             }}
                         >
-                            {isLiked ? <LikedSongCheckmark /> : <AddLikedBtn />}
+                            {isLiked ? <LikedSongCheckmark  /> : <AddLikedBtn  />}
                         </button>
                     </React.Fragment>
                 )}

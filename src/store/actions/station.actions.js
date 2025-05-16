@@ -34,16 +34,7 @@ export async function loadStation(stationId) {
 }
 
 
-// export async function loadStation(stationId) {
-//     try {
-//         const station = await stationService.getById(stationId)
-//         console.log('🟢 Loaded station:', station)
-//         store.dispatch(getCmdSetStation(station))
-//     } catch (err) {
-//         console.log('Cannot load station', err)
-//         throw err
-//     }
-// }
+
 
 
 export async function removeStation(stationId) {
