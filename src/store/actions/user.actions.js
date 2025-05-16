@@ -129,7 +129,7 @@ export async function toggleLike(song, loggedInUser, station, stations) {
             await likeSongForUser(loggedInUser, song.id)
             showSuccessMsg('Added to Liked Songs')
         }
-        if (station.type === 'liked station') store.dispatch({ type: SET_STATION, station: updatedLikedStation })
+        if (station?.type === 'liked station') store.dispatch({ type: SET_STATION, station: updatedLikedStation })
         //   store.dispatch({type:SET_STATIONS, stations: stations })
 
         const updatedStations = stations.map(s =>
