@@ -36,7 +36,7 @@
 
     .station-header {
         // background: linear-gradient(to bottom, $clr1, $clr10);
-        
+
         height: fit-content;
 
         .station-header-content {
@@ -99,6 +99,18 @@
                 transform: scale(1.03);
                 cursor: pointer;
                 color: $clr7;
+            }
+        }
+
+        svg.options-btn {
+            height: rem(32px);
+            width: rem(32px);
+            color: $clr5;
+
+            &:hover {
+                transform: scale(1.05);
+                cursor: pointer;
+                color: $clr6;
             }
         }
     }
@@ -370,7 +382,7 @@
     .song-list.search {
         margin-block-start: 6px;
         padding-inline-end: 16px;
-        gap:0;
+        gap: 0;
 
         .song-row.search {
             padding-inline-start: 6px;
