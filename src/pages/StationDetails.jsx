@@ -109,7 +109,7 @@ export function StationDetails({ onRemoveStation }) {
   }
   function onPlaySongFromStation(songIdx) {
     dispatch({ type: SET_CURRENT_PLAYLIST, songs })
-    dispatch({ type: SET_CURRENT_SONG, song: station.songs[0], isPlaying: false })
+    dispatch({ type: SET_CURRENT_SONG, song: station.songs[songIdx], isPlaying: false })
   }
 
   function handleDragEnd(result) {
