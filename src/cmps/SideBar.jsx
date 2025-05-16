@@ -14,23 +14,29 @@ import { getCloudinaryImg } from '../services/util.service'
 
 
 
-export function SideBar({ onCreateStation, stations, onSelectStation }) {
+export function SideBar({ onCreateStation, onSelectStation }) {
     const [isSearchOpen, setIsSearchOpen] = useState(false)
     const [userStations, setUserStations] = useState([])
     const [searchTerm, setSearchTerm] = useState('')
-    const [likedStation, setLikedStation] = useState('')
+    // const [likedStation, setLikedStation] = useState('')
     const user = userService.getLoggedinUser()
     const station = useSelector(storeState => storeState.stationModule.station)
+    const stations = useSelector(storeState => storeState.stationModule.stations)
     // const station = useSelector(storeState => storeState.stationModule.station)
     // const {createdBy} = station
     // const {createdBy} = station
-    
+
+    const likedStation = stations.find(station => station.createdBy._id === user?._id && station.type === 'liked station')
 
 
     useEffect(() => {
-        const filteredStations = stations.filter(station => (station.createdBy._id === user?._id))
+        const filteredStations = stations.filter(station => (station.createdBy._id === user?._id && station.type !== 'liked station'))
         setUserStations(filteredStations)
-    }, [stations])
+    }, [stations, likedStation])
+
+
+    console.log('likedStation:', likedStation)
+    console.log('stations:', stations)
 
 
 
@@ -99,14 +105,14 @@ export function SideBar({ onCreateStation, stations, onSelectStation }) {
                 )}
             </div>
 
-            {likedStation && (
+            {likedStation && likedStation.songs.length > 0 && (
                 <div key={likedStation._id} className='sidebar-followed-content' onClick={() => onSelectStation(likedStation._id)}>
                     <div className='sidebar-content-preview'>
-                        <img src={LikedSongsStationPic} alt="" />
-                        <HoverPlayBtn className="hover-play-btn"/>
+                        <img src={getCloudinaryImg(likedStation.createdBy.imgUrl)} alt="" />
+                        <HoverPlayBtn className="hover-play-btn" />
                         <div className='sidebar-content-info'>
                             <span className='sidebar-content-info-title'>{likedStation.name}</span>
-                            <span className='sidebar-content-info-description sidebar-content-info-description-liked-songs'><span className="liked-songs-pin"><LikedSongsPin className="liked-songs-pin-svg" /></span>Playlist • {likedStation.songs.length}</span>
+                            <span className='sidebar-content-info-description sidebar-content-info-description-liked-songs'><span className="liked-songs-pin"><LikedSongsPin className="liked-songs-pin-svg" /></span>Playlist • {likedStation.songs.length} {likedStation.songs.length === 1 ? 'song' : 'songs'}</span>
                         </div>
                     </div>
                 </div>
@@ -117,7 +123,7 @@ export function SideBar({ onCreateStation, stations, onSelectStation }) {
                     <div key={station._id} className='sidebar-followed-content' onClick={() => onSelectStation(station._id)}>
                         <div className='sidebar-content-preview'>
                             <img src={getCloudinaryImg(station.createdBy.imgUrl)} />
-                            <HoverPlayBtn className="hover-play-btn"/>
+                            <HoverPlayBtn className="hover-play-btn" />
                             <div className='sidebar-content-info'>
                                 <span className='sidebar-content-info-title'>{station.name}</span>
                                 <span className='sidebar-content-info-description'>Playlist • {station.createdBy.fullname}</span>
