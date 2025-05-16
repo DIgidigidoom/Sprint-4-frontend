@@ -220,13 +220,13 @@ export function StationDetails({ onRemoveStation }) {
           </Droppable>
         </DragDropContext>
       </div>
-      <p className='playlist-srch-header'>Let's find something for your playlist</p>
+      <p className='playlist-srch-header search'>Let's find something for your playlist</p>
       <div className="search-wrapper">
         <span className='magnifying-glass-header-filter'><MagnifyingGlassIcon /></span>
         <div className='playlist-search-container'></div>
         <input
           type="text"
-          className="header-filter"
+          className="playlist-filter search"
           placeholder="What do you want to play?"
           value={searchTxt}
           onChange={(ev) => {
@@ -236,25 +236,24 @@ export function StationDetails({ onRemoveStation }) {
         />
       </div>
       {stationSearchResults.length > 0 && (
-        <div className="song-list">
+        <div className="song-list search">
        
           {stationSearchResults.map((song, idx) => (
-            <div className="song-row"
+            <div className="song-row search"
               key={song.id || idx}
               index={idx}
               onClick={() => onSelectSong(song)}>
-              <span className="song-index">{idx + 1}</span>
-              <div className='info-wrapper'>
-                <img className="song-img" src={song.imgUrl} alt="" />
-                <div className="song-info">
-                  <p className="song-title">{song.title}</p>
-                  <p className="song-artist">{song.artist}</p>
+              <div className='info-wrapper search'>
+                <img className="song-img search" src={song.imgUrl} alt="" />
+                <div className="song-info search">
+                  <p className="song-title search">{song.title}</p>
+                  <p className="song-artist search">{song.artist}</p>
                 </div>
               </div>
 
-              <p className="song-date-added">{formatSpotifyDate(song.addedAt)}</p>
+              <p className="song-date-added search">{formatSpotifyDate(song.addedAt)}</p>
 
-              <button>Add</button>
+              <button className='add-to-playlist-btn search'>Add</button>
 
             </div>
           ))

@@ -7,7 +7,7 @@
 
     .station-header {
         // background: linear-gradient(to bottom, $clr1, $clr10);
-        box-shadow: 0 80px 100px 50px rgba(36, 211, 51, 0.2);
+        
         height: fit-content;
 
         .station-header-content {
@@ -127,7 +127,7 @@
                 align-items: center;
                 width: 16px;
                 fill: $clr5 ;
-                margin-inline-end: 11px;
+                margin-inline-end: 18px;
             }
         }
     }
@@ -146,6 +146,7 @@
             align-items: center;
             height: 54px;
             padding-inline: 16px;
+            margin-top: 2px;
             border-radius: 4px;
             border: 1px solid transparent;
             transition: background-color 0.2s ease;
@@ -217,18 +218,18 @@
             .song-album {
                 flex: 2;
                 min-width: 120px;
-                padding-inline-start: 75px;
+                padding-inline-start: 85px;
             }
 
             .song-date-added {
                 flex: 2;
                 min-width: 120px;
-                padding-left: 75px;
+                padding-left: 85px;
             }
 
             .song-formatted-duration {
                 width: 32px;
-                margin-inline-end: 11px;
+                margin-inline-end: 18px;
                 justify-content: flex-end;
             }
 
@@ -290,8 +291,8 @@
         padding: 24px 24px 0 clamp(24px, 2.3vh, 80px);
         font-size: rem(24px);
         font-weight: 700;
-         word-spacing: -1.5px;
-         letter-spacing: -0.3px;
+        word-spacing: -1.5px;
+        letter-spacing: -0.3px;
     }
 
     .search-wrapper {
@@ -299,29 +300,26 @@
         display: flex;
         align-items: center;
         padding-inline-start: clamp(24px, 2.4vh, 80px);
+        padding-block-end: 16px;
 
         svg {
             position: absolute;
             color: $clr5;
-            left: rem(13px);
-            top: 50%;
+            left: rem(9px);
             transform: translateY(-50%);
-            height: rem(22px);
+            height: rem(16px);
             pointer-events: none;
             padding-inline-start: clamp(24px, 2.4vh, 80px);
         }
 
-        .header-filter {
-            width: rem(474px);
-            height: 3rem;
-            // border-radius: 999px;
+        .playlist-filter.search {
+            width: rem(397px);
+            height: rem(38px);
             background-color: darken($color: $gray4, $amount: 5%);
             border: 2px solid transparent;
-            padding-top: rem(3px);
-            padding-left: rem(47px);
-            padding-right: 1rem;
+            padding: rem(1px) rem(16px) 0 rem(28px);
             color: $clr6;
-            font-size: 1rem;
+            font-size: rem(14px);
             transition: background-color 0.2s ease, border-color 0.2s ease;
 
             &::placeholder {
@@ -338,6 +336,34 @@
                 outline: none;
             }
         }
+    }
+
+    .song-list.search {
+        margin-block-start: 6px;
+        padding-inline-end: 16px;
+        gap:0;
+
+        .song-row.search {
+            padding-inline-start: 6px;
+
+            .song-date-added.search {
+                padding-left: 0;
+                padding-right: 26px;
+            }
+
+            .add-to-playlist-btn.search {
+                display: flex;
+                justify-items: center;
+                background-color: transparent;
+                padding: 6px 16px;
+                border: 1px solid grey;
+                border-radius: 100px;
+                color: white;
+                font-weight: 700;
+            }
+
+        }
+
     }
 
 }
