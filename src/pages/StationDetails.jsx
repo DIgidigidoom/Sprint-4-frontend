@@ -107,7 +107,7 @@ export function StationDetails({ onRemoveStation }) {
             src={getCloudinaryImg(createdBy.imgUrl)}
             alt={station.name}
           />
-          {loggedInUser._id === station.createdBy._id && (
+          {loggedInUser?._id === station.createdBy._id && (
             <button onClick={() => { onRemoveStation(station._id) }}>Remove</button>
           )}
 
