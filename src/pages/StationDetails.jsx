@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { loadStation, updateStation, setIsPlaying } from '../store/actions/station.actions'
+import { loadStation, updateStation, setIsPlaying, addSong, removeSong } from '../store/actions/station.actions'
 import { SET_YOUTUBE_RESULTS } from '../store/reducers/youtube.reducer.js'
 import { useDebouncedYouTubeSearch, useDebouncedYouTubeSearchInsidePlaylist } from '../customHooks/useDebouncedYouTubeSearch'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
@@ -22,6 +22,7 @@ export function StationDetails({ onRemoveStation }) {
   const station = useSelector(storeState => storeState.stationModule.station)
   const stations = useSelector(storeState => storeState.stationModule.stations)
   const loggedInUser = useSelector(storeState => storeState.userModule.user)
+  const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0, song: null })
   // const youtubeResults = useSelector(storeState => storeState.youtubeModule.youtubeResults)
 
 
@@ -47,6 +48,16 @@ export function StationDetails({ onRemoveStation }) {
       loadStation(stationId)
     }
   }, [stationId])
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (contextMenu.visible) setContextMenu({ visible: false, x: 0, y: 0, song: null })
+    }
+
+    window.addEventListener('click', handleClickOutside)
+    return () => window.removeEventListener('click', handleClickOutside)
+  }, [contextMenu.visible])
+
 
 
   useEffect(() => {
@@ -83,6 +94,16 @@ export function StationDetails({ onRemoveStation }) {
     }
   }
 
+  function onRightClickSong(ev, song) {
+    ev.preventDefault()
+    setContextMenu({
+      visible: true,
+      x: ev.pageX,
+      y: ev.pageY,
+      song
+    })
+  }
+
   function onBackToList() {
     dispatch({ type: SET_STATION, station: null })
   }
@@ -101,6 +122,19 @@ export function StationDetails({ onRemoveStation }) {
 
     const updatedStation = { ...station, songs: reordered }
     updateStation(updatedStation)
+  }
+
+  function onAddSongToStation(song) {
+    console.log('song: ', song)
+    console.log('station id: ', station._id)
+
+    addSong(stationId, song)
+  }
+
+  function onRemoveSongFromStation(song) {
+    console.log('song: ', song)
+    console.log('station id: ', station._id)
+    removeSong(stationId, song)
   }
 
 
@@ -147,7 +181,7 @@ export function StationDetails({ onRemoveStation }) {
             )}
 
             <p>
-              <span style={{ fontWeight: "700" }}> {createdBy.fullname}</span><span style={{ color: "#b3b3b3" }}> • {songs.length} songs, about {stationDuration} </span>
+              <span style={{ fontWeight: "700" }}> {createdBy.fullname}</span><span style={{ color: "#b3b3b3" }}> • {songs.length} {songs.length === 1 ? 'song' : 'songs'} , about {stationDuration} </span>
             </p>
           </div>
         </div>
@@ -183,6 +217,7 @@ export function StationDetails({ onRemoveStation }) {
                       <div
                         className="song-row"
                         onClick={() => onPlaySongFromStation(idx)}
+                        onContextMenu={(ev) => onRightClickSong(ev, song)}
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
@@ -237,12 +272,12 @@ export function StationDetails({ onRemoveStation }) {
       </div>
       {stationSearchResults.length > 0 && (
         <div className="song-list">
-       
+
           {stationSearchResults.map((song, idx) => (
             <div className="song-row"
               key={song.id || idx}
               index={idx}
-              onClick={() => onSelectSong(song)}>
+            >
               <span className="song-index">{idx + 1}</span>
               <div className='info-wrapper'>
                 <img className="song-img" src={song.imgUrl} alt="" />
@@ -251,16 +286,34 @@ export function StationDetails({ onRemoveStation }) {
                   <p className="song-artist">{song.artist}</p>
                 </div>
               </div>
-
               <p className="song-date-added">{formatSpotifyDate(song.addedAt)}</p>
-
-              <button>Add</button>
-
+              <button onClick={() => onAddSongToStation(song)}>Add</button>
             </div>
           ))
           }
+
         </div >
+      )}
+
+      {contextMenu.visible && (
+        <div
+          className="custom-context-menu"
+          style={{
+            top: `${contextMenu.y}px`,
+            left: `${contextMenu.x}px`,
+            position: 'fixed',
+            backgroundColor: '#282828',
+            border: '1px solid #555',
+            padding: '10px',
+            borderRadius: '5px',
+            zIndex: 1000,
+          }}
+          onClick={(ev) => ev.stopPropagation()}
+        >
+          <button onClick={() => onRemoveSongFromStation(contextMenu.song)}>Remove Song</button>
+        </div>
       )}
     </section >
   )
 }
+

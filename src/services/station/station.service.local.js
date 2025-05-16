@@ -96,14 +96,63 @@ export async function removeSongFromLikedStation(station, songId) {
 }
 
 export async function addSongToLikedStation(station, song) {
-  if (!station.songs) station.songs = []
+    if (!station.songs) station.songs = []
 
-  const alreadyExists = station.songs.some(s => s.id === song.id)
-  if (alreadyExists) throw new Error('Song already exists in Liked Songs')
+    const alreadyExists = station.songs.some(s => s.id === song.id)
+    if (alreadyExists) throw new Error('Song already exists in Liked Songs')
 
-  station.songs.push(song)
-  return save(station)
+    station.songs.push(song)
+    return save(station)
 }
+
+export async function addSongToStation(stationId, song) {
+    try {
+        
+        const stations = await storageService.query(STORAGE_KEY)
+
+        
+        const station = stations.find(station => station._id === stationId)
+        if (!station) throw new Error('Station not found')
+
+       
+        const isAlreadyAdded = station.songs.some(s => s.id === song.id)
+        if (isAlreadyAdded) throw new Error('Song already exists in station')
+
+        
+        station.songs.push(song)
+
+        
+        await storageService.put(STORAGE_KEY, station)
+
+        return station
+    } catch (err) {
+        console.error('Failed to add song to station', err)
+        throw err
+    }
+}
+
+export async function removeSongFromStation(stationId, song) {
+    try {
+        
+        const stations = await storageService.query(STORAGE_KEY)
+
+        
+        const station = stations.find(station => station._id === stationId)
+        if (!station) throw new Error('Station not found')
+
+        
+        station.songs = station.songs.filter(s => s.id !== song.id)
+
+        
+        await storageService.put(STORAGE_KEY, station)
+
+        return station
+    } catch (err) {
+        console.error('Failed to add song to station', err)
+        throw err
+    }
+}
+
 
 
 
