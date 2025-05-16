@@ -3,7 +3,7 @@ import { storageService } from '../async-storage.service.js'
 import { makeId } from '../util.service.js'
 import { seedStationsToLocalStorage } from './station.seed.js'
 import { demoSongs } from './demo-songs.js'
-import { addToLiked, removeFromLiked } from '../../store/actions/station.actions.js'
+import { attachSongIdToUser, removeFromLiked } from '../../store/actions/station.actions.js'
 import { userService } from '../user/index.js'
 
 const STORAGE_KEY = 'stationDB'
@@ -15,10 +15,10 @@ export const stationService = {
     getById,
     save,
     remove,
-    addSongToStation,
-    removeSongFromStation,
-    addToLikedSongs,
-    removeFromLikedSongs,
+    likeSongForUserStation,
+    removeSongFromLikedStation,
+    addSongToLikedStation
+
 }
 window.cs = stationService
 
@@ -51,7 +51,7 @@ async function save(station) {
 
     if (station.type === 'liked station') {
         if (station._id) savedStation = await storageService.put(STORAGE_KEY, { ...station })
-        else savedStation = await storageService.post(STORAGE_KEY,  station )
+        else savedStation = await storageService.post(STORAGE_KEY, station)
     } else {
         if (station._id) {
             savedStation = await storageService.put(STORAGE_KEY, { ...station })
@@ -64,7 +64,7 @@ async function save(station) {
 
             const stationToSave = {
                 _id: makeId(4),
-                type:'user playlist',
+                type: 'user playlist',
                 name: 'My Playlist #' + (length),
                 createdBy: {
                     imgUrl: 'defaultstation_ov5qip',
@@ -74,7 +74,7 @@ async function save(station) {
                 songs: [],
                 createdAt: Date.now(),
             }
-           
+
 
             savedStation = await storageService.post(STORAGE_KEY, stationToSave)
         }
@@ -82,63 +82,35 @@ async function save(station) {
     return savedStation
 }
 
-
-export async function addSongToStation(stationId, songId) {
-    const station = await getById(stationId)
-    const { songs } = station
-    if (!station.owner || station.owner._id !== loggedinUser._id) {
-        throw new Error('Not your station')
+export async function likeSongForUserStation(station, song) {
+    if (station.songs.find(s => s.id === song.id)) {
+        throw new Error('Song already exists in station')
     }
-    const song = songs.find(song => song.id === songId)
-    if (!song) throw new Error('Song not found')
-
     station.songs.push(song)
     return save(station)
 }
 
-export async function removeSongFromStation(stationId, songId) {
-    const station = await getById(stationId)
-    if (!station.owner || station.owner._id !== loggedinUser._id) {
-        throw new Error('Not your station')
-    }
-
+export async function removeSongFromLikedStation(station, songId) {
     station.songs = station.songs.filter(song => song.id !== songId)
     return save(station)
 }
 
-export async function addToLikedSongs(station, song) {
-    const { songs } = station
+export async function addSongToLikedStation(station, song) {
+  if (!station.songs) station.songs = []
 
-    if(songs.find(likedSong=> likedSong.id === song.id))  throw new Error('Song is already in liked songs')
+  const alreadyExists = station.songs.some(s => s.id === song.id)
+  if (alreadyExists) throw new Error('Song already exists in Liked Songs')
 
-    station.songs.push(song)
-    
-    // const song = songs.find(song => song.id === songId)
-
-    
-
-
-    return save(station)
+  station.songs.push(song)
+  return save(station)
 }
 
-export async function removeFromLikedSongs(songId) {
-    let stations = await query()
 
-    const likedStation = stations.find(station =>
-        station.isLikedSongs && station.owner?._id === loggedinUser._id
-    )
-
-    if (!likedStation) throw new Error('Liked Songs station not found')
-
-    likedStation.songs = likedStation.songs.filter(song => song.id !== songId)
-
-    return save(likedStation)
-}
 
 // for console
 window.stationService = stationService
 window.demoSongs = demoSongs
-window.addToLiked = addToLiked
+window.attachSongIdToUser = attachSongIdToUser
 window.removeFromLiked = removeFromLiked
 
 

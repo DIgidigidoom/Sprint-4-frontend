@@ -1,15 +1,14 @@
 import { useEffect, useState, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { userService } from '../services/user/user.service.local'
-import { loadStation, updateStation, addToLiked, setIsPlaying } from '../store/actions/station.actions'
+import { loadStation, updateStation, setIsPlaying } from '../store/actions/station.actions'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
 import { Navigate, useParams } from 'react-router-dom'
 import { formatDuration, formatSpotifyDate, getCloudinaryImg, calcStationDuration } from '../services/util.service'
 import { SET_STATION, SET_CURRENT_PLAYLIST, SET_CURRENT_SONG } from '../store/reducers/station.reducer'
-import { addSongToLiked } from '../store/actions/user.actions'
-import { SET_USER } from '../store/reducers/user.reducer'
+import { toggleLike } from '../store/actions/user.actions'
 import AddLikedBtn from '../assets/icons/add-liked-btn.svg?react'
+import LikedSongCheckmark from '../assets/icons/liked-song-checkmark.svg?react'
 import PlayBtn from '../assets/icons/play-btn-preview.svg?react'
 import ClockIcon from '../assets/icons/clock-icon.svg?react'
 import { EditStationModal } from '../cmps/EditStationModal'
@@ -26,7 +25,7 @@ export function StationDetails({ onRemoveStation }) {
   const [stationDuration, setStationDuration] = useState('')
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [dominantColor, setDominantColor] = useState(null)
-  // const loggedInUser = userService.getLoggedinUser()
+
 
   const { stationId } = useParams()
   const dispatch = useDispatch()
@@ -34,6 +33,7 @@ export function StationDetails({ onRemoveStation }) {
 
 
   useEffect(() => {
+
     if (stationId) {
       loadStation(stationId)
     }
@@ -51,6 +51,7 @@ export function StationDetails({ onRemoveStation }) {
 
 
   }, [station])
+
 
   async function onSaveName() {
     try {
@@ -83,25 +84,8 @@ export function StationDetails({ onRemoveStation }) {
     updateStation(updatedStation)
   }
 
-  async function onAddToLiked(ev, song) {
-    ev.stopPropagation()
 
-    try {
-      const likedStation = stations.find(
-        station =>
-          station.createdBy._id === loggedInUser._id &&
-          station.type === 'liked station'
-      )
 
-      await addToLiked(likedStation, song)
-      await addSongToLiked(loggedInUser, song.id)
-
-      showSuccessMsg('Added To Liked Songs')
-    } catch (err) {
-      console.error('Failed to add to liked', err)
-      showErrorMsg('Failed To Add To Liked')
-    }
-  }
 
   const { createdBy } = station
 
@@ -195,7 +179,16 @@ export function StationDetails({ onRemoveStation }) {
                         <p className="song-album">{song.album}</p>
                         <p className="song-date-added">{formatSpotifyDate(song.addedAt)}</p>
                         <div className="hovered-like-btn">
-                          <button onClick={(ev) => onAddToLiked(ev, song)}><AddLikedBtn /></button>
+                          <button className='hovered-like-btn'
+                            onClick={(ev) => {
+                              ev.stopPropagation()
+                              toggleLike(song, loggedInUser, station, stations)
+                            }}
+                          >
+                            {loggedInUser?.likedSongsIds?.includes(song.id)
+                              ? <LikedSongCheckmark style={{ zIndex: 100 }} />
+                              : <AddLikedBtn />}
+                          </button>
                         </div>
                         <p className="song-formatted-duration">{formatDuration(song.duration)}</p>
                       </div>

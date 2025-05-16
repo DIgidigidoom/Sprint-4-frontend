@@ -123,10 +123,10 @@ export async function removeSong(stationId, songId) {
     }
 }
 
-export async function addToLiked(station, song) {
+export async function attachSongIdToUser(station, song) {
    
     try {
-        const updatedStation = await stationService.addToLikedSongs(station, song)
+        const updatedStation = await stationService.likeSongForUserStation(station, song)
 
         const state = store.getState()
         const existing = state.stationModule.stations.find(s => s._id === updatedStation._id)

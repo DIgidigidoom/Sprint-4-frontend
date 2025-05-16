@@ -1,11 +1,11 @@
 import { userService } from '../../services/user/index.js'
 import { stationService } from '../../services/station/station.service.local'
 import { store } from '../store'
-
-import { showErrorMsg } from '../../services/event-bus.service'
+import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service'
 import { LOADING_DONE, LOADING_START } from '../reducers/system.reducer'
 import { REMOVE_USER, SET_USER, SET_USERS, SET_WATCHED_USER } from '../reducers/user.reducer'
 import { makeId } from '../../services/util.service.js'
+import { SET_STATION,} from '../../store/reducers/station.reducer.js'
 
 
 export async function loadUsers() {
@@ -100,20 +100,39 @@ export async function loadUser(userId) {
     }
 }
 
-export async function addSongToLiked(user, songId) {
-  try {
-    // Prevent duplicates
-    if (user.likedSongsIds.includes(songId)) return
-
-    const updatedUser = {
-      ...user,
-      likedSongsIds: [...user.likedSongsIds, songId]
-    }
-
-    await userService.update(updatedUser)
-    store.dispatch({ type: SET_USER, user: updatedUser })
-  } catch (err) {
-    console.error('user.actions -> Cannot add to liked', err)
-    throw err
-  }
+export async function likeSongForUser(user, songId) {
+  const updatedUser = await userService.addSongIdToUser(user, songId)
+  store.dispatch({ type: SET_USER, user: updatedUser })
 }
+
+export async function unlikeSongForUser(user, songId) {
+  const updatedUser = await userService.removeSongIdFromUser(user, songId)
+  store.dispatch({ type: SET_USER, user: updatedUser })
+}
+
+export async function toggleLike(song, loggedInUser, station, stations) {
+   
+console.log("loggedInUser ", loggedInUser)
+    const isLiked = loggedInUser.likedSongsIds.includes(song.id)
+    const likedStation = stations.find(
+      s => s.type === 'liked station' && s.createdBy._id === loggedInUser._id
+    )
+
+    try {
+      let updatedLikedStation
+      if (isLiked) {
+       updatedLikedStation= await stationService.removeSongFromLikedStation(likedStation, song.id)
+        await unlikeSongForUser(loggedInUser, song.id)
+        showSuccessMsg('Removed from Liked Songs')
+      } else {
+       updatedLikedStation= await stationService.addSongToLikedStation(likedStation, song)
+        await likeSongForUser(loggedInUser, song.id)
+        showSuccessMsg('Added to Liked Songs')
+      }
+      if(station.type === 'liked station') store.dispatch({type:SET_STATION, station: updatedLikedStation})
+      
+    } catch (err) {
+      console.error('Like/unlike failed', err)
+      showErrorMsg(err.message || 'Something went wrong')
+    }
+  }
