@@ -7,6 +7,9 @@ import { userService } from '../services/user'
 import { showErrorMsg } from '../services/event-bus.service'
 import LikedSongsStationPic from "../assets/imgs/liked-songs-station-pic.png"
 import LikedSongsPin from "../assets/icons/liked-songs-pin.svg?react"
+import { useSelector } from 'react-redux'
+import DefaultPic from '../assets/imgs/defaultstation.jpeg'
+import { getCloudinaryImg } from '../services/util.service'
 
 
 
@@ -17,6 +20,10 @@ export function SideBar({ onCreateStation, stations, onSelectStation }) {
     const [searchTerm, setSearchTerm] = useState('')
     const [likedStation, setLikedStation] = useState('')
     const user = userService.getLoggedinUser()
+    const station = useSelector(storeState => storeState.stationModule.station)
+    // const station = useSelector(storeState => storeState.stationModule.station)
+    // const {createdBy} = station
+    // const {createdBy} = station
     
 
 
@@ -109,7 +116,7 @@ export function SideBar({ onCreateStation, stations, onSelectStation }) {
                 return (
                     <div key={station._id} className='sidebar-followed-content' onClick={() => onSelectStation(station._id)}>
                         <div className='sidebar-content-preview'>
-                            <img src="https://i.ytimg.com/vi/TLDflhhdPCg/mqdefault.jpg" alt="" />
+                            <img src={getCloudinaryImg(station.createdBy.imgUrl)} />
                             <HoverPlayBtn className="hover-play-btn"/>
                             <div className='sidebar-content-info'>
                                 <span className='sidebar-content-info-title'>{station.name}</span>

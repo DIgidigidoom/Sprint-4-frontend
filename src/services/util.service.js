@@ -95,7 +95,7 @@ export function formatSpotifyDate(ms) {
 }
 
 export function getCloudinaryImg(picId) {
-  const cloudinaryUrl = `https://res.cloudinary.com/dirlnkakz/image/upload/v1747039279/${picId}.jpg`
+  const cloudinaryUrl = `https://res.cloudinary.com/dirlnkakz/image/upload/v1747039279/${picId}`
   return cloudinaryUrl
 }
 

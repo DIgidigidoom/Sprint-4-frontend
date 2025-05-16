@@ -17,9 +17,9 @@ export function EditStationModal({ onClose }) {
   const [previewImg, setPreviewImg] = useState(getCloudinaryImg(stationImg))
   const [imageFile, setImageFile] = useState(null)
   const fileInputRef = useRef(null)
-  
 
-  
+
+
 
   async function onSave(ev) {
     ev.preventDefault()
@@ -54,16 +54,23 @@ export function EditStationModal({ onClose }) {
   async function uploadImage(file) {
     const formData = new FormData()
     formData.append('file', file)
-    formData.append('upload_preset', 'react_uploads') // replace with your Cloudinary preset
+    formData.append('upload_preset', 'spotify_cloudinary') // replace with your Cloudinary preset
 
-    const res = await fetch('https://api.cloudinary.com/v1_1/dzgjtsmav/image/upload', {
+    const res = await fetch('https://api.cloudinary.com/v1_1/dirlnkakz/image/upload', {
       method: 'POST',
       body: formData
     })
 
     const data = await res.json()
-    return data.secure_url // this is the URL you save
+    console.log('data.secure_url: ',data.secure_url)
+    console.log('test url:', extractPicId(data.secure_url))
+    return extractPicId(data.secure_url) // this is the URL you save
   }
+
+  function extractPicId(url) {
+  const match = url.match(/\/([^/]+\.(jpg|png))$/i)
+  return match ? match[1] : null
+}
 
 
   function handleFileChange(ev) {

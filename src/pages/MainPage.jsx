@@ -31,7 +31,8 @@ export default function MainPage({
         !station ? (
           <div>Loading station...</div>
         ) : (
-          <StationDetails />
+          <StationDetails
+          onRemoveStation={onRemoveStation} />
         )
       ) : (
         <StationList

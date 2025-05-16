@@ -4,7 +4,7 @@ import { userService } from '../services/user/user.service.local'
 import { loadStation, updateStation, addToLiked, setIsPlaying } from '../store/actions/station.actions'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
-import { useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 import { formatDuration, formatSpotifyDate, getCloudinaryImg, calcStationDuration } from '../services/util.service'
 import { SET_STATION, SET_CURRENT_PLAYLIST, SET_CURRENT_SONG } from '../store/reducers/station.reducer'
 import { addSongToLiked } from '../store/actions/user.actions'
@@ -15,7 +15,7 @@ import ClockIcon from '../assets/icons/clock-icon.svg?react'
 import { EditStationModal } from '../cmps/EditStationModal'
 import { ColorThief } from '../cmps/ColorThief'
 
-export function StationDetails() {
+export function StationDetails({ onRemoveStation }) {
   const station = useSelector(storeState => storeState.stationModule.station)
   const stations = useSelector(storeState => storeState.stationModule.stations)
   const loggedInUser = useSelector(storeState => storeState.userModule.user)
@@ -31,6 +31,7 @@ export function StationDetails() {
   const { stationId } = useParams()
   const dispatch = useDispatch()
   const colorThief = useRef()
+
 
   useEffect(() => {
     if (stationId) {
@@ -83,24 +84,24 @@ export function StationDetails() {
   }
 
   async function onAddToLiked(ev, song) {
-  ev.stopPropagation()
+    ev.stopPropagation()
 
-  try {
-    const likedStation = stations.find(
-      station =>
-        station.createdBy._id === loggedInUser._id &&
-        station.type === 'liked station'
-    )
+    try {
+      const likedStation = stations.find(
+        station =>
+          station.createdBy._id === loggedInUser._id &&
+          station.type === 'liked station'
+      )
 
-    await addToLiked(likedStation, song)
-    await addSongToLiked(loggedInUser, song.id) 
+      await addToLiked(likedStation, song)
+      await addSongToLiked(loggedInUser, song.id)
 
-    showSuccessMsg('Added To Liked Songs')
-  } catch (err) {
-    console.error('Failed to add to liked', err)
-    showErrorMsg('Failed To Add To Liked')
+      showSuccessMsg('Added To Liked Songs')
+    } catch (err) {
+      console.error('Failed to add to liked', err)
+      showErrorMsg('Failed To Add To Liked')
+    }
   }
-}
 
   const { createdBy } = station
 
@@ -118,9 +119,14 @@ export function StationDetails() {
         <div className="station-header-content">
           <img
             className="station-img"
-            src={createdBy.imgUrl?.startsWith('http') ? createdBy.imgUrl : getCloudinaryImg(createdBy.imgUrl)}
+            // src={createdBy.imgUrl?.startsWith('http') ? createdBy.imgUrl : getCloudinaryImg(createdBy.imgUrl)}
+            src={getCloudinaryImg(createdBy.imgUrl)}
             alt={station.name}
           />
+          {loggedInUser._id === station.createdBy._id && (
+            <button onClick={() => { onRemoveStation(station._id) }}>Remove</button>
+          )}
+
           <div className="station-info">
             <p>Public Playlist</p>
             <h1 className="station-name-input" onClick={() => setIsEditModalOpen(true)}>{name}</h1>

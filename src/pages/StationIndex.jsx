@@ -29,6 +29,7 @@ export function StationIndex() {
     async function onRemoveStation(stationId) {
         try {
             await removeStation(stationId)
+            navigate('/')
             showSuccessMsg('Station removed')
 
         } catch (err) {
