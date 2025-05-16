@@ -12,6 +12,7 @@ import NextBtn from '../assets/icons/next-btn-media-player.svg?react'
 import ShuffleBtn from '../assets/icons/shuffle-btn-media-player.svg?react'
 import RepeatBtn from '../assets/icons/repeat-btn-media-player.svg?react'
 import AddLikedBtn from '../assets/icons/add-liked-btn.svg?react'
+import LikedSongCheckmark from '../assets/icons/liked-song-checkmark.svg?react'
 import VolumeMute from '../assets/icons/volume-mute.svg?react'
 import VolumeLow from '../assets/icons/volume-low.svg?react'
 import VolumeMedium from '../assets/icons/volume-medium.svg?react'
@@ -128,7 +129,8 @@ export function MediaPlayer() {
         return <VolumeLoud />
     }
 
-
+    const isLiked = loggedInUser?.likedSongsIds?.includes(song?.id)
+    
     return (
         <footer className="media-player">
             <div className="track-info">
@@ -136,24 +138,15 @@ export function MediaPlayer() {
                     <React.Fragment>
                         <img src={song.imgUrl} alt={song.title} />
                         <div>{song.title}</div>
-                        {/* <button onClick={(ev) => {
-                            ev.stopPropagation()
-                            toggleSongLike({
-                              song,
-                              user: loggedInUser,
-                              station,
-                              stations
-                            })
-                          }}><AddLikedBtn /></button> */}
-                        <AddLikedBtn className="add-liked-btn" onClick={(ev) => {
-                            ev.stopPropagation()
-                            toggleLike(
-                                song,
-                                loggedInUser,
-                                station,
-                                stations
-                            )
-                        }} />
+                        <button
+                            className="like-btn"
+                            onClick={(ev) => {
+                                ev.stopPropagation()
+                                toggleLike(song, loggedInUser, station, stations)
+                            }}
+                        >
+                            {isLiked ? <LikedSongCheckmark /> : <AddLikedBtn />}
+                        </button>
                     </React.Fragment>
                 )}
             </div>

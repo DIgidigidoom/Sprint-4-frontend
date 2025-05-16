@@ -8,6 +8,7 @@ import { formatDuration, formatSpotifyDate, getCloudinaryImg, calcStationDuratio
 import { SET_STATION, SET_CURRENT_PLAYLIST, SET_CURRENT_SONG } from '../store/reducers/station.reducer'
 import { toggleLike } from '../store/actions/user.actions'
 import AddLikedBtn from '../assets/icons/add-liked-btn.svg?react'
+import LikedSongCheckmark from '../assets/icons/liked-song-checkmark.svg?react'
 import PlayBtn from '../assets/icons/play-btn-preview.svg?react'
 import ClockIcon from '../assets/icons/clock-icon.svg?react'
 import { EditStationModal } from '../cmps/EditStationModal'
@@ -171,18 +172,15 @@ export function StationDetails() {
                         <p className="song-album">{song.album}</p>
                         <p className="song-date-added">{formatSpotifyDate(song.addedAt)}</p>
                         <div className="hovered-like-btn">
-                          <button
+                          <button className='hovered-like-btn'
                             onClick={(ev) => {
                               ev.stopPropagation()
-                              toggleLike(
-                                song,
-                                loggedInUser,
-                                station,
-                                stations
-                              )
+                              toggleLike(song, loggedInUser, station, stations)
                             }}
                           >
-                            <AddLikedBtn />
+                            {loggedInUser?.likedSongsIds?.includes(song.id)
+                              ? <LikedSongCheckmark style={{ zIndex: 100 }} />
+                              : <AddLikedBtn />}
                           </button>
                         </div>
                         <p className="song-formatted-duration">{formatDuration(song.duration)}</p>
