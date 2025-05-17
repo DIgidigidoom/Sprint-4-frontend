@@ -105,13 +105,13 @@ export async function addSong(stationId, song) {
 }
 
 export async function removeSong(stationId, song) {
-    try {
-        const updatedStation = await removeSongFromStation(stationId, song)
-        store.dispatch({ type: SET_STATION, station: updatedStation })
-    } catch (err) {
-        console.error('Cannot remove song', err)
-        throw err
-    }
+  try {
+    const updatedStation = await stationService.removeSongFromStation(stationId, song.id)
+    store.dispatch({ type: SET_STATION, station: updatedStation })
+  } catch (err) {
+    console.error('Cannot remove song', err)
+    throw err
+  }
 }
 
 export async function attachSongIdToUser(station, song) {

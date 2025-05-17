@@ -110,35 +110,47 @@ export async function unlikeSongForUser(user, songId) {
     store.dispatch({ type: SET_USER, user: updatedUser })
 }
 
-export async function toggleLike(song, loggedInUser, station, stations) {
+export async function toggleLike(song, user, currentStation, allStations) {
 
-    console.log("loggedInUser ", loggedInUser)
-    const isLiked = loggedInUser.likedSongsIds.includes(song.id)
-    const likedStation = stations.find(
-        s => s.type === 'liked station' && s.createdBy._id === loggedInUser._id
-    )
 
     try {
-        let updatedLikedStation
-        if (isLiked) {
-            updatedLikedStation = await stationService.removeSongFromLikedStation(likedStation, song.id)
-            await unlikeSongForUser(loggedInUser, song.id)
-            showSuccessMsg('Removed from Liked Songs')
-        } else {
-            updatedLikedStation = await stationService.addSongToLikedStation(likedStation, song)
-            await likeSongForUser(loggedInUser, song.id)
-            showSuccessMsg('Added to Liked Songs')
+        if (!user || !user._id) {
+            showErrorMsg('Please log in to like songs')
+            return
         }
-        if (station?.type === 'liked station') store.dispatch({ type: SET_STATION, station: updatedLikedStation })
-        //   store.dispatch({type:SET_STATIONS, stations: stations })
 
-        const updatedStations = stations.map(s =>
-            s._id === updatedLikedStation._id ? updatedLikedStation : s
+        const userInfo = {
+            _id: user._id,
+            fullname: user.fullname,
+            imgUrl: user.imgUrl
+        }
+
+        let updatedLikedStation
+        const likedStation = allStations.find(
+            s => s.isLikedSongs && s.createdBy._id === user._id
         )
-        store.dispatch({ type: SET_STATIONS, stations: updatedStations })
+        const isLiked = Array.isArray(user.likedSongsIds) && user.likedSongsIds.includes(song.id)
+        if (isLiked) {
+            updatedLikedStation = await stationService.removeFromLikedSongs(user._id, song.id)
+        } else {
+            updatedLikedStation = await stationService.addToLikedSongs(user._id, userInfo, song)
+        }
 
+        // Update the likedSongs station in Redux
+        store.dispatch({ type: SET_STATION, station: updatedLikedStation })
+
+        // If toggling in current station, also refresh its songs (if needed)
+        if (currentStation._id === updatedLikedStation._id) {
+            store.dispatch({ type: SET_STATION, station: updatedLikedStation })
+        }
+
+        // Update logged in user locally (optional)
+        const updatedUser = await userService.toggleLikedSong(song.id)
+        store.dispatch({ type: SET_USER, user: updatedUser })
+        console.log('🍪 loginToken:', req.cookies?.loginToken)
+        console.log('👤 decoded user:', authService.validateToken(req.cookies?.loginToken))
     } catch (err) {
-        console.error('Like/unlike failed', err)
-        showErrorMsg(err.message || 'Something went wrong')
+        console.error('❌ toggleLike failed:', err)
+        throw err
     }
 }
