@@ -212,7 +212,7 @@ export function StationDetails({ onRemoveStation }) {
       </div>
       <div className="controls">
         <PlayBtn />
-        {station.createdBy._id === loggedInUser._id && (
+        {station.createdBy?._id === loggedInUser?._id && (
           <OptionsBtn
             className="options-btn"
             onClick={(ev) => {

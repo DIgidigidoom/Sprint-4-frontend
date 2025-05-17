@@ -14,6 +14,7 @@ const initialState = {
 }
 
 export function userReducer(state = initialState, action) {
+    console.log('🟡 userReducer got action:', action)
     var newState = state
     switch (action.type) {
        
