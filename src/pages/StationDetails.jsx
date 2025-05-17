@@ -13,6 +13,7 @@ import { toggleLike } from '../store/actions/user.actions'
 import AddLikedBtn from '../assets/icons/add-liked-btn.svg?react'
 import LikedSongCheckmark from '../assets/icons/liked-song-checkmark.svg?react'
 import PlayBtn from '../assets/icons/play-btn-preview.svg?react'
+import OptionsBtn from '../assets/icons/options-btn.svg?react'
 import ClockIcon from '../assets/icons/clock-icon.svg?react'
 import MagnifyingGlassIcon from '../assets/icons/magnifying-glass.svg?react'
 import { EditStationModal } from '../cmps/EditStationModal'
@@ -22,7 +23,8 @@ export function StationDetails({ onRemoveStation }) {
   const station = useSelector(storeState => storeState.stationModule.station)
   const stations = useSelector(storeState => storeState.stationModule.stations)
   const loggedInUser = useSelector(storeState => storeState.userModule.user)
-  const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0, song: null })
+  const [SongContextMenu, setSongContextMenu] = useState({ visible: false, x: 0, y: 0, song: null })
+  const [stationContextMenu, setStationContextMenu] = useState({ visible: false, x: 0, y: 0 })
   // const youtubeResults = useSelector(storeState => storeState.youtubeModule.youtubeResults)
 
 
@@ -50,14 +52,14 @@ export function StationDetails({ onRemoveStation }) {
   }, [stationId])
 
   useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (contextMenu.visible) setContextMenu({ visible: false, x: 0, y: 0, song: null })
+    const handleClickOutside = () => {
+      if (SongContextMenu.visible) setSongContextMenu({ visible: false, x: 0, y: 0, song: null })
+      if (stationContextMenu.visible) setStationContextMenu({ visible: false, x: 0, y: 0 })
     }
 
     window.addEventListener('click', handleClickOutside)
     return () => window.removeEventListener('click', handleClickOutside)
-  }, [contextMenu.visible])
-
+  }, [SongContextMenu.visible, stationContextMenu.visible])
 
 
   useEffect(() => {
@@ -96,11 +98,29 @@ export function StationDetails({ onRemoveStation }) {
 
   function onRightClickSong(ev, song) {
     ev.preventDefault()
-    setContextMenu({
+    setSongContextMenu({
       visible: true,
       x: ev.pageX,
       y: ev.pageY,
       song
+    })
+  }
+
+  function onRightClickStation(ev) {
+    ev.preventDefault()
+    setStationContextMenu({
+      visible: true,
+      x: ev.pageX,
+      y: ev.pageY,
+    })
+  }
+
+  function openStationMenu(ev) {
+    ev.preventDefault()
+    setStationContextMenu({
+      visible: true,
+      x: ev.pageX,
+      y: ev.pageY,
     })
   }
 
@@ -160,13 +180,17 @@ export function StationDetails({ onRemoveStation }) {
             src={getCloudinaryImg(createdBy.imgUrl)}
             alt={station.name}
           />
-          {loggedInUser?._id === station.createdBy._id && (
+          {/* {loggedInUser?._id === station.createdBy._id && station.type !== 'liked station' && (
             <button onClick={() => { onRemoveStation(station._id) }}>Remove</button>
-          )}
+          )} */}
 
           <div className="station-info">
             <p>Public Playlist</p>
-            <h1 className="station-name-input" onClick={() => setIsEditModalOpen(true)}>{name}</h1>
+            <h1 className="station-name-input"
+              onClick={() => setIsEditModalOpen(true)}
+              onContextMenu={onRightClickStation}
+            >{name}
+            </h1>
 
             {isEditModalOpen && (
               <EditStationModal
@@ -188,6 +212,21 @@ export function StationDetails({ onRemoveStation }) {
       </div>
       <div className="controls">
         <PlayBtn />
+        {station.createdBy._id === loggedInUser._id && (
+          <OptionsBtn
+            className="options-btn"
+            onClick={(ev) => {
+              ev.preventDefault()
+              ev.stopPropagation()
+              setStationContextMenu({
+                visible: true,
+                x: ev.clientX,
+                y: ev.clientY,
+              })
+            }}
+          />
+        )}
+
       </div>
       <div className="song-list-container">
         <div className='list-header-container'>
@@ -272,7 +311,7 @@ export function StationDetails({ onRemoveStation }) {
       </div>
       {stationSearchResults.length > 0 && (
         <div className="song-list search">
-       
+
           {stationSearchResults.map((song, idx) => (
             <div className="song-row search"
               key={song.id || idx}
@@ -297,12 +336,12 @@ export function StationDetails({ onRemoveStation }) {
         </div >
       )}
 
-      {contextMenu.visible && (
+      {SongContextMenu.visible && (
         <div
           className="custom-context-menu"
           style={{
-            top: `${contextMenu.y}px`,
-            left: `${contextMenu.x}px`,
+            top: `${SongContextMenu.y}px`,
+            left: `${SongContextMenu.x}px`,
             position: 'fixed',
             backgroundColor: '#282828',
             border: '1px solid #555',
@@ -312,7 +351,45 @@ export function StationDetails({ onRemoveStation }) {
           }}
           onClick={(ev) => ev.stopPropagation()}
         >
-          <button onClick={() => onRemoveSongFromStation(contextMenu.song)}>Remove Song</button>
+          <button onClick={() => {
+            onRemoveSongFromStation(SongContextMenu.song)
+            setSongContextMenu({ visible: false, x: 0, y: 0 })
+          }}>
+            Remove Song
+          </button>
+        </div>
+      )}
+      {stationContextMenu.visible && station.createdBy._id === loggedInUser._id && (
+        <div
+          className="custom-context-menu"
+          style={{
+            top: `${stationContextMenu.y}px`,
+            left: `${stationContextMenu.x}px`,
+            position: 'fixed',
+            backgroundColor: '#282828',
+            border: '1px solid #555',
+            padding: '10px',
+            borderRadius: '5px',
+            zIndex: 1000,
+          }}
+          onClick={(ev) => ev.stopPropagation()}
+        >
+          <button onClick={() => {
+            setIsEditModalOpen(true)
+            setStationContextMenu({ visible: false, x: 0, y: 0 })
+          }}>
+            Edit Station
+          </button>
+
+          {station.type !== 'liked station' && (
+            <button onClick={() => {
+              onRemoveStation(station._id)
+              setStationContextMenu({ visible: false, x: 0, y: 0 })
+            }}>
+              Remove Station
+            </button>
+          )}
+
         </div>
       )}
     </section >
