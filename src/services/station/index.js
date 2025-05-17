@@ -24,7 +24,11 @@ function getDefaultFilter() {
     }
 }
 
+
+
 const service = (VITE_LOCAL === 'true') ? local : remote
 export const stationService = { getEmptyStation, getDefaultFilter, ...service }
+export const addSongToStation = service.addSongToStation
+export const removeSongFromStation = service.removeSongFromStation
 
 if (DEV) window.stationService = stationService

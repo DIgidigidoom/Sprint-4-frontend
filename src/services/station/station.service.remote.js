@@ -5,7 +5,11 @@ export const stationService = {
     getById,
     save,
     remove,
-    addStationMsg
+    addSongToStation,
+    removeSongFromStation,
+    addStationMsg,
+    addToLikedSongs,
+    removeFromLikedSongs
 }
 
 async function query(filterBy = { txt: '', minSpeed: 0 }) {
@@ -29,7 +33,24 @@ async function save(station) {
     return savedStation
 }
 
+
 async function addStationMsg(stationId, txt) {
-    const savedMsg = await httpService.post(`station/${stationId}/msg`, {txt})
+    const savedMsg = await httpService.post(`station/${stationId}/msg`, { txt })
     return savedMsg
+}
+
+async function addSongToStation(stationId, song) {
+  return httpService.post(`station/${stationId}/song`, song)
+}
+
+async function removeSongFromStation(stationId, songId) {
+  return httpService.delete(`station/${stationId}/song/${songId}`)
+}
+
+async function addToLikedSongs(userId, userInfo, song) {
+  return httpService.post(`station/${userId}/liked-songs`, { userInfo, song })
+}
+
+async function removeFromLikedSongs(userId, songId) {
+  return httpService.delete(`station/${userId}/liked-songs/${songId}`)
 }

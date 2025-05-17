@@ -1,4 +1,4 @@
-import { addSongToStation, removeSongFromStation, stationService } from '../../services/station/station.service.local.js'
+import { addSongToStation, removeSongFromStation, stationService } from '../../services/station'
 import { store } from '../store.js'
 import { ADD_STATION, REMOVE_STATION, SET_STATIONS, SET_STATION, UPDATE_STATION, SET_NEXT_SONG, SET_PREV_SONG, SET_CURRENT_PLAYLIST, SET_CURRENT_SONG, SET_IS_PLAYING } from '../reducers/station.reducer.js'
 
@@ -105,13 +105,13 @@ export async function addSong(stationId, song) {
 }
 
 export async function removeSong(stationId, song) {
-    try {
-        const updatedStation = await removeSongFromStation(stationId, song)
-        store.dispatch({ type: SET_STATION, station: updatedStation })
-    } catch (err) {
-        console.error('Cannot remove song', err)
-        throw err
-    }
+  try {
+    const updatedStation = await stationService.removeSongFromStation(stationId, song.id)
+    store.dispatch({ type: SET_STATION, station: updatedStation })
+  } catch (err) {
+    console.error('Cannot remove song', err)
+    throw err
+  }
 }
 
 export async function attachSongIdToUser(station, song) {
