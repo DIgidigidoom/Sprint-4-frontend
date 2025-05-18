@@ -1,4 +1,27 @@
 
+export function getTagsList() {
+  return [
+    { name: 'Hip Hop', color: '#477d95', imgUrl: 'hip-hop_yed5cu' },
+    { name: 'Rock', color: '#006450', imgUrl: 'rockclassics_wt0e6h' },
+    { name: 'Jazz', color: '#8d67ab', imgUrl: 'jazzNchill_okhsih' },
+    { name: 'Pop', color: '#477d95', imgUrl: 'pop_ddwaam' },
+    { name: 'Rap', color: '#e91429', imgUrl: 'snoop_ma55tw' },
+    { name: 'Relax', color: '#0d73ec', imgUrl: 'relax_hqujwh' },
+    { name: 'Legends', color: '#608108', imgUrl: 'legends_xqjqq6' },
+    { name: 'Workout', color: '#777', imgUrl: 'workoutboosy_gstrn6' },
+    { name: 'Energy', color: '#e1118c', imgUrl: 'energy_gxatpd' },
+    { name: 'Study', color: '#e61e32', imgUrl: 'study_djipj0' },
+    { name: 'Classical', color: '#7d4b32', imgUrl: 'classicalcalm_v0uct2' },
+    { name: 'Reggae', color: '#8c1932', imgUrl: 'ReggaeVibes_o7clhl' },
+    { name: 'Chill', color: '#b06239', imgUrl: 'chill_w0p1si' },
+    { name: 'EDM', color: '#af2896', imgUrl: 'EDM_jkwdke' },
+    { name: 'Party', color: '#8d67ab', imgUrl: 'party_velo68' },
+    { name: 'Soul', color: '#27856a', imgUrl: 'soul_nnz2s2' },
+    { name: 'Smooth', color: '#537aa1', imgUrl: 'smooth_bqypbh' },
+    { name: 'Piano', color: '#1e3264', imgUrl: 'piano_bs4lgl' },
+    { name: 'Essential', color: '#d84000', imgUrl: 'essential_wbaljy' },
+  ]
+}
 
 export function makeId(length = 6) {
   var txt = ''

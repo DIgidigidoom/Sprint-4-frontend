@@ -59,6 +59,49 @@
                     pointer-events: none;
                 }
 
+
+                .explore-btn {
+                    position: absolute;
+                    fill: $clr5;
+                    top: 50%;
+                    right: rem(12px);
+                    transform: translateY(-50%);
+                    width: 40px;
+                    height: 24px;
+
+                    background: transparent;
+                    border: none;
+                    padding: 0;
+                    margin: 0;
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    cursor: pointer;
+                    z-index: 10;
+
+                    border-inline-start: 1px solid #7c7c7c;
+
+                    svg {
+                        width: 24px;
+                        height: 24px;
+                        pointer-events: none;
+                        display: block;
+                        transition: transform 0.2s ease;
+                        transform-origin: center center;
+                    }
+
+                    &:hover svg {
+                        // transform: scale(1.1);
+                    }
+                }
+
+                .explore-fill-btn {
+                    fill: white;
+                }
+
+
                 .header-filter {
                     width: rem(474px);
                     height: 3rem;
@@ -131,7 +174,7 @@
                 font-size: rem(14px);
                 transition: background-color, 0.1s ease;
                 padding-right: rem(14px);
-                
+
                 cursor: pointer;
 
                 &:hover {
