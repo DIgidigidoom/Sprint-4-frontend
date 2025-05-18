@@ -173,7 +173,8 @@ export function StationDetails({ onRemoveStation }) {
       <ColorThief imgSrc={getCloudinaryImg(createdBy.imgUrl)} onColorReady={setDominantColor} />
       <div className="station-header"
         style={{
-          background: `linear-gradient(to bottom, ${dominantColor} 0%, hsl(0, 0.80%, 25.70%) 100%)`,
+          background:dominantColor,
+          backgroundImage: `linear-gradient(transparent  0%, rgba(0,0,0,0.5) 100%)`,
           boxShadow: `0 1px 1000px 0  ${dominantColor}`
         }}>
         <div className="station-header-content">
