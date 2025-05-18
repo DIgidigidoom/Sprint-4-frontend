@@ -10,6 +10,7 @@ import MainPage from './MainPage.jsx'
 import { EditStationModal } from '../cmps/EditStationModal.jsx'
 import { MediaPlayer } from '../cmps/MediaPlayer.jsx'
 import { SET_SEARCH_TEXT } from '../store/reducers/youtube.reducer.js'
+import { SET_STATIONS } from '../store/reducers/station.reducer.js'
 
 
 export function StationIndex() {
@@ -26,7 +27,7 @@ export function StationIndex() {
 
     useEffect(() => {
         stationService.query(filterBy)
-            .then(stations => dispatch({ type: 'SET_STATIONS', stations }))
+            .then(stations => dispatch({ type: SET_STATIONS, stations }))
             .catch(err => {
                 console.error('Failed to load stations', err)
                 showErrorMsg('Could not load stations')

@@ -27,6 +27,8 @@ export function SideBar({ onCreateStation, onSelectStation }) {
     // const {createdBy} = station
 
     const likedStation = stations.find(station => station.createdBy._id === user?._id && station.type === 'liked station')
+    console.log('liked station: ', likedStation)
+    console.log('stations: ', stations)
 
 
     useEffect(() => {
@@ -104,7 +106,7 @@ export function SideBar({ onCreateStation, onSelectStation }) {
                 )}
             </div>
 
-            {likedStation && likedStation.songs.length > 0 && (
+            {likedStation && likedStation?.songs?.length > 0 && (
                 <div key={likedStation._id} className='sidebar-followed-content' onClick={() => onSelectStation(likedStation._id)}>
                     <div className='sidebar-content-preview'>
                         <img src={getCloudinaryImg(likedStation.createdBy.imgUrl)} alt="" />

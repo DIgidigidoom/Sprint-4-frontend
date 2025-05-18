@@ -137,7 +137,11 @@ export async function toggleLike(song, user, currentStation, allStations) {
         }
 
         // Update the likedSongs station in Redux
-        store.dispatch({ type: SET_STATION, station: updatedLikedStation })
+        // store.dispatch({ type: SET_STATION, station: updatedLikedStation })
+
+
+        const updatedStations = await stationService.query()
+        store.dispatch({ type: SET_STATIONS, stations: updatedStations })
 
         // If toggling in current station, also refresh its songs (if needed)
         if (currentStation._id === updatedLikedStation._id) {
