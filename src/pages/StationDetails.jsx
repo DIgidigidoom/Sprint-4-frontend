@@ -16,6 +16,7 @@ import PlayBtn from '../assets/icons/play-btn-preview.svg?react'
 import OptionsBtn from '../assets/icons/options-btn.svg?react'
 import ClockIcon from '../assets/icons/clock-icon.svg?react'
 import MagnifyingGlassIcon from '../assets/icons/magnifying-glass.svg?react'
+import CloseSearchIcon from '../assets/icons/sidebar-input-x.svg?react'
 import { EditStationModal } from '../cmps/EditStationModal'
 import { ColorThief } from '../cmps/ColorThief'
 
@@ -36,6 +37,7 @@ export function StationDetails({ onRemoveStation }) {
   const [dominantColor, setDominantColor] = useState(null)
   const [searchTxt, setSearchTxt] = useState('')
   const [stationSearchResults, setStationSearchResults] = useState([])
+  const [isDisplayingSearch, setIsDisplayingSearch] = useState(false)
 
 
   const { stationId } = useParams()
@@ -69,6 +71,8 @@ export function StationDetails({ onRemoveStation }) {
       setSongs(stationSongs)
       dispatch(setIsPlaying(false))
       setStationDuration(calcStationDuration(stationSongs))
+      setIsDisplayingSearch(stationSongs.length === 0)
+
     }
   }, [station])
 
@@ -162,9 +166,8 @@ export function StationDetails({ onRemoveStation }) {
 
   const { createdBy } = station
 
-
+  // console.log("variable: ", variable)
   if (!station) return <div>Loading...</div>
-
   return (
     <section className="station-details">
       <ColorThief imgSrc={getCloudinaryImg(createdBy.imgUrl)} onColorReady={setDominantColor} />
@@ -271,15 +274,15 @@ export function StationDetails({ onRemoveStation }) {
                         </div>
                         <p className="song-album">{song.album}</p>
                         <p className="song-date-added">{formatSpotifyDate(song.addedAt)}</p>
-                        <div className={loggedInUser?.likedSongsIds?.includes(song.id)? "hovered-like-btn liked" :"hovered-like-btn"}>
-                          <button 
+                        <div className={loggedInUser?.likedSongsIds?.includes(song.id) ? "hovered-like-btn liked" : "hovered-like-btn"}>
+                          <button
                             onClick={(ev) => {
                               ev.stopPropagation()
                               toggleLike(song, loggedInUser, station, stations)
                             }}
                           >
                             {loggedInUser?.likedSongsIds?.includes(song.id)
-                              ? <LikedSongCheckmark/>
+                              ? <LikedSongCheckmark />
                               : <AddLikedBtn />}
                           </button>
                         </div>
@@ -294,22 +297,36 @@ export function StationDetails({ onRemoveStation }) {
           </Droppable>
         </DragDropContext>
       </div>
-      <p className='playlist-srch-header search'>Let's find something for your playlist</p>
-      <div className="search-wrapper">
-        <span className='magnifying-glass-header-filter'><MagnifyingGlassIcon /></span>
-        <div className='playlist-search-container'></div>
-        <input
-          type="text"
-          className="playlist-filter search"
-          placeholder="What do you want to play?"
-          value={searchTxt}
-          onChange={(ev) => {
-            const value = ev.target.value
-            setSearchTxt(value)
-          }}
-        />
+      <div className='search-inside-playlist-container'>
+        {isDisplayingSearch ?
+          <div className='search-inside-playlist-container'>
+            <p className='playlist-srch-header search'>Let's find something for your playlist</p>
+            <div className="search-wrapper">
+              <span className='magnifying-glass-header-filter'><MagnifyingGlassIcon /></span>
+              <div className='playlist-search-container'></div>
+              <input
+                type="text"
+                className="playlist-filter search"
+                placeholder="Search for songs or episodes"
+                value={searchTxt}
+                onChange={(ev) => {
+                  const value = ev.target.value
+                  setSearchTxt(value)
+                }}
+              />
+              <div className='close-playlist-search' onClick={() => {
+                setIsDisplayingSearch(false)
+                setSearchTxt('')
+              }}
+              >
+                <CloseSearchIcon className='icon' /></div>
+            </div>
+
+          </div> :
+          <div className='find-more-btn' onClick={() => setIsDisplayingSearch(true)}>Find more</div>
+        }
       </div>
-      {stationSearchResults.length > 0 && (
+      {isDisplayingSearch && (
         <div className="song-list search">
 
           {stationSearchResults.map((song, idx) => (
