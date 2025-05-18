@@ -7,6 +7,7 @@ import { useParams, useSearchParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { loadStation } from '../store/actions/station.actions'
 import { Explore } from '../cmps/Explore.jsx'
+import { ExploreDetails } from '../cmps/ExploreDetails.jsx'
 
 
 export default function MainPage({
@@ -49,11 +50,34 @@ export default function MainPage({
     //   )}
     // </div>
 
+    // <div className="main-page">
+    //   {youtubeResults.length !== 0 ? (
+    //     <StaitionSearch />
+    //   ) : searchQuery === '' ? (
+    //     <Explore />
+    //   ) : stationId ? (
+    //     !station ? (
+    //       <div>Loading station...</div>
+    //     ) : (
+    //       <StationDetails onRemoveStation={onRemoveStation} />
+    //     )
+    //   ) : (
+    //     <StationList
+    //       stations={stations}
+    //       onRemoveStation={onRemoveStation}
+    //       onUpdateStation={onUpdateStation}
+    //       onSelectStation={onSelectStation}
+    //     />
+    //   )}
+    // </div>
+
     <div className="main-page">
       {youtubeResults.length !== 0 ? (
         <StaitionSearch />
       ) : searchQuery === '' ? (
         <Explore />
+      ) : searchQuery ? (
+        <ExploreDetails tag={searchQuery} />
       ) : stationId ? (
         !station ? (
           <div>Loading station...</div>
