@@ -11,6 +11,7 @@ import { EditStationModal } from '../cmps/EditStationModal.jsx'
 import { MediaPlayer } from '../cmps/MediaPlayer.jsx'
 import { SET_SEARCH_TEXT } from '../store/reducers/youtube.reducer.js'
 import { SET_STATIONS } from '../store/reducers/station.reducer.js'
+import { userService } from '../services/user/index.js'
 
 
 export function StationIndex() {

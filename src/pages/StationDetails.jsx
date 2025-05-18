@@ -271,15 +271,15 @@ export function StationDetails({ onRemoveStation }) {
                         </div>
                         <p className="song-album">{song.album}</p>
                         <p className="song-date-added">{formatSpotifyDate(song.addedAt)}</p>
-                        <div className="hovered-like-btn">
-                          <button className='hovered-like-btn'
+                        <div className={loggedInUser?.likedSongsIds?.includes(song.id)? "hovered-like-btn liked" :"hovered-like-btn"}>
+                          <button 
                             onClick={(ev) => {
                               ev.stopPropagation()
                               toggleLike(song, loggedInUser, station, stations)
                             }}
                           >
                             {loggedInUser?.likedSongsIds?.includes(song.id)
-                              ? <LikedSongCheckmark style={{ zIndex: 100 }} />
+                              ? <LikedSongCheckmark/>
                               : <AddLikedBtn />}
                           </button>
                         </div>
