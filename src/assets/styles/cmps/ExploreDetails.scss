@@ -1,0 +1,59 @@
+.explore-details {
+    display: flex;
+    flex-direction: column;
+
+    .explore-header {
+        height: 220px;
+        display: flex;
+        align-items: flex-end;
+        padding: 0 2rem 1.5rem;
+        background: linear-gradient(to bottom, #7d4b32 0%, #121212 100%);
+
+        .tag-title {
+            font-size: 4rem;
+            font-weight: 900;
+            color: white;
+            text-transform: capitalize;
+        }
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        color: white;
+        font-weight: bold;
+        margin: 2rem 2rem 1rem;
+    }
+
+    .station-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 1.5rem;
+        padding: 0 2rem 2rem;
+    }
+
+    .station-card {
+        background-color: #181818;
+        border-radius: 8px;
+        padding: 1rem;
+        color: white;
+        transition: background-color 0.2s ease;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #282828;
+        }
+
+        img {
+            width: 100%;
+            border-radius: 6px;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            margin-bottom: 1rem;
+        }
+
+        h3 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+    }
+}
