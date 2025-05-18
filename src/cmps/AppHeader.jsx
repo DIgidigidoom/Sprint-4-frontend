@@ -12,10 +12,8 @@ import HomeIcon from '../assets/icons/home-btn.svg?react'
 import HomeIconEmpty from '../assets/icons/homepage-no-fill.svg?react'
 import MagnifyingGlassIcon from '../assets/icons/magnifying-glass.svg?react'
 import SpotifyLogo from '../assets/icons/spotify-logo.svg?react'
-
-
-
-
+import ExploreBtn from '../assets/icons/explore-btn.svg?react'
+import ExploreFillBtn from '../assets/icons/explore-fill-btn.svg?react'
 
 
 export function AppHeader() {
@@ -28,6 +26,9 @@ export function AppHeader() {
 	const debouncedSearch = useDebouncedYouTubeSearch()
 	const [userContextMenu, setUserContextMenu] = useState({ visible: false, x: 0, y: 0 })
 	console.log('userContextMenu', userContextMenu)
+	const isAtRealHome = location.pathname === '/' && searchParams.get('search') === null
+	const isInExplore = location.pathname === '/' && searchParams.get('search') === ''
+
 
 
 	useEffect(() => {
@@ -70,6 +71,11 @@ export function AppHeader() {
 		}
 	}
 
+	function onGoExplore() {
+		setSearchParams({ search: '' })
+		navigate('/?search')
+	}
+
 
 	return (
 
@@ -80,13 +86,24 @@ export function AppHeader() {
 				</button>
 
 				<div className="middle-header">
-					<button className="home-btn" onClick={onGoHome}>
+					{/* <button className="home-btn" onClick={onGoHome}>
 						{location.pathname === '/' ? <span className="home-btn-icon"><HomeIcon /> </span> : <span className="home-btn-icon"> <HomeIconEmpty /> </span>}
+					</button> */}
+					<button className="home-btn" onClick={onGoHome}>
+						{isAtRealHome ? (
+							<span className="home-btn-icon"><HomeIcon /></span>
+						) : (
+							<span className="home-btn-icon"><HomeIconEmpty /></span>
+						)}
 					</button>
+
 
 					<div className="search-wrapper">
 
-						<span className='magnifying-glass-header-filter'><MagnifyingGlassIcon /></span>
+						<span
+							className='magnifying-glass-header-filter'>
+							<MagnifyingGlassIcon />
+						</span>
 
 						<input
 							type="text"
@@ -100,10 +117,16 @@ export function AppHeader() {
 									navigate(`/?search=${encodeURIComponent(value)}`)
 
 								} else {
-									navigate('/')
+									navigate('/?search')
 								}
 							}}
 						/>
+						<button
+							className="explore-btn"
+							onClick={onGoExplore}>
+							{isInExplore ? <span className='explore-fill-btn'><ExploreFillBtn /> </span> : <ExploreBtn />}
+						</button>
+
 					</div>
 				</div>
 

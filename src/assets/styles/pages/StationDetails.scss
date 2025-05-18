@@ -33,10 +33,7 @@
     }
 
 
-
     .station-header {
-        // background: linear-gradient(to bottom, $clr1, $clr10);
-
         height: fit-content;
 
         .station-header-content {
@@ -431,84 +428,114 @@
         border-bottom: 2px solid $clr1;
     }
 
-    .playlist-srch-header {
-        margin: 22px 0 15px 0;
-        padding: 24px 24px 0 clamp(24px, 2.3vh, 80px);
-        font-size: rem(24px);
-        font-weight: 700;
-        word-spacing: -1.5px;
-        letter-spacing: -0.3px;
-    }
-
-    .search-wrapper {
+    .search-inside-playlist-container {
         position: relative;
-        display: flex;
-        align-items: center;
-        padding-inline-start: clamp(24px, 2.4vh, 80px);
-        padding-block-end: 16px;
 
-        svg {
-            position: absolute;
-            color: $clr5;
-            left: rem(9px);
-            transform: translateY(-50%);
-            height: rem(16px);
-            pointer-events: none;
+        .playlist-srch-header {
+            margin: 22px 0 15px 0;
+            padding: 24px 24px 0 clamp(24px, 2.3vh, 80px);
+            font-size: rem(24px);
+            font-weight: 700;
+            word-spacing: -1.5px;
+            letter-spacing: -0.3px;
+        }
+
+        .search-wrapper {
+            display: flex;
+            align-items: center;
             padding-inline-start: clamp(24px, 2.4vh, 80px);
-        }
+            padding-block-end: 16px;
 
-        .playlist-filter.search {
-            width: rem(397px);
-            height: rem(38px);
-            background-color: darken($color: $gray4, $amount: 5%);
-            border: 2px solid transparent;
-            padding: rem(1px) rem(16px) 0 rem(28px);
-            color: $clr6;
-            font-size: rem(14px);
-            transition: background-color 0.2s ease, border-color 0.2s ease;
-
-            &::placeholder {
+            svg {
+                position: absolute;
                 color: $clr5;
+                left: rem(9px);
+                transform: translateY(-50%);
+                height: rem(16px);
+                // pointer-events: none;
+                padding-inline-start: clamp(24px, 2.4vh, 80px);
             }
 
-            &:hover {
-                background-color: lighten($gray4, 3%);
+            .playlist-filter.search {
+                width: rem(397px);
+                height: rem(38px);
+                background-color: darken($color: $gray4, $amount: 5%);
+                border: 2px solid transparent;
+                padding: rem(1px) rem(16px) 0 rem(28px);
+                color: $clr6;
+                font-size: rem(14px);
+                transition: background-color 0.2s ease, border-color 0.2s ease;
+
+                &::placeholder {
+                    color: $clr5;
+                }
+
+                &:hover {
+                    background-color: lighten($gray4, 3%);
+                }
+
+                &:focus {
+                    background-color: lighten($gray4, 5%);
+                    border-color: $clr6;
+                    outline: none;
+                }
             }
 
-            &:focus {
-                background-color: lighten($gray4, 5%);
-                border-color: $clr6;
-                outline: none;
+            .close-playlist-search {
+                position: absolute;
+                right: 56px;
+                top: 69px;
+                height: fit-content;
+                width: fit-content;
+                cursor: pointer;
+
+
+                .icon {
+                    fill: $clr6;
+                   
+                    height: 24px;
+                    width: 24px;
+                    padding: 0;
+                }
             }
         }
-    }
 
-    .song-list.search {
-        margin-block-start: 6px;
-        padding-inline-end: 16px;
-        gap: 0;
+        .find-more-btn {
+            position: absolute;
+            top: 33px;
+            right: 31px;
+            font-size: rem(14px);
+            font-weight: 650;
+            cursor: pointer;
+        }
 
-        .song-row.search {
-            padding-inline-start: 6px;
 
-            .song-date-added.search {
-                padding-left: 0;
-                padding-right: 26px;
-            }
+        .song-list.search {
+            margin-block-start: 6px;
+            padding-inline-end: 16px;
+            gap: 0;
 
-            .add-to-playlist-btn.search {
-                display: flex;
-                justify-items: center;
-                background-color: transparent;
-                padding: 6px 16px;
-                border: 1px solid grey;
-                border-radius: 100px;
-                color: white;
-                font-weight: 700;
+            .song-row.search {
+                padding-inline-start: 6px;
+
+                .song-date-added.search {
+                    padding-left: 0;
+                    padding-right: 26px;
+                }
+
+                .add-to-playlist-btn.search {
+                    display: flex;
+                    justify-items: center;
+                    background-color: transparent;
+                    padding: 6px 16px;
+                    border: 1px solid grey;
+                    border-radius: 100px;
+                    color: white;
+                    font-weight: 700;
+                }
+
             }
 
         }
-
     }
-
 }
