@@ -8,11 +8,13 @@ import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
 import { useParams } from 'react-router-dom'
 
 import { formatDuration, formatSpotifyDate, getCloudinaryImg, calcStationDuration } from '../services/util.service'
-import { SET_STATION, SET_CURRENT_PLAYLIST, SET_CURRENT_SONG } from '../store/reducers/station.reducer'
+import { SET_STATION, SET_CURRENT_PLAYLIST, SET_CURRENT_SONG, SET_IS_PLAYING } from '../store/reducers/station.reducer'
 import { toggleLike } from '../store/actions/user.actions'
 import AddLikedBtn from '../assets/icons/add-liked-btn.svg?react'
 import LikedSongCheckmark from '../assets/icons/liked-song-checkmark.svg?react'
 import PlayBtn from '../assets/icons/play-btn-preview.svg?react'
+import HoverPlayBtn from '../assets/icons/hover-play-btn.svg?react'
+import HoverPauseBtn from '../assets/icons/pause-btn-media-player.svg?react'
 import OptionsBtn from '../assets/icons/options-btn.svg?react'
 import ClockIcon from '../assets/icons/clock-icon.svg?react'
 import MagnifyingGlassIcon from '../assets/icons/magnifying-glass.svg?react'
@@ -23,6 +25,9 @@ export function StationDetails({ onRemoveStation }) {
   const station = useSelector(storeState => storeState.stationModule.station)
   const stations = useSelector(storeState => storeState.stationModule.stations)
   const loggedInUser = useSelector(storeState => storeState.userModule.user)
+  const songIdx = useSelector(storeState => storeState.stationModule.currentSongIdx)
+  const currentSong = useSelector(storeState => storeState.stationModule.currentSong)
+  const isPlaying = useSelector(storeState => storeState.stationModule.isPlaying)
   const [SongContextMenu, setSongContextMenu] = useState({ visible: false, x: 0, y: 0, song: null })
   const [stationContextMenu, setStationContextMenu] = useState({ visible: false, x: 0, y: 0 })
   // const youtubeResults = useSelector(storeState => storeState.youtubeModule.youtubeResults)
@@ -36,6 +41,7 @@ export function StationDetails({ onRemoveStation }) {
   const [dominantColor, setDominantColor] = useState(null)
   const [searchTxt, setSearchTxt] = useState('')
   const [stationSearchResults, setStationSearchResults] = useState([])
+  const playerRef = useRef(null)
 
 
   const { stationId } = useParams()
@@ -96,6 +102,8 @@ export function StationDetails({ onRemoveStation }) {
     }
   }
 
+  
+
   function onRightClickSong(ev, song) {
     ev.preventDefault()
     setSongContextMenu({
@@ -129,7 +137,22 @@ export function StationDetails({ onRemoveStation }) {
   }
   function onPlaySongFromStation(songIdx) {
     dispatch({ type: SET_CURRENT_PLAYLIST, songs })
-    dispatch({ type: SET_CURRENT_SONG, song: station.songs[songIdx], isPlaying: true })
+    // dispatch({ type: SET_CURRENT_SONG, song: station.songs[songIdx], isPlaying: true })
+    dispatch({ type: SET_CURRENT_SONG, song: station.songs[songIdx] })
+    dispatch(setIsPlaying(!isPlaying))
+  }
+
+  function togglePlay(song) {
+    if (!currentSong || currentSong.id !== song.id) {
+      // New song clicked: set song and start playing
+      dispatch({ type: SET_CURRENT_SONG, song })
+      dispatch(setIsPlaying(true))
+    } else {
+      // Same song clicked: just toggle play/pause
+      dispatch({ type: SET_CURRENT_PLAYLIST, songs })
+      dispatch({ type: SET_CURRENT_SONG, song })
+      dispatch(setIsPlaying(!isPlaying))
+    }
   }
 
   function handleDragEnd(result) {
@@ -156,6 +179,12 @@ export function StationDetails({ onRemoveStation }) {
     console.log('station id: ', station._id)
     removeSong(stationId, song)
   }
+
+  // function onSelectSong(song) {
+  //       dispatch({ type: SET_STATION, station: null })
+  //       dispatch({ type: SET_CURRENT_PLAYLIST, songs: [song] ,isPlaying: true })
+  //       dispatch({ type: SET_CURRENT_SONG, song })
+  //   }
 
 
 
@@ -211,7 +240,14 @@ export function StationDetails({ onRemoveStation }) {
         </div>
       </div>
       <div className="controls">
-        <PlayBtn />
+        <span className="play-btn-container" onClick={() => togglePlay(currentSong)}>
+          {station.songs.some(song => song.id === currentSong.id) && isPlaying ? (
+            <HoverPauseBtn className="play-btn" />
+          ) : (
+            <HoverPlayBtn className="play-btn" />
+          )}
+        </span>
+
         {station.createdBy?._id === loggedInUser?._id && (
           <OptionsBtn
             className="options-btn"
@@ -261,11 +297,28 @@ export function StationDetails({ onRemoveStation }) {
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                       >
-                        <span className="song-index">{idx + 1}</span>
+                        <span className={
+                          currentSong.id === song.id
+                            ? (!isPlaying ? "song-index song-index-active" : "song-index-off song-index")
+                            : "song-index "
+                        }>
+                          {idx + 1}
+                        </span>
+
+                        {currentSong.id === song.id && isPlaying ? <HoverPauseBtn className="hover-pause-btn" /> : <HoverPlayBtn className="hover-play-btn" />}
+                        {currentSong.id === song.id && isPlaying && (
+                          <div className="playing-bars">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                          </div>
+                        )}
+
                         <div className='info-wrapper'>
                           <img className="song-img" src={song.imgUrl} alt="" />
                           <div className="song-info">
-                            <p className="song-title">{song.title}</p>
+                            <p className={currentSong.id === song.id ? "song-title song-title-active" : "song-title"}>{song.title}</p>
                             <p className="song-artist">{song.artist}</p>
                           </div>
                         </div>

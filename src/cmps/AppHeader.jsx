@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, Link, useSearchParams } from 'react-router-dom'
 import { SET_STATION } from '../store/reducers/station.reducer'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDebouncedYouTubeSearch } from '../customHooks/useDebouncedYouTubeSearch'
 import { setSearchText } from '../store/actions/youtube.actions'
 import { SET_YOUTUBE_RESULTS } from '../store/reducers/youtube.reducer.js'
@@ -26,6 +26,8 @@ export function AppHeader() {
 	const location = useLocation()
 	const [searchParams, setSearchParams] = useSearchParams()
 	const debouncedSearch = useDebouncedYouTubeSearch()
+	const [userContextMenu, setUserContextMenu] = useState({ visible: false, x: 0, y: 0 })
+	console.log('userContextMenu', userContextMenu)
 
 
 	useEffect(() => {
@@ -38,6 +40,15 @@ export function AppHeader() {
 		debouncedSearch(searchTxt)
 		return () => debouncedSearch.cancel()
 	}, [searchTxt])
+
+	useEffect(() => {
+		const handleClickOutside = () => {
+			if (userContextMenu.visible) setUserContextMenu({ visible: false, x: 0, y: 0, song: null })
+		}
+
+		window.addEventListener('click', handleClickOutside)
+		return () => window.removeEventListener('click', handleClickOutside)
+	}, [userContextMenu.visible])
 
 	async function onLogout() {
 		try {
@@ -87,7 +98,7 @@ export function AppHeader() {
 								dispatch(setSearchText(value))
 								if (value) {
 									navigate(`/?search=${encodeURIComponent(value)}`)
-									
+
 								} else {
 									navigate('/')
 								}
@@ -111,10 +122,59 @@ export function AppHeader() {
 				)}
 				{user && (
 					<div className="user-info">
-						<Link to={`user/${user._id}`}>{user.fullname}</Link>
-						<button onClick={onLogout}>Logout</button>
+						<button
+							className="user-info-btn"
+							onClick={(ev) => {
+								ev.preventDefault()
+								ev.stopPropagation()
+								setUserContextMenu(prev => ({
+									visible: !prev.visible,
+									x: ev.clientX,
+									y: ev.clientY,
+								}))
+							}}
+						>
+							<span className="user-info-btn-info">
+								{user.fullname.charAt(0).toUpperCase()}
+							</span>
+						</button>
+
+						{userContextMenu.visible && (
+							<div className="custom-context-menu"
+								onClick={(ev) => ev.stopPropagation()}
+								style={{
+									top: `70px`,
+									right: `12px`,
+									position: 'fixed',
+									backgroundColor: '#282828',
+									width: '188px',
+									padding: '4px',
+									borderRadius: '5px',
+									zIndex: 1000,
+
+								}}>
+								<button
+									className="logout-btn"
+
+									onClick={(ev) => {
+										ev.preventDefault()
+										ev.stopPropagation()
+										setUserContextMenu({
+											visible: false,
+											x: ev.clientX,
+											y: ev.clientY,
+										})
+
+										onLogout()
+									}}
+								>
+									Log out
+								</button>
+							</div>
+						)}
 					</div>
 				)}
+
 
 			</nav>
 		</header>

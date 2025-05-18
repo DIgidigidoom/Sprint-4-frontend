@@ -38,6 +38,9 @@ export function MediaPlayer() {
     const [isShuffle, setIsShuffle] = useState(false)
     const playerRef = useRef(null)
 
+    console.log('is Playing: ',isPlaying)
+    console.log('currentSong: ',currentSong)
+
 
 
     const song = currentSong

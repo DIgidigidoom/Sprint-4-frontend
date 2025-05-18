@@ -131,7 +131,8 @@
                 font-size: rem(14px);
                 transition: background-color, 0.1s ease;
                 padding-right: rem(14px);
-                
+
+
                 cursor: pointer;
 
                 &:hover {
@@ -161,11 +162,11 @@
         }
 
         .user-info {
+            position: relative;
             display: flex;
             align-items: center;
-            margin-inline-start: auto;
-            margin-inline-end: 1rem;
             color: $clr1;
+            margin-left: 132px;
 
             img {
                 width: rem(32px);
@@ -176,6 +177,53 @@
             .btn-link {
                 color: $clr2;
             }
+
+            
+            .user-info-btn {
+                height: 48px;
+                width: 48px;
+                border-radius: 50%;
+                background-color: #1F1F1F;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 700;
+                
+                &:hover {
+                    transform: scale(1.05);
+                }
+                
+                .user-info-btn-info {
+                    background-color: #B49BC8;
+                    height: 32px;
+                    width: 32px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 0.875rem;
+                    font-weight: bold;
+
+
+
+                }
+            }
+        }
+    }
+
+    
+    .logout-btn {
+        background-color: transparent;
+        color: $clr6;
+        padding: 12px;
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        font-weight: bold;
+
+        &:hover {
+            background-color: #ffffff1a;
+            
         }
     }
 }
