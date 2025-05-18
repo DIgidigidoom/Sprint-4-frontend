@@ -43,7 +43,7 @@ registerRoute(
 
     return true;
   },
-  createHandlerBoundToURL('/index.html')
+  createHandlerBoundToURL(process.env.PUBLIC_URL +'/index.html')
   // createHandlerBoundToURL(process.env.PUBLIC_URL + '/index.html')
 );
 
