@@ -27,9 +27,7 @@ export function SideBar({ onCreateStation, onSelectStation }) {
     // const {createdBy} = station
 
     const likedStation = stations.find(station => station.createdBy._id === user?._id && station.type === 'liked station')
-    console.log('liked station: ', likedStation)
-    console.log('stations: ', stations)
-
+    
 
     useEffect(() => {
         const filteredStations = stations.filter(station => (station.createdBy._id === user?._id && station.type !== 'liked station'))

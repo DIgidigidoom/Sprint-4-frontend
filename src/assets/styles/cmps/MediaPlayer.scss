@@ -24,12 +24,6 @@
         }
     }
 
-
-
-
-
-
-
     .track-info {
         display: flex;
         align-items: center;
@@ -258,6 +252,38 @@
         gap: 2px;
         margin-bottom: 11px;
 
+        .lyrics-btn {
+            margin-inline-end: 16px;
+
+            .lyrics-icon-white {
+                padding: 0;
+                width: 16px;
+                height: 16px;
+                fill: $clr5;
+                color: $clr5;
+            }
+
+            .lyrics-icon-green {
+                padding: 0;
+                width: 16px;
+                height: 16px;
+                fill: $clr1;
+                color: $clr1;
+            }
+
+        }
+
+        .lyrics-btn.lyrics-active::after {
+            content: '';
+            
+            width: 4px;
+            height: 4px;
+            border-radius: 2px;
+            position: absolute;
+            display: block;
+            background-color: $clr1;
+             margin-inline-start: 6px;
+        }
 
         button {
             background-color: transparent;

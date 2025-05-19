@@ -9,6 +9,7 @@ export const SET_IS_PLAYING = 'SET_IS_PLAYING'
 export const SET_SONG_IDX = 'SET_SONG_IDX'
 export const SET_CURRENT_SONG = 'SET_CURRENT_SONG'
 export const SET_CURRENT_PLAYLIST = 'SET_CURRENT_PLAYLIST'
+export const SET_LYRICS_CACHE = 'SET_LYRICS_CACHE'
 
 const initialState = {
     stations: [],
@@ -16,7 +17,8 @@ const initialState = {
     currentSongIdx: 0,
     isPlaying: false,
     currentSong: null,
-    SET_CURRENT_PLAYLIST: []
+    SET_CURRENT_PLAYLIST: [],
+    lyricsCache: {}
 }
 
 export function stationReducer(state = initialState, action) {
@@ -85,6 +87,16 @@ export function stationReducer(state = initialState, action) {
                 isPlaying: true,
             }
         }
+
+
+        case SET_LYRICS_CACHE:
+            return {
+                ...state,
+                lyricsCache: {
+                    ...state.lyricsCache,
+                    [action.cacheKey]: action.lyrics
+                }
+            }
     }
     return newState
 }

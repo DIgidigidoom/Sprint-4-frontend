@@ -8,13 +8,18 @@ import { useDispatch } from 'react-redux'
 import { loadStation } from '../store/actions/station.actions'
 import { Explore } from '../cmps/Explore.jsx'
 import { ExploreDetails } from '../cmps/ExploreDetails.jsx'
+import { LyricsViewer } from '../cmps/LyricsViewer.jsx'
 
 
 export default function MainPage({
   stations,
   onRemoveStation,
   onUpdateStation,
-  onSelectStation
+  onSelectStation,
+  onOpenLyrics,
+  showLyrics,
+  currentSong,
+  setShowLyrics,
 }) {
   const { stationId } = useParams()
   const station = useSelector(storeState => storeState.stationModule.station)
@@ -28,48 +33,8 @@ export default function MainPage({
       loadStation(stationId)
     }
   }, [stationId, station])
-  console.log("searchQuery: ", searchQuery)
-  return (
-    // <div className="main-page">
-    //   {youtubeResults.length !== 0 ? (
-    //     <StaitionSearch />
-    //   ) : stationId ? (
-    //     !station ? (
-    //       <div>Loading station...</div>
-    //     ) : (
-    //       <StationDetails
-    //       onRemoveStation={onRemoveStation} />
-    //     )
-    //   ) : (
-    //     <StationList
-    //       stations={stations}
-    //       onRemoveStation={onRemoveStation}
-    //       onUpdateStation={onUpdateStation}
-    //       onSelectStation={onSelectStation}
-    //     />
-    //   )}
-    // </div>
 
-    // <div className="main-page">
-    //   {youtubeResults.length !== 0 ? (
-    //     <StaitionSearch />
-    //   ) : searchQuery === '' ? (
-    //     <Explore />
-    //   ) : stationId ? (
-    //     !station ? (
-    //       <div>Loading station...</div>
-    //     ) : (
-    //       <StationDetails onRemoveStation={onRemoveStation} />
-    //     )
-    //   ) : (
-    //     <StationList
-    //       stations={stations}
-    //       onRemoveStation={onRemoveStation}
-    //       onUpdateStation={onUpdateStation}
-    //       onSelectStation={onSelectStation}
-    //     />
-    //   )}
-    // </div>
+  return (
 
     <div className="main-page">
       {youtubeResults.length !== 0 ? (
@@ -92,6 +57,10 @@ export default function MainPage({
           onSelectStation={onSelectStation}
         />
       )}
+      {showLyrics && currentSong && (
+        <LyricsViewer song={currentSong} onClose={() => setShowLyrics(false)} />
+      )}
     </div>
+
   )
 }

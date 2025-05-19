@@ -106,7 +106,7 @@ export function StationDetails({ onRemoveStation }) {
     }
   }
 
-  
+
 
   function onRightClickSong(ev, song) {
     ev.preventDefault()
@@ -172,9 +172,6 @@ export function StationDetails({ onRemoveStation }) {
   }
 
   function onAddSongToStation(song) {
-    console.log('song: ', song)
-    console.log('station id: ', station._id)
-
     addSong(stationId, song)
   }
 
@@ -202,7 +199,7 @@ export function StationDetails({ onRemoveStation }) {
       <ColorThief imgSrc={getCloudinaryImg(createdBy.imgUrl)} onColorReady={setDominantColor} />
       <div className="station-header"
         style={{
-          backgroundColor:`${dominantColor}`,
+          backgroundColor: `${dominantColor}`,
           backgroundImage: `linear-gradient(transparent 0%, rgba(0,0,0,0.5) 100%)`,
           boxShadow: `0 1px 1000px 0  ${dominantColor}`
         }}>
