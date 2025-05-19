@@ -16,7 +16,6 @@ export default function MainPage({
   onRemoveStation,
   onUpdateStation,
   onSelectStation,
-  onOpenLyrics,
   showLyrics,
   currentSong,
   setShowLyrics,

@@ -142,3 +142,11 @@ export function darkenHexColor(hex, percent = 10) {
   )
 }
 
+export function getMutedSpotifyColor() {
+  const hue = Math.floor(Math.random() * 360)             // Any hue
+  const saturation = Math.floor(Math.random() * 20) + 20  // 20%–40% (low saturation)
+  const lightness = Math.floor(Math.random() * 20) + 15   // 15%–35% (dark)
+
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`
+}
+

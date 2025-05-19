@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { getLyrics } from '../services/lyrics.service'
+import {getMutedSpotifyColor} from '../services/util.service'
 import { SET_LYRICS_CACHE } from '../store/reducers/station.reducer'
 import { useEffect, useRef, useState } from 'react'
 
@@ -20,7 +21,7 @@ export function LyricsViewer({ song, onClose }) {
 
     // Else, fetch from API
     getLyrics(song.title, song.artist).then(fetchedLyrics => {
-       console.log('📝 fetchedLyrics:', fetchedLyrics)
+  
       setLyrics(fetchedLyrics)
 
       dispatch({
@@ -33,10 +34,8 @@ export function LyricsViewer({ song, onClose }) {
   }, [song])
 
   return (
-    <div className="lyrics-modal">
+    <div className="lyrics-modal" style={{backgroundColor : getMutedSpotifyColor()}}>
       <div className="lyrics-content">
-        <button className="close-btn" onClick={onClose}>✕</button>
-        <h3>{song.title} <small>– {song.artist}</small></h3>
         <pre>{lyrics}</pre>
       </div>
     </div>

@@ -139,7 +139,10 @@ export function MediaPlayer({ onOpenLyrics, showLyrics }) {
                 {song && (
                     <React.Fragment>
                         <img src={song.imgUrl} alt={song.title} />
-                        <div>{song.title}</div>
+                        <span>
+                        <div className='track-info-title'>{song.title}</div>
+                        <div className='track-info-artist'>{song.artist}</div>
+                        </span>
                         <button
                             className="like-btn"
                             onClick={(ev) => {
