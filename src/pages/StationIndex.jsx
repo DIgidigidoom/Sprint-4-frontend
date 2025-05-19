@@ -20,6 +20,7 @@ export function StationIndex() {
 
     const [filterBy, setFilterBy] = useState(stationService.getDefaultFilter())
     const [stationToEdit, setStationToEdit] = useState(null)
+    const [isCollapsed, setIsCollapsed] = useState(false)
 
 
 
@@ -92,7 +93,7 @@ export function StationIndex() {
     }
 
     return (
-        <main className="station-index">
+        <main className={`station-index ${isCollapsed ? 'collapsed' : ''}`}>
             <AppHeader />
 
             <MainPage
@@ -105,7 +106,9 @@ export function StationIndex() {
             <SideBar
                 onCreateStation={onCreateStation}
                 stations={stations}
-                onSelectStation={onSelectStation} />
+                onSelectStation={onSelectStation}
+                isCollapsed={isCollapsed}
+                setIsCollapsed={setIsCollapsed} />
 
             <MediaPlayer />
 

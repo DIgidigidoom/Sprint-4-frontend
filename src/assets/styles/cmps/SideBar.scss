@@ -2,6 +2,85 @@
     background-color: $clr3;
     color: $clr6;
 
+    &.collapsed {
+
+        .sidebar-header .your-library-span,
+        .sidebar-header .create-btn-word,
+        .sidebar-sort-btns,
+        .sidebar-filter,
+        .sidebar-followed-content .sidebar-content-info,
+        .collapse-btn {
+            opacity: 0;
+            display: none;
+        }
+
+        .sidebar-content-info {
+            height: 48px;
+            width: 0;
+            opacity: 0;
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-followed-content {
+            padding: 0px 4px 0px 4px;
+        }
+
+        .sidebar-content-preview {
+            gap: rem(0px) !important;
+        }
+
+        .sidebar-header .sidebar-create-btn {
+            height: rem(35px);
+            width: rem(35px);
+            padding-top: 4px;
+
+        }
+
+        .sidebar-header {
+            padding-top: 20px;
+            padding-bottom: 16px;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+
+        .sidebar-header .expand-btns-container {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+
+            .expand-collapse-btn {
+                opacity: 0;
+                z-index: -5;
+
+            }
+
+            &:hover .expand-collapse-btn {
+                opacity: 1;
+                z-index: 0;
+            }
+
+            &:hover .expand-collapse-btn-ph {
+                opacity: 0;
+                z-index: -5;
+            }
+        }
+
+
+    }
+
+    &:hover .your-library-span {
+        transform: translateX(30%);
+    }
+
+    &:hover .sidebar-header .collapse-btn {
+        transform: translateX(0);
+        transition-delay: 0.1s;
+        opacity: 1;
+    }
+
 
 
     .sidebar-header {
@@ -10,13 +89,51 @@
         align-items: center;
         padding: rem(12px) rem(16px) rem(8px) rem(16px);
 
-        span {
+        .collapse-btn {
+            position: absolute;
+            color: #B3B3B3;
+            fill: #B3B3B3;
+            height: 1rem;
+            width: 1rem;
+            transform: translateX(-250%);
+            transition: transform 0.1s ease-in-out, opacity 0.2s ease-in-out;
+            // transition-delay: 0.1s;
+            opacity: 0;
+
+
+
+            &:hover {
+                cursor: pointer;
+                fill: $clr6
+            }
+        }
+
+        .expand-btns-container {
+            display: none;
+
+            .expand-collapse-btn,
+            .expand-collapse-btn-ph {
+                // position: absolute;
+                height: 24px;
+                width: 24px;
+                fill: #B3B3B3;
+
+            }
+
+            .expand-collapse-btn {
+                position: absolute;
+            }
+        }
+
+
+        .your-library-span {
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 1rem;
             font-weight: 700;
             height: fit-content;
+            transition: transform 0.12s;
         }
 
         .sidebar-create-btn {
@@ -188,22 +305,26 @@
                 opacity: 1;
             }
 
-            &::after {
-                content: '';
-                position: absolute;
-                top: 8px;
-                left: 9px;
-                width: rem(48px);
-                height: rem(48px);
-                border-radius: rem(3px);
-                background-color: rgba(0, 0, 0, 0);
-                // transition: background-color 0.2s ease;
-                pointer-events: none;
+            &:hover img {
+                background-color: darken($color: #000000, $amount: 20%);
             }
 
-            &:hover::after {
-                background-color: rgba(0, 0, 0, 0.25);
-            }
+            // &::after {
+            //     content: '';
+            //     position: absolute;
+            //     top: 8px;
+            //     left: 9px;
+            //     width: rem(48px);
+            //     height: rem(48px);
+            //     border-radius: rem(3px);
+            //     background-color: rgba(0, 0, 0, 0);
+            //     // transition: background-color 0.2s ease;
+            //     pointer-events: none;
+            // }
+
+            // &:hover::after {
+            //     background-color: rgba(0, 0, 0, 0.25);
+            // }
 
             img {
                 width: rem(48px);
@@ -228,12 +349,13 @@
                 .sidebar-content-info-description-liked-songs {
                     .liked-songs-pin {
                         padding-right: 5px;
+
                         .liked-songs-pin-svg {
                             fill: #1ed760;
                             color: #1ed760;
                             height: rem(12px);
                             width: rem(12px);
-                            
+
                         }
                     }
                 }

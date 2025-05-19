@@ -7,6 +7,9 @@ import { userService } from '../services/user'
 import { showErrorMsg } from '../services/event-bus.service'
 import LikedSongsStationPic from "../assets/imgs/liked-songs-station-pic.png"
 import LikedSongsPin from "../assets/icons/liked-songs-pin.svg?react"
+import CollapseBtn from "../assets/icons/collapse-btn.svg?react"
+import ExpandCollapseBtn from "../assets/icons/expand-collapse-btn.svg?react"
+import ExpandCollapseBtnPh from "../assets/icons/expand-collapse-ph.svg?react"
 import { useSelector } from 'react-redux'
 import DefaultPic from '../assets/imgs/defaultstation.jpeg'
 import { getCloudinaryImg } from '../services/util.service'
@@ -14,7 +17,8 @@ import { getCloudinaryImg } from '../services/util.service'
 
 
 
-export function SideBar({ onCreateStation, onSelectStation }) {
+
+export function SideBar({ onCreateStation, onSelectStation, isCollapsed, setIsCollapsed }) {
     const [isSearchOpen, setIsSearchOpen] = useState(false)
     const [userStations, setUserStations] = useState([])
     const [searchTerm, setSearchTerm] = useState('')
@@ -36,8 +40,10 @@ export function SideBar({ onCreateStation, onSelectStation }) {
         setUserStations(filteredStations)
     }, [stations, likedStation])
 
+    console.log('Is collapsed? : ', isCollapsed)
 
-   
+
+
 
 
 
@@ -61,9 +67,16 @@ export function SideBar({ onCreateStation, onSelectStation }) {
     }, [searchTerm])
 
     return (
-        <div className='sidebar'>
+        <div className={`sidebar ${isCollapsed ? 'collapsed' : ''}`}>
             <div className='sidebar-header'>
-                <span>Your Library</span>
+                <CollapseBtn className="collapse-btn" onClick={() => setIsCollapsed(prev => !prev)} />
+                <div className='expand-btns-container'>
+                    <ExpandCollapseBtnPh className="expand-collapse-btn-ph" />
+                    <ExpandCollapseBtn className="expand-collapse-btn" onClick={() => setIsCollapsed(prev => !prev)} />
+                </div>
+
+
+                <span className='your-library-span'>Your Library</span>
                 <button
                     onClick={() => {
                         if (!user) {
@@ -74,9 +87,10 @@ export function SideBar({ onCreateStation, onSelectStation }) {
                     }}
                     className='sidebar-create-btn'>
                     <span><Plus /></span>
-                    Create
+                    <span className='create-btn-word'>Create</span>
                 </button>
             </div>
+
 
             <div className='sidebar-sort-btns'>
                 <button className='sidebar-playlist-btn sidebar-sort-btn'>Playlists</button>
