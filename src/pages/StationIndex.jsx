@@ -14,12 +14,15 @@ import { SET_STATIONS } from '../store/reducers/station.reducer.js'
 import { userService } from '../services/user/index.js'
 
 
+
 export function StationIndex() {
 
     const stations = useSelector(storeState => storeState.stationModule.stations)
 
     const [filterBy, setFilterBy] = useState(stationService.getDefaultFilter())
     const [stationToEdit, setStationToEdit] = useState(null)
+    const [showLyrics, setShowLyrics] = useState(false)
+    const [currentSong, setCurrentSong] = useState(null)
     const [isCollapsed, setIsCollapsed] = useState(false)
 
 
@@ -35,6 +38,17 @@ export function StationIndex() {
                 showErrorMsg('Could not load stations')
             })
     }, [filterBy])
+
+    function onOpenLyrics(song) {
+  if (currentSong?.id === song.id && showLyrics) {
+   
+    setShowLyrics(false)
+  } else {
+    
+    setCurrentSong(song)
+    setShowLyrics(true)
+  }
+}
 
     async function onRemoveStation(stationId) {
         try {
@@ -101,6 +115,10 @@ export function StationIndex() {
                 onRemoveStation={onRemoveStation}
                 onUpdateStation={onUpdateStation}
                 onSelectStation={onSelectStation}
+                onOpenLyrics={onOpenLyrics}
+                showLyrics={showLyrics}
+                currentSong={currentSong}
+                setShowLyrics={setShowLyrics}
             />
 
             <SideBar
@@ -110,7 +128,9 @@ export function StationIndex() {
                 isCollapsed={isCollapsed}
                 setIsCollapsed={setIsCollapsed} />
 
-            <MediaPlayer />
+            <MediaPlayer
+                onOpenLyrics={onOpenLyrics}
+                showLyrics={showLyrics} />
 
             {stationToEdit && (
                 <EditStationModal

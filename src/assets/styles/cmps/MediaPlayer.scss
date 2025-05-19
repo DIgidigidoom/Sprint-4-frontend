@@ -24,17 +24,12 @@
         }
     }
 
-
-
-
-
-
-
     .track-info {
         display: flex;
         align-items: center;
         gap: rem(14px);
         padding-bottom: rem(8px);
+
 
         .like-btn {
             background-color: transparent;
@@ -53,11 +48,19 @@
             }
         }
 
-        div {
-            font-size: em(14px);
-            margin-block-end: rem(16px);
+
+        span .track-info-title {
+            font-size: rem(14px);
+            margin-block-start: rem(17px);
             color: $clr6 ;
         }
+
+        span .track-info-artist {
+            font-size: rem(12px);
+            margin-block-end: rem(16px);
+
+        }
+
 
         img {
             height: rem(56px);
@@ -258,6 +261,38 @@
         gap: 2px;
         margin-bottom: 11px;
 
+        .lyrics-btn {
+            margin-inline-end: 16px;
+
+            .lyrics-icon-white {
+                padding: 0;
+                width: 16px;
+                height: 16px;
+                fill: $clr5;
+                color: $clr5;
+            }
+
+            .lyrics-icon-green {
+                padding: 0;
+                width: 16px;
+                height: 16px;
+                fill: $clr1;
+                color: $clr1;
+            }
+
+        }
+
+        .lyrics-btn.lyrics-active::after {
+            content: '';
+
+            width: 4px;
+            height: 4px;
+            border-radius: 2px;
+            position: absolute;
+            display: block;
+            background-color: $clr1;
+            margin-inline-start: 6px;
+        }
 
         button {
             background-color: transparent;

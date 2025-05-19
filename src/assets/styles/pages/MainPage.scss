@@ -1,4 +1,48 @@
 .main-page {
     background-color: $clr3;
     overflow-y: auto;
+    position: relative;
+
+    .lyrics-modal {
+        position: absolute;
+        display: grid;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        z-index: 1000;
+        border-radius: 6px 0;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        overflow-y: auto;
+        
+        
+    }
+
+    .lyrics-content {
+        background-color: transparent;
+        color: white;
+        
+        margin: auto;
+        border-radius: 16px;
+        align-self: center;
+       
+       
+       width: 80%;
+
+        pre {
+            margin-block-start:45px;
+            white-space: pre-wrap;
+            font-family: inherit;
+            font-size: 3rem;
+            font-weight: 700;
+            line-height:2;
+            color: $clr5;
+            letter-spacing: -0.8px;
+            
+            
+
+        }
+    }
+
 }

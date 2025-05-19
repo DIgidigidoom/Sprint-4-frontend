@@ -25,7 +25,6 @@ export function AppHeader() {
 	const [searchParams, setSearchParams] = useSearchParams()
 	const debouncedSearch = useDebouncedYouTubeSearch()
 	const [userContextMenu, setUserContextMenu] = useState({ visible: false, x: 0, y: 0 })
-	console.log('userContextMenu', userContextMenu)
 	const isAtRealHome = location.pathname === '/' && searchParams.get('search') === null
 	const isInExplore = location.pathname === '/' && searchParams.get('search') === ''
 

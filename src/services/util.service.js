@@ -20,6 +20,9 @@ export function getTagsList() {
     { name: 'Smooth', color: '#537aa1', imgUrl: 'smooth_bqypbh' },
     { name: 'Piano', color: '#1e3264', imgUrl: 'piano_bs4lgl' },
     { name: 'Essential', color: '#d84000', imgUrl: 'essential_wbaljy' },
+    { name: 'Alternative', color: '#af2896', imgUrl: 'alternative_nwbxo2' },
+    { name: 'Electronic', color: '#477d95', imgUrl: 'electronic_a0791b' },
+    { name: 'Latin', color: '#8400e7', imgUrl: 'Latin_u6ztkh' },
   ]
 }
 
@@ -140,5 +143,13 @@ export function darkenHexColor(hex, percent = 10) {
       .map(x => x.toString(16).padStart(2, '0'))
       .join('')
   )
+}
+
+export function getMutedSpotifyColor() {
+  const hue = Math.floor(Math.random() * 360)             // Any hue
+  const saturation = Math.floor(Math.random() * 20) + 20  // 20%–40% (low saturation)
+  const lightness = Math.floor(Math.random() * 20) + 15   // 15%–35% (dark)
+
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`
 }
 

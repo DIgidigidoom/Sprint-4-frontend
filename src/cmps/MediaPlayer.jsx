@@ -17,8 +17,9 @@ import VolumeMute from '../assets/icons/volume-mute.svg?react'
 import VolumeLow from '../assets/icons/volume-low.svg?react'
 import VolumeMedium from '../assets/icons/volume-medium.svg?react'
 import VolumeLoud from '../assets/icons/volume-loud.svg?react'
+import LyricsIcon from '../assets/icons/lyrics-icon.svg?react'
 
-export function MediaPlayer() {
+export function MediaPlayer({ onOpenLyrics, showLyrics }) {
 
 
     const songIdx = useSelector(storeState => storeState.stationModule.currentSongIdx)
@@ -38,8 +39,7 @@ export function MediaPlayer() {
     const [isShuffle, setIsShuffle] = useState(false)
     const playerRef = useRef(null)
 
-    console.log('is Playing: ',isPlaying)
-    console.log('currentSong: ',currentSong)
+  
 
 
 
@@ -133,14 +133,16 @@ export function MediaPlayer() {
     }
 
     const isLiked = loggedInUser?.likedSongsIds?.includes(song?.id)
-    
     return (
         <footer className="media-player">
             <div className="track-info">
                 {song && (
                     <React.Fragment>
                         <img src={song.imgUrl} alt={song.title} />
-                        <div>{song.title}</div>
+                        <span>
+                        <div className='track-info-title'>{song.title}</div>
+                        <div className='track-info-artist'>{song.artist}</div>
+                        </span>
                         <button
                             className="like-btn"
                             onClick={(ev) => {
@@ -148,7 +150,7 @@ export function MediaPlayer() {
                                 toggleLike(song, loggedInUser, station, stations)
                             }}
                         >
-                            {isLiked ? <LikedSongCheckmark  /> : <AddLikedBtn  />}
+                            {isLiked ? <LikedSongCheckmark /> : <AddLikedBtn />}
                         </button>
                     </React.Fragment>
                 )}
@@ -208,6 +210,7 @@ export function MediaPlayer() {
                 </div>
             </div>
             <div className="track-options">
+                <button className={`lyrics-btn ${showLyrics ? 'lyrics-active' :''}`} onClick={() => onOpenLyrics(song)}><LyricsIcon className={showLyrics ? 'lyrics-icon-green' : 'lyrics-icon-white'} /></button>
                 <button className="mute-btn" onClick={toggleMute}>
                     <span>{getVolumeIcon()}</span>
                 </button>
@@ -220,6 +223,7 @@ export function MediaPlayer() {
                     className="volume-slider"
                     style={{ '--vol-fill': `${volume}%` }}
                 />
+
             </div>
 
             {song && (
