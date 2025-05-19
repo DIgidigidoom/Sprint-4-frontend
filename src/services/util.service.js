@@ -20,6 +20,9 @@ export function getTagsList() {
     { name: 'Smooth', color: '#537aa1', imgUrl: 'smooth_bqypbh' },
     { name: 'Piano', color: '#1e3264', imgUrl: 'piano_bs4lgl' },
     { name: 'Essential', color: '#d84000', imgUrl: 'essential_wbaljy' },
+    { name: 'Alternative', color: '#af2896', imgUrl: 'alternative_nwbxo2' },
+    { name: 'Electronic', color: '#477d95', imgUrl: 'electronic_a0791b' },
+    { name: 'Latin', color: '#8400e7', imgUrl: 'Latin_u6ztkh' },
   ]
 }
 
