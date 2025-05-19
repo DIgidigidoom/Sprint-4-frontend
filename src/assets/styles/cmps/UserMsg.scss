@@ -6,13 +6,14 @@
     align-items: center;
     left: 50vw;
     transform: translateX(-50%);
-    padding: .2em .5em;
+    padding: rem(12px);
     background-color: $gray3;
     border-radius: rem(4px);
     color: $clr6;
     font-size: .9em;
     opacity: 0;
     transition: 600ms;
+    font-weight: 500;
 }
 
 .user-msg.visible {
@@ -30,9 +31,13 @@
 
 .user-msg.success {
     background-color: $gray1;
+    
     color: $gray5;
+    z-index: 100;
+    background-color: $clr6;
 }
 
 .user-msg.error {
     background-color: $clr11;
+    z-index: 100;
 }

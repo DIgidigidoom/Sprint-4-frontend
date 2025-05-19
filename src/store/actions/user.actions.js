@@ -127,13 +127,17 @@ export async function toggleLike(song, user, currentStation, allStations) {
 
         let updatedLikedStation
         const likedStation = allStations.find(
-            s => s.isLikedSongs && s.createdBy._id === user._id
+            s => s.type === 'liked station' && s.createdBy._id === user._id
         )
         const isLiked = Array.isArray(user.likedSongsIds) && user.likedSongsIds.includes(song.id)
         if (isLiked) {
+            // console.log('TOGGLE LIKE LIKED STATION: ', likedStation)
             updatedLikedStation = await stationService.removeFromLikedSongs(user._id, song.id)
+            showSuccessMsg('Removed from liked station.')
         } else {
+            // console.log('TOGGLE LIKE LIKED STATION: ', likedStation)
             updatedLikedStation = await stationService.addToLikedSongs(user._id, userInfo, song)
+            showSuccessMsg('Added to liked station.')
         }
 
         // Update the likedSongs station in Redux

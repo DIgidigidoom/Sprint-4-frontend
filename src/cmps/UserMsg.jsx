@@ -31,5 +31,11 @@ export function UserMsg() {
 		<section className={`user-msg ${msg?.type} ${msgClass()}`}>
 			{msg?.txt}
 		</section>
+		// msg && (
+		// 	<section className={`user-msg ${msg?.type} ${msgClass()}`}>
+		// 		{msg?.imgUrl && <img src={msg.imgUrl} alt="msg" className="msg-img" />}
+		// 		<span>{msg?.txt}</span>
+		// 	</section>
+		// )
 	)
 }
