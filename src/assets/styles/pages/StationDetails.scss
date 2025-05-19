@@ -404,6 +404,9 @@
                     }
                 }
             }
+            .hovered-like-btn.liked{
+                z-index: 100;
+            }
 
             &:hover .hovered-like-btn {
                 z-index: 100;
