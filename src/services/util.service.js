@@ -80,9 +80,16 @@ export function loadFromStorage(key) {
 }
 
 export function formatDuration(seconds) {
-  const mins = Math.floor(seconds / 60)
+  const hrs = Math.floor(seconds / 3600)
+  const mins = Math.floor((seconds % 3600) / 60)
   const secs = seconds % 60
-  return `${mins}:${secs.toString().padStart(2, '0')}`
+
+  const parts = []
+  if (hrs) parts.push(`${hrs} hr`)
+  if (mins) parts.push(`${mins} min`)
+  if (secs || parts.length === 0) parts.push(`${secs} sec`)
+
+  return parts.join(' ')
 }
 
 export function formatSpotifyDate(ms) {

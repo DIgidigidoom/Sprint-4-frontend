@@ -188,7 +188,7 @@ export function StationDetails({ onRemoveStation }) {
 
 
 
-
+console.log("stationDuration: ", stationDuration)
   const { createdBy } = station
 
   // console.log("variable: ", variable)
