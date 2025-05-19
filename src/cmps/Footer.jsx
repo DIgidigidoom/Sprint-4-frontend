@@ -1,3 +1,7 @@
+import Facebook from '../assets/icons/facebook.svg?react'
+import Instagram from '../assets/icons/instagram.svg?react'
+import Tweeter from '../assets/icons/tweeter.svg?react'
+
 export function Footer() {
     return (
         <footer className="app-footer">
@@ -34,9 +38,9 @@ export function Footer() {
                     </div>
 
                     <div className="footer-social">
-                        <a href="#"><img src="/assets/icons/instagram.svg" alt="Instagram" /></a>
-                        <a href="#"><img src="/assets/icons/twitter.svg" alt="Twitter" /></a>
-                        <a href="#"><img src="/assets/icons/facebook.svg" alt="Facebook" /></a>
+                        <div className="social-icon"><Instagram /></div>
+                        <div className="social-icon"><Tweeter /></div>
+                        <div className="social-icon"><Facebook /></div>
                     </div>
                 </div>
             </section>
