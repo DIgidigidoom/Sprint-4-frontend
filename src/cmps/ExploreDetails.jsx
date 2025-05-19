@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux'
 import { getTagsList, getCloudinaryImg } from '../services/util.service'
 import { useNavigate } from 'react-router-dom'
+import PreviewPlayBtn from '../assets/icons/play-btn-preview.svg?react'
 
 export function ExploreDetails({ tag }) {
     const stations = useSelector(storeState => storeState.stationModule.stations)
@@ -29,17 +30,23 @@ export function ExploreDetails({ tag }) {
 
             <div className="station-grid">
                 {filteredStations.map(station => (
-                    <div
-                        key={station._id}
-                        className="station-card"
-                        onClick={() => onSelectStation(station._id)}>
+                    <div className='station-card-container'>
+                        <div
+                            key={station._id}
+                            className="station-card"
+                            onClick={() => onSelectStation(station._id)}>
 
-                        <img
-                            src={getCloudinaryImg(station.createdBy.imgUrl)}
-                            alt={station.name}
-                        />
-                        <h3>{station.name}</h3>
+                            <div className='station-img-wrapper'>
+                                <img
+                                    src={getCloudinaryImg(station.createdBy.imgUrl)}
+                                    alt={station.name}
+                                />
+                                <span className='preview-play-btn'><PreviewPlayBtn /></span>
+                            </div>
+                            <h3>{station.name}</h3>
+                        </div>
                     </div>
+
                 ))}
             </div>
         </section>

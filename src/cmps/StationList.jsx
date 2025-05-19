@@ -27,6 +27,9 @@ export function StationList({ stations, onSelectStation }) {
     const electronicStations = spotifyStations.filter(
         station => station.type === 'album' && station.tags.includes("Electronic")
     )
+    const latinStations = spotifyStations.filter(
+        station => station.type === 'album' && station.tags.includes("Latin")
+    )
     return (
         <section className="station-list">
             <h2 className='station-list-title'>Our Recommendations For You</h2>
@@ -82,6 +85,16 @@ export function StationList({ stations, onSelectStation }) {
             <h2 className='station-list-title'>Electronic</h2>
             <div className='station-list-stations'>
                 {electronicStations.map(station =>
+                    <div key={station._id} className="station-card">
+                        <StationPreview
+                            station={station}
+                            onSelectStation={onSelectStation} />
+                    </div>
+                )}
+            </div>
+            <h2 className='station-list-title'>Latin</h2>
+            <div className='station-list-stations'>
+                {latinStations.map(station =>
                     <div key={station._id} className="station-card">
                         <StationPreview
                             station={station}
