@@ -41,7 +41,7 @@ export function SideBar({ onCreateStation, onSelectStation, isCollapsed, setIsCo
         setUserStations(filteredByTxt)
     }, [stations, likedStation,searchTerm])
 
-    console.log('Is collapsed? : ', isCollapsed)
+   
 
 
 

@@ -10,6 +10,9 @@ export const SOCKET_EVENT_USER_UPDATED = 'user-updated'
 export const SOCKET_EVENT_REVIEW_ADDED = 'review-added'
 export const SOCKET_EVENT_REVIEW_REMOVED = 'review-removed'
 export const SOCKET_EVENT_REVIEW_ABOUT_YOU = 'review-about-you'
+export const SOCKET_EVENT_STATION_UPDATED = 'station-updated'
+export const SOCKET_EMIT_REORDER_STATION = 'station-reorder'
+
 
 const SOCKET_EMIT_LOGIN = 'set-user-socket'
 const SOCKET_EMIT_LOGOUT = 'unset-user-socket'
@@ -106,7 +109,7 @@ function createDummySocketService() {
   return socketService
 }
 
-
+if (import.meta.env.DEV) window.socketService = socketService
 // Basic Tests
 // function cb(x) {console.log('Socket Test - Expected Puk, Actual:', x)}
 // socketService.on('baba', cb)

@@ -2,14 +2,15 @@ import { useEffect, useState, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { loadStation, updateStation, setIsPlaying, addSong, removeSong } from '../store/actions/station.actions'
 
-import {  useDebouncedYouTubeSearchInsidePlaylist } from '../customHooks/useDebouncedYouTubeSearch'
+import { useDebouncedYouTubeSearchInsidePlaylist } from '../customHooks/useDebouncedYouTubeSearch'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
 import { useParams } from 'react-router-dom'
 import { EditStationModal } from '../cmps/EditStationModal'
 import { ColorThief } from '../cmps/ColorThief'
 import { formatTime, formatSpotifyDate, getCloudinaryImg, calcStationDuration } from '../services/util.service'
-import { SET_STATION, SET_CURRENT_PLAYLIST, SET_CURRENT_SONG, SET_IS_PLAYING } from '../store/reducers/station.reducer'
+import { SET_STATION, SET_CURRENT_PLAYLIST, SET_CURRENT_SONG } from '../store/reducers/station.reducer'
+import { socketService, SOCKET_EMIT_REORDER_STATION, SOCKET_EVENT_STATION_UPDATED } from '../services/socket.service'
 import { toggleLike } from '../store/actions/user.actions'
 import AddLikedBtn from '../assets/icons/add-liked-btn.svg?react'
 import LikedSongCheckmark from '../assets/icons/liked-song-checkmark.svg?react'
@@ -59,6 +60,28 @@ export function StationDetails({ onRemoveStation }) {
   }, [stationId])
 
   useEffect(() => {
+    console.log('[SOCKET] 🎯 Watching stationId:', stationId)
+    const onStationUpdated = (updatedStation) => {
+      if (!updatedStation || !updatedStation._id) {
+        console.warn('[SOCKET] ⚠️ Invalid station update received:', updatedStation)
+        return
+      }
+
+      console.log('[SOCKET] 🔄 station-updated received:', updatedStation)
+      if (updatedStation._id === stationId) {
+        setSongs(updatedStation.songs)
+      }
+    }
+
+    socketService.on('station-updated', onStationUpdated)
+    socketService.emit('station-watch', stationId)
+
+    return () => {
+      socketService.off('station-updated', onStationUpdated)
+    }
+  }, [stationId])
+
+  useEffect(() => {
     const handleClickOutside = () => {
       if (SongContextMenu.visible) setSongContextMenu({ visible: false, x: 0, y: 0, song: null })
       if (stationContextMenu.visible) setStationContextMenu({ visible: false, x: 0, y: 0 })
@@ -75,7 +98,7 @@ export function StationDetails({ onRemoveStation }) {
       const stationSongs = station.songs || []
       setSongs(stationSongs)
       dispatch(setIsPlaying(false))
-      setStationDuration(calcStationDuration(stationSongs, 'duration' ))
+      setStationDuration(calcStationDuration(stationSongs, 'duration'))
       setIsDisplayingSearch(stationSongs.length === 0)
 
     }
@@ -93,6 +116,8 @@ export function StationDetails({ onRemoveStation }) {
 
     return () => debouncedSearch.cancel()
   }, [searchTxt])
+
+
 
   async function onSaveName() {
     try {
@@ -142,7 +167,7 @@ export function StationDetails({ onRemoveStation }) {
     dispatch({ type: SET_CURRENT_PLAYLIST, songs })
     // dispatch({ type: SET_CURRENT_SONG, song: station.songs[songIdx], isPlaying: true })
     dispatch({ type: SET_CURRENT_SONG, song: station.songs[songIdx] })
-    dispatch(setIsPlaying(!isPlaying))
+    dispatch(setIsPlaying(true))
   }
 
   function togglePlay(song) {
@@ -167,7 +192,15 @@ export function StationDetails({ onRemoveStation }) {
     setSongs(reordered)
 
     const updatedStation = { ...station, songs: reordered }
+
+    // Update locally
     updateStation(updatedStation)
+    console.log('[CLIENT] Emitting station-reorder with ID:', station._id)
+    // Emit socket event
+    socketService.emit(SOCKET_EMIT_REORDER_STATION, {
+      stationId: station._id,
+      songs: reordered,
+    })
   }
 
   function onAddSongToStation(song) {
@@ -188,7 +221,7 @@ export function StationDetails({ onRemoveStation }) {
 
 
 
-console.log("stationDuration: ", stationDuration)
+
   const { createdBy } = station
 
   // console.log("variable: ", variable)
