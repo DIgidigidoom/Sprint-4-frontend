@@ -8,7 +8,7 @@ import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
 import { useParams } from 'react-router-dom'
 import { EditStationModal } from '../cmps/EditStationModal'
 import { ColorThief } from '../cmps/ColorThief'
-import { formatDuration, formatSpotifyDate, getCloudinaryImg, calcStationDuration } from '../services/util.service'
+import { formatTime, formatSpotifyDate, getCloudinaryImg, calcStationDuration } from '../services/util.service'
 import { SET_STATION, SET_CURRENT_PLAYLIST, SET_CURRENT_SONG, SET_IS_PLAYING } from '../store/reducers/station.reducer'
 import { toggleLike } from '../store/actions/user.actions'
 import AddLikedBtn from '../assets/icons/add-liked-btn.svg?react'
@@ -75,7 +75,7 @@ export function StationDetails({ onRemoveStation }) {
       const stationSongs = station.songs || []
       setSongs(stationSongs)
       dispatch(setIsPlaying(false))
-      setStationDuration(calcStationDuration(stationSongs))
+      setStationDuration(calcStationDuration(stationSongs, 'duration' ))
       setIsDisplayingSearch(stationSongs.length === 0)
 
     }
@@ -336,7 +336,7 @@ console.log("stationDuration: ", stationDuration)
                               : <AddLikedBtn />}
                           </button>
                         </div>
-                        <p className="song-formatted-duration">{formatDuration(song.duration)}</p>
+                        <p className="song-formatted-duration">{formatTime(song.duration)}</p>
                       </div>
                     )}
                   </Draggable>

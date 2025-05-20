@@ -91,6 +91,11 @@ export function formatDuration(seconds) {
 
   return parts.join(' ')
 }
+export function formatTime(seconds) {
+  const mins = Math.floor(seconds / 60)
+  const secs = seconds % 60
+  return `${mins}:${secs.toString().padStart(2, '0')}`
+}
 
 export function formatSpotifyDate(ms) {
   const date = new Date(ms)
@@ -134,8 +139,7 @@ export function getCloudinaryImg(picId) {
 
 export function calcStationDuration(songs) {
   const duration = songs.reduce((sum, song) => sum + song.duration, 0)
-
-  return formatDuration(duration)
+   return formatTime(duration)
 }
 
 export function darkenHexColor(hex, percent = 10) {
