@@ -44,6 +44,11 @@ export function StationDetails({ onRemoveStation }) {
   const [stationSearchResults, setStationSearchResults] = useState([])
   const playerRef = useRef(null)
   const [isDisplayingSearch, setIsDisplayingSearch] = useState(false)
+  const [userMsg, setUserMsg] = useState({
+    visible: false,
+    message: '',
+    image: null,
+  })
 
 
   const { stationId } = useParams()
@@ -103,6 +108,31 @@ export function StationDetails({ onRemoveStation }) {
     } catch (err) {
       console.error('Failed to update station name', err)
       showErrorMsg('Failed to save station')
+    }
+  }
+
+  async function onToggleLike(song, loggedInUser, station, stations) {
+    try {
+      const updatedUser = await toggleLike(song, loggedInUser, station, stations)
+      const isNowLiked = updatedUser.likedSongsIds.includes(song.id)
+      const likedStation = stations.find(station => station.type === 'liked station' && station.createdBy._id === updatedUser._id)
+
+      setUserMsg({
+        visible: true,
+        message: isNowLiked ? 'Added to Liked Songs.' : 'Removed from Liked Songs.',
+        image: getCloudinaryImg(likedStation.createdBy.imgUrl), // or whatever image you want to show
+      })
+
+      // Auto-dismiss after 3 seconds
+      setTimeout(() => {
+        setUserMsg(prev => ({ ...prev, visible: false }))
+      }, 3000)
+
+    } catch (err) {
+      console.log(err, 'cannot add to liked song')
+    }
+    finally {
+
     }
   }
 
@@ -173,12 +203,38 @@ export function StationDetails({ onRemoveStation }) {
 
   function onAddSongToStation(song) {
     addSong(stationId, song)
+
+
+
+    setUserMsg({
+        visible: true,
+        message: `Added to ${station.name}.` ,
+        image: getCloudinaryImg(station.createdBy.imgUrl), 
+      })
+
+      // Auto-dismiss after 3 seconds
+      setTimeout(() => {
+        setUserMsg(prev => ({ ...prev, visible: false }))
+      }, 3000)
+
   }
 
   function onRemoveSongFromStation(song) {
     console.log('song: ', song)
     console.log('station id: ', station._id)
     removeSong(stationId, song)
+
+
+    setUserMsg({
+        visible: true,
+        message: `Removed from ${station.name}.` ,
+        image: getCloudinaryImg(station.createdBy.imgUrl), 
+      })
+
+      // Auto-dismiss after 3 seconds
+      setTimeout(() => {
+        setUserMsg(prev => ({ ...prev, visible: false }))
+      }, 3000)
   }
 
   // function onSelectSong(song) {
@@ -329,7 +385,7 @@ export function StationDetails({ onRemoveStation }) {
                           <button
                             onClick={(ev) => {
                               ev.stopPropagation()
-                              toggleLike(song, loggedInUser, station, stations)
+                              onToggleLike(song, loggedInUser, station, stations)
                             }}
                           >
                             {loggedInUser?.likedSongsIds?.includes(song.id)
@@ -458,6 +514,12 @@ export function StationDetails({ onRemoveStation }) {
             </button>
           )}
 
+        </div>
+      )}
+      {userMsg.visible && (
+        <div className="toast-modal">
+          <img src={userMsg.image} alt="station" />
+          <span>{userMsg.message}</span>
         </div>
       )}
     </section >

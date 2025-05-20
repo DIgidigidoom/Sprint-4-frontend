@@ -256,7 +256,7 @@
                 align-items: end;
                 height: 14px;
                 gap: 2px;
-                
+
             }
 
             .playing-bars span {
@@ -492,7 +492,7 @@
 
                 .icon {
                     fill: $clr6;
-                   
+
                     height: 24px;
                     width: 24px;
                     padding: 0;
@@ -510,33 +510,60 @@
         }
 
 
-        
+
     }
+
     .song-list.search {
-            margin-block-start: 6px;
-            padding-inline-end: 16px;
-            gap: 0;
+        margin-block-start: 6px;
+        padding-inline-end: 16px;
+        gap: 0;
 
-            .song-row.search {
-                padding-inline-start: 6px;
+        .song-row.search {
+            padding-inline-start: 6px;
 
-                .song-date-added.search {
-                    padding-left: 0;
-                    padding-right: 26px;
-                }
+            .song-date-added.search {
+                padding-left: 0;
+                padding-right: 26px;
+            }
 
-                .add-to-playlist-btn.search {
-                    display: flex;
-                    justify-items: center;
-                    background-color: transparent;
-                    padding: 6px 16px;
-                    border: 1px solid grey;
-                    border-radius: 100px;
-                    color: white;
-                    font-weight: 700;
-                }
-
+            .add-to-playlist-btn.search {
+                display: flex;
+                justify-items: center;
+                background-color: transparent;
+                padding: 6px 16px;
+                border: 1px solid grey;
+                border-radius: 100px;
+                color: white;
+                font-weight: 700;
             }
 
         }
+
+    }
+
+    .toast-modal {
+        position: fixed;
+        bottom: 100px;
+        display: flex;
+        gap: 9px;
+        justify-content: center;
+        align-items: center;
+        left: 50vw;
+        transform: translateX(-50%);
+        padding: rem(12px);
+        background-color: $gray3;
+        border-radius: rem(4px);
+        color: $clr6;
+        font-size: .9em;
+        transition: 600ms;
+        font-weight: 500;
+        color: $gray5;
+        z-index: 100;
+        background-color: $clr6;
+
+        img {
+            height: 24px;
+            width: 24px;
+        }
+    }
 }
