@@ -40,15 +40,15 @@ export function StationIndex() {
     }, [filterBy])
 
     function onOpenLyrics(song) {
-  if (currentSong?.id === song.id && showLyrics) {
-   
-    setShowLyrics(false)
-  } else {
-    
-    setCurrentSong(song)
-    setShowLyrics(true)
-  }
-}
+        if (currentSong?.id === song.id && showLyrics) {
+
+            setShowLyrics(false)
+        } else {
+
+            setCurrentSong(song)
+            setShowLyrics(true)
+        }
+    }
 
     async function onRemoveStation(stationId) {
         try {
@@ -96,14 +96,16 @@ export function StationIndex() {
         try {
             const savedStation = await addStation(newStation)
             showSuccessMsg('Station created')
-
+            
             // Refresh the list to include the new one
             const updatedStations = await stationService.query()
             dispatch({ type: 'SET_STATIONS', stations: updatedStations })
+            navigate(`/station/${savedStation._id}`, { replace: false })
         } catch (err) {
             showErrorMsg('Cannot create station')
             console.error(err)
         }
+        
     }
 
     return (

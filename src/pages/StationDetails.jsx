@@ -1,26 +1,25 @@
 import { useEffect, useState, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { loadStation, updateStation, setIsPlaying, addSong, removeSong } from '../store/actions/station.actions'
-import { SET_YOUTUBE_RESULTS } from '../store/reducers/youtube.reducer.js'
-import { useDebouncedYouTubeSearch, useDebouncedYouTubeSearchInsidePlaylist } from '../customHooks/useDebouncedYouTubeSearch'
+
+import {  useDebouncedYouTubeSearchInsidePlaylist } from '../customHooks/useDebouncedYouTubeSearch'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
 import { useParams } from 'react-router-dom'
-
-import { formatDuration, formatSpotifyDate, getCloudinaryImg, calcStationDuration } from '../services/util.service'
+import { EditStationModal } from '../cmps/EditStationModal'
+import { ColorThief } from '../cmps/ColorThief'
+import { formatTime, formatSpotifyDate, getCloudinaryImg, calcStationDuration } from '../services/util.service'
 import { SET_STATION, SET_CURRENT_PLAYLIST, SET_CURRENT_SONG, SET_IS_PLAYING } from '../store/reducers/station.reducer'
 import { toggleLike } from '../store/actions/user.actions'
 import AddLikedBtn from '../assets/icons/add-liked-btn.svg?react'
 import LikedSongCheckmark from '../assets/icons/liked-song-checkmark.svg?react'
-import PlayBtn from '../assets/icons/play-btn-preview.svg?react'
 import HoverPlayBtn from '../assets/icons/hover-play-btn.svg?react'
 import HoverPauseBtn from '../assets/icons/pause-btn-media-player.svg?react'
 import OptionsBtn from '../assets/icons/options-btn.svg?react'
 import ClockIcon from '../assets/icons/clock-icon.svg?react'
 import MagnifyingGlassIcon from '../assets/icons/magnifying-glass.svg?react'
 import CloseSearchIcon from '../assets/icons/sidebar-input-x.svg?react'
-import { EditStationModal } from '../cmps/EditStationModal'
-import { ColorThief } from '../cmps/ColorThief'
+
 
 export function StationDetails({ onRemoveStation }) {
   const station = useSelector(storeState => storeState.stationModule.station)
@@ -81,7 +80,7 @@ export function StationDetails({ onRemoveStation }) {
       const stationSongs = station.songs || []
       setSongs(stationSongs)
       dispatch(setIsPlaying(false))
-      setStationDuration(calcStationDuration(stationSongs))
+      setStationDuration(calcStationDuration(stationSongs, 'duration' ))
       setIsDisplayingSearch(stationSongs.length === 0)
 
     }
@@ -245,7 +244,7 @@ export function StationDetails({ onRemoveStation }) {
 
 
 
-
+console.log("stationDuration: ", stationDuration)
   const { createdBy } = station
 
   // console.log("variable: ", variable)
@@ -393,7 +392,7 @@ export function StationDetails({ onRemoveStation }) {
                               : <AddLikedBtn />}
                           </button>
                         </div>
-                        <p className="song-formatted-duration">{formatDuration(song.duration)}</p>
+                        <p className="song-formatted-duration">{formatTime(song.duration)}</p>
                       </div>
                     )}
                   </Draggable>

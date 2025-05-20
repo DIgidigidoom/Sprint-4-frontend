@@ -32,7 +32,6 @@
         background-color: #3e3e3e;
     }
 
-
     .station-header {
         height: fit-content;
 
@@ -75,8 +74,6 @@
             }
         }
     }
-
-
 
     .controls {
         display: flex;
@@ -403,6 +400,9 @@
                         }
                     }
                 }
+            }
+            .hovered-like-btn.liked{
+                z-index: 100;
             }
 
             &:hover .hovered-like-btn {

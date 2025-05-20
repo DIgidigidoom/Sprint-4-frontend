@@ -31,12 +31,15 @@ export function SideBar({ onCreateStation, onSelectStation, isCollapsed, setIsCo
     // const {createdBy} = station
 
     const likedStation = stations.find(station => station.createdBy._id === user?._id && station.type === 'liked station')
-    
+
 
     useEffect(() => {
         const filteredStations = stations.filter(station => (station.createdBy._id === user?._id && station.type !== 'liked station'))
-        setUserStations(filteredStations)
-    }, [stations, likedStation])
+        const filteredByTxt = filteredStations.filter(station =>
+            station.name.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+        setUserStations(filteredByTxt)
+    }, [stations, likedStation,searchTerm])
 
     console.log('Is collapsed? : ', isCollapsed)
 
@@ -48,6 +51,7 @@ export function SideBar({ onCreateStation, onSelectStation, isCollapsed, setIsCo
     const searchRef = useRef(null)
 
     useEffect(() => {
+
         const handleClickOutside = (event) => {
             if (
                 searchRef.current &&
@@ -57,12 +61,15 @@ export function SideBar({ onCreateStation, onSelectStation, isCollapsed, setIsCo
                 setIsSearchOpen(false)
             }
         }
-
+        console.log("searchTerm: ", searchTerm)
         document.addEventListener('mousedown', handleClickOutside)
         return () => {
             document.removeEventListener('mousedown', handleClickOutside)
         }
+
     }, [searchTerm])
+
+
 
     return (
         <div className={`sidebar ${isCollapsed ? 'collapsed' : ''}`}>
