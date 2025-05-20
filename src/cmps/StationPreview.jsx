@@ -17,7 +17,7 @@ export function StationPreview({ station, onSelectStation }) {
 
             <div className="station-info" >
                 <span className='station-preview-title'>{station.name}</span>
-                <span className='station-preview-artist'>Playlist • {station.owner?.fullname || 'Unknown'}</span>
+                <span className='station-preview-artist'>Playlist • {station.createdBy.fullname || 'Unknown'}</span>
             </div>
         </div>
     )
