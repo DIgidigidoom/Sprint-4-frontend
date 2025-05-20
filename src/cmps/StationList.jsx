@@ -72,6 +72,16 @@ export function StationList({ stations, onSelectStation }) {
                     </div>
                 )}
             </div>
+            <h2 className='station-list-title'>Latin</h2>
+            <div className='station-list-stations'>
+                {latinStations.map(station =>
+                    <div key={station._id} className="station-card">
+                        <StationPreview
+                            station={station}
+                            onSelectStation={onSelectStation} />
+                    </div>
+                )}
+            </div>
             <h2 className='station-list-title'>Alternative</h2>
             <div className='station-list-stations'>
                 {alternativeStations.map(station =>
@@ -85,16 +95,6 @@ export function StationList({ stations, onSelectStation }) {
             <h2 className='station-list-title'>Electronic</h2>
             <div className='station-list-stations'>
                 {electronicStations.map(station =>
-                    <div key={station._id} className="station-card">
-                        <StationPreview
-                            station={station}
-                            onSelectStation={onSelectStation} />
-                    </div>
-                )}
-            </div>
-            <h2 className='station-list-title'>Latin</h2>
-            <div className='station-list-stations'>
-                {latinStations.map(station =>
                     <div key={station._id} className="station-card">
                         <StationPreview
                             station={station}

@@ -353,4 +353,56 @@
         height: 0;
         width: 0;
     }
+
+    @include for-mobile-layout {
+        // margin-top: 16px;
+        height: 45px;
+        padding: 0px;
+        grid-template-columns: auto auto !important;
+        justify-content: space-between;
+        // width: 360px !important;
+        .track-seek-container {
+            display: none !important;
+        }
+
+        .track-info-artist {
+            margin: 0px !important;
+        }
+
+        .track-info-title {
+            margin: 0px !important;
+        }
+
+        .track-options {
+                display: none !important;
+            }
+
+        .track-info {
+            padding: 0px;
+            img {
+                height: 40px;
+                width: 40px;
+                margin: 0;
+            }
+        }
+
+        .track-nav-container {
+            .previous-btn-button {
+                display: none !important;
+            }
+
+            .repeat-btn {
+                display: none !important;
+            }
+
+            .next-btn-button {
+                display: none !important;
+            }
+            .shuffle-btn {
+                display: none !important;
+            }
+
+            
+        }
+    }
 }

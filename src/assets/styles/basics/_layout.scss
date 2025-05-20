@@ -9,11 +9,13 @@
         "sidebar main-page"
         "media-player media-player";
     gap: 8px;
-    padding: 8px;  
+    padding: 8px;
 
     &.collapsed {
         grid-template-columns: rem(72px) 1fr;
     }
+
+
 }
 
 header {
@@ -27,7 +29,6 @@ header {
 .main-page {
     grid-area: main-page;
     overflow-y: auto;
-    background-color: white;
 }
 
 .media-player {
@@ -38,8 +39,40 @@ header,
 .sidebar,
 .main-page {
     border-radius: rem(8px);
-    overflow: hidden;   
+    overflow: hidden;
 }
+
+@include for-mobile-layout {
+    .station-index {
+        grid-template-columns: 360px;
+        grid-template-rows: auto auto;
+        ;
+        grid-template-areas:
+            "main-page"
+            "media-player"
+        ;
+
+
+
+
+
+        // .media-player {
+        //     display: none;
+        // }
+    }
+
+    header {
+        display: none !important;
+    }
+
+    .sidebar {
+        display: none !important;
+    }
+
+
+}
+
+
 
 
 // @include for-narrow-layout {

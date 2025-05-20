@@ -166,7 +166,7 @@ export function MediaPlayer({ onOpenLyrics, showLyrics }) {
                         <ShuffleBtn className={isShuffle ? "shuffle-green shuffle-btn-svg" : "shuffle-white shuffle-btn-svg"} />
                     </button>
 
-                    <button onClick={prevSong} disabled={!song}>
+                    <button className='previous-btn-button' onClick={prevSong} disabled={!song}>
                         <PreviousBtn className="previous-btn" />
                     </button>
 
@@ -174,7 +174,7 @@ export function MediaPlayer({ onOpenLyrics, showLyrics }) {
                         {isPlaying ? <PauseBtnWide className="pause-svg" /> : <PlayBtn />}
                     </button>
 
-                    <button onClick={nextSong} disabled={!song}>
+                    <button className='next-btn-button' onClick={nextSong} disabled={!song}>
                         <NextBtn className="next-btn" />
                     </button>
 

@@ -133,11 +133,11 @@ export async function toggleLike(song, user, currentStation, allStations) {
         if (isLiked) {
             // console.log('TOGGLE LIKE LIKED STATION: ', likedStation)
             updatedLikedStation = await stationService.removeFromLikedSongs(user._id, song.id)
-            showSuccessMsg('Removed from liked station.')
+            // showSuccessMsg('Removed from liked station.')
         } else {
             // console.log('TOGGLE LIKE LIKED STATION: ', likedStation)
             updatedLikedStation = await stationService.addToLikedSongs(user._id, userInfo, song)
-            showSuccessMsg('Added to liked station.')
+            // showSuccessMsg('Added to liked station.')
         }
 
         // Update the likedSongs station in Redux
@@ -155,8 +155,9 @@ export async function toggleLike(song, user, currentStation, allStations) {
         // Update logged in user locally (optional)
         const updatedUser = await userService.toggleLikedSong(song.id)
         store.dispatch({ type: SET_USER, user: updatedUser })
-        console.log('🍪 loginToken:', req.cookies?.loginToken)
-        console.log('👤 decoded user:', authService.validateToken(req.cookies?.loginToken))
+        // console.log('🍪 loginToken:', req.cookies?.loginToken)
+        // console.log('👤 decoded user:', authService.validateToken(req.cookies?.loginToken))
+        return updatedUser
     } catch (err) {
         console.error('❌ toggleLike failed:', err)
         throw err

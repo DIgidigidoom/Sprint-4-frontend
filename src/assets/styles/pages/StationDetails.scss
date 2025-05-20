@@ -253,7 +253,7 @@
                 align-items: end;
                 height: 14px;
                 gap: 2px;
-                
+
             }
 
             .playing-bars span {
@@ -401,7 +401,8 @@
                     }
                 }
             }
-            .hovered-like-btn.liked{
+
+            .hovered-like-btn.liked {
                 z-index: 100;
             }
 
@@ -492,7 +493,7 @@
 
                 .icon {
                     fill: $clr6;
-                   
+
                     height: 24px;
                     width: 24px;
                     padding: 0;
@@ -510,34 +511,129 @@
         }
 
 
-        
+
     }
 
     .song-list.search {
-            margin-block-start: 6px;
-            padding-inline-end: 16px;
-            gap: 0;
+        margin-block-start: 6px;
+        padding-inline-end: 16px;
+        gap: 0;
 
-            .song-row.search {
-                padding-inline-start: 6px;
+        .song-row.search {
+            padding-inline-start: 6px;
 
-                .song-date-added.search {
-                    padding-left: 0;
-                    padding-right: 26px;
-                }
+            .song-date-added.search {
+                padding-left: 0;
+                padding-right: 26px;
+            }
 
-                .add-to-playlist-btn.search {
-                    display: flex;
-                    justify-items: center;
-                    background-color: transparent;
-                    padding: 6px 16px;
-                    border: 1px solid grey;
-                    border-radius: 100px;
-                    color: white;
-                    font-weight: 700;
-                }
-
+            .add-to-playlist-btn.search {
+                display: flex;
+                justify-items: center;
+                background-color: transparent;
+                padding: 6px 16px;
+                border: 1px solid grey;
+                border-radius: 100px;
+                color: white;
+                font-weight: 700;
             }
 
         }
+
+    }
+
+    .toast-modal {
+        position: fixed;
+        bottom: 100px;
+        display: flex;
+        gap: 9px;
+        justify-content: center;
+        align-items: center;
+        left: 50vw;
+        transform: translateX(-50%);
+        padding: rem(12px);
+        background-color: $gray3;
+        border-radius: rem(4px);
+        color: $clr6;
+        font-size: .9em;
+        transition: 600ms;
+        font-weight: 500;
+        color: $gray5;
+        z-index: 100;
+        background-color: $clr6;
+
+        img {
+            height: 24px;
+            width: 24px;
+        }
+    }
+
+    @include for-mobile-layout {
+        width: 360px;
+
+        .station-header-content {
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start !important;
+            padding: 16px !important;
+
+            .station-img {
+                align-self: center;
+            }
+
+            .station-info {
+                h1 {
+                    font-size: 2rem;
+                }
+
+                p:first-child {
+                    display: none;
+                }
+            }
+
+
+        }
+
+        .controls {
+            padding: 16px !important;
+            // justify-content: flex-end;
+        }
+
+        .list-header-container {
+            display: none;
+        }
+
+        .song-list {
+            padding: 0px;
+
+            .song-row {
+
+
+                .info-wrapper {
+                    margin: 0;
+                    flex: 6;
+
+
+                }
+
+                .song-date-added {
+                    display: none;
+                }
+
+                .song-formatted-duration {
+                    margin: 0;
+                }
+
+                .song-index {
+                    display: none;
+                }
+
+                .song-album {
+                    display: none;
+                }
+            }
+
+
+        }
+    }
 }
