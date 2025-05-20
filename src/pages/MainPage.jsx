@@ -9,7 +9,7 @@ import { loadStation } from '../store/actions/station.actions'
 import { Explore } from '../cmps/Explore.jsx'
 import { ExploreDetails } from '../cmps/ExploreDetails.jsx'
 import { LyricsViewer } from '../cmps/LyricsViewer.jsx'
-import { Footer } from '../cmps/Footer.jsx'
+import { AppFooter } from '../cmps/AppFooter.jsx'
 
 
 export default function MainPage({
@@ -58,7 +58,7 @@ export default function MainPage({
         />
       )}
 
-      <Footer />
+      <AppFooter />
       {showLyrics && currentSong && (
         <LyricsViewer song={currentSong} onClose={() => setShowLyrics(false)} />
       )}
