@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { loadStation, updateStation, setIsPlaying, addSong, removeSong } from '../store/actions/station.actions'
 
-import {  useDebouncedYouTubeSearchInsidePlaylist } from '../customHooks/useDebouncedYouTubeSearch'
+import { useDebouncedYouTubeSearchInsidePlaylist } from '../customHooks/useDebouncedYouTubeSearch'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
 import { useParams } from 'react-router-dom'
@@ -49,7 +49,6 @@ export function StationDetails({ onRemoveStation }) {
     image: null,
   })
 
-
   const { stationId } = useParams()
   const dispatch = useDispatch()
   const colorThief = useRef()
@@ -80,7 +79,7 @@ export function StationDetails({ onRemoveStation }) {
       const stationSongs = station.songs || []
       setSongs(stationSongs)
       dispatch(setIsPlaying(false))
-      setStationDuration(calcStationDuration(stationSongs, 'duration' ))
+      setStationDuration(calcStationDuration(stationSongs, 'duration'))
       setIsDisplayingSearch(stationSongs.length === 0)
 
     }
@@ -206,15 +205,15 @@ export function StationDetails({ onRemoveStation }) {
 
 
     setUserMsg({
-        visible: true,
-        message: `Added to ${station.name}.` ,
-        image: getCloudinaryImg(station.createdBy.imgUrl), 
-      })
+      visible: true,
+      message: `Added to ${station.name}.`,
+      image: getCloudinaryImg(station.createdBy.imgUrl),
+    })
 
-      // Auto-dismiss after 3 seconds
-      setTimeout(() => {
-        setUserMsg(prev => ({ ...prev, visible: false }))
-      }, 3000)
+    // Auto-dismiss after 3 seconds
+    setTimeout(() => {
+      setUserMsg(prev => ({ ...prev, visible: false }))
+    }, 3000)
 
   }
 
@@ -225,15 +224,15 @@ export function StationDetails({ onRemoveStation }) {
 
 
     setUserMsg({
-        visible: true,
-        message: `Removed from ${station.name}.` ,
-        image: getCloudinaryImg(station.createdBy.imgUrl), 
-      })
+      visible: true,
+      message: `Removed from ${station.name}.`,
+      image: getCloudinaryImg(station.createdBy.imgUrl),
+    })
 
-      // Auto-dismiss after 3 seconds
-      setTimeout(() => {
-        setUserMsg(prev => ({ ...prev, visible: false }))
-      }, 3000)
+    // Auto-dismiss after 3 seconds
+    setTimeout(() => {
+      setUserMsg(prev => ({ ...prev, visible: false }))
+    }, 3000)
   }
 
   // function onSelectSong(song) {
@@ -244,7 +243,7 @@ export function StationDetails({ onRemoveStation }) {
 
 
 
-console.log("stationDuration: ", stationDuration)
+  console.log("stationDuration: ", stationDuration)
   const { createdBy } = station
 
   // console.log("variable: ", variable)

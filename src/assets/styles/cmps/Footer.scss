@@ -117,4 +117,8 @@
             font-weight: 450;
         }
     }
+
+    @include for-mobile-layout {
+        display: none;
+    }
 }

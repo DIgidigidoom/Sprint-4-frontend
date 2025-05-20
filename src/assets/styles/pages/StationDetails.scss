@@ -401,7 +401,8 @@
                     }
                 }
             }
-            .hovered-like-btn.liked{
+
+            .hovered-like-btn.liked {
                 z-index: 100;
             }
 
@@ -564,6 +565,75 @@
         img {
             height: 24px;
             width: 24px;
+        }
+    }
+
+    @include for-mobile-layout {
+        width: 360px;
+
+        .station-header-content {
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start !important;
+            padding: 16px !important;
+
+            .station-img {
+                align-self: center;
+            }
+
+            .station-info {
+                h1 {
+                    font-size: 2rem;
+                }
+
+                p:first-child {
+                    display: none;
+                }
+            }
+
+
+        }
+
+        .controls {
+            padding: 16px !important;
+            // justify-content: flex-end;
+        }
+
+        .list-header-container {
+            display: none;
+        }
+
+        .song-list {
+            padding: 0px;
+
+            .song-row {
+
+
+                .info-wrapper {
+                    margin: 0;
+                    flex: 6;
+
+
+                }
+
+                .song-date-added {
+                    display: none;
+                }
+
+                .song-formatted-duration {
+                    margin: 0;
+                }
+
+                .song-index {
+                    display: none;
+                }
+
+                .song-album {
+                    display: none;
+                }
+            }
+
+
         }
     }
 }
