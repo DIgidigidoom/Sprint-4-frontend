@@ -31,8 +31,8 @@ export function MediaPlayer({ onOpenLyrics, showLyrics }) {
     const dispatch = useDispatch()
 
 
-    const [volume, setVolume] = useState(100)
-    const [prevVolume, setPrevVolume] = useState(100)
+    const [volume, setVolume] = useState(50)
+    const [prevVolume, setPrevVolume] = useState(50)
     const [progress, setProgress] = useState(0)
     const [duration, setDuration] = useState(0)
     const [isRepeat, setIsRepeat] = useState(false)
