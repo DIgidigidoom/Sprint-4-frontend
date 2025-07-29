@@ -25,8 +25,8 @@ export const httpService = {
 async function ajax(endpoint, method = 'GET', data = null) {
     const url = `${BASE_URL}${endpoint}`
     const params = (method === 'GET') ? data : null
-    
-   const options = { url, method, data, params, withCredentials: true }
+
+    const options = { url, method, data, params, withCredentials: true }
 
     try {
         const res = await axios(options)
@@ -36,7 +36,9 @@ async function ajax(endpoint, method = 'GET', data = null) {
         console.dir(err)
         if (err.response && err.response.status === 401) {
             sessionStorage.clear()
-            window.location.assign('/')
+            if (!endpoint.includes('auth/login')) {
+                window.location.assign('/');
+            }
         }
         throw err
     }

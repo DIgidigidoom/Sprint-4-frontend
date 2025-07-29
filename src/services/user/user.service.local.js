@@ -1,4 +1,5 @@
 import { storageService } from '../async-storage.service.js'
+import { showErrorMsg } from '../event-bus.service.js'
 // import { addStation } from '../../store/actions/station.actions.js'
 
 const USER_STORAGE_KEY = 'userDB'
@@ -61,7 +62,12 @@ async function login(userCred) {
     const users = await storageService.query(USER_STORAGE_KEY)
     const user = users.find(user => user.username === userCred.username)
 
-    if (user) return saveLoggedinUser(user)
+    // if (user) return saveLoggedinUser(user)
+    if (user) {
+        return saveLoggedinUser(user)
+    } else {
+        throw new Error('Invalid username or password');
+    }
 }
 
 async function signup(userCred) {
