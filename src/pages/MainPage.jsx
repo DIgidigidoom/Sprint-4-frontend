@@ -10,6 +10,9 @@ import { Explore } from '../cmps/Explore.jsx'
 import { ExploreDetails } from '../cmps/ExploreDetails.jsx'
 import { LyricsViewer } from '../cmps/LyricsViewer.jsx'
 import { AppFooter } from '../cmps/AppFooter.jsx'
+import { useLocation } from 'react-router-dom'
+import { Settings } from '../cmps/Settings.jsx'
+import { EditFullName } from '../cmps/EditFullName.jsx'
 
 
 export default function MainPage({
@@ -26,6 +29,8 @@ export default function MainPage({
   const youtubeResults = useSelector(storeState => storeState.youtubeModule.youtubeResults)
   const [searchParams] = useSearchParams()
   const searchQuery = searchParams.get('search')
+  const location = useLocation()
+  const pathname = location.pathname
 
   useEffect(() => {
 
@@ -37,26 +42,33 @@ export default function MainPage({
   return (
 
     <div className="main-page">
-      {youtubeResults.length !== 0 ? (
-        <StaitionSearch />
-      ) : searchQuery === '' ? (
-        <Explore />
-      ) : searchQuery ? (
-        <ExploreDetails tag={searchQuery} />
-      ) : stationId ? (
-        !station ? (
-          <div>Loading station...</div>
+      {pathname === '/settings' ? (
+        <Settings />
+      ) :
+      pathname === '/settings/edit-fullname' ? (
+          <EditFullName />
+        ) :
+        youtubeResults.length !== 0 ? (
+          <StaitionSearch />
+        ) : searchQuery === '' ? (
+          <Explore />
+        ) : searchQuery ? (
+          <ExploreDetails tag={searchQuery} />
+        ) : stationId ? (
+          !station ? (
+            <div>Loading station...</div>
+          ) : (
+            <StationDetails onRemoveStation={onRemoveStation} />
+          )
         ) : (
-          <StationDetails onRemoveStation={onRemoveStation} />
-        )
-      ) : (
-        <StationList
-          stations={stations}
-          onRemoveStation={onRemoveStation}
-          onUpdateStation={onUpdateStation}
-          onSelectStation={onSelectStation}
-        />
-      )}
+          <StationList
+            stations={stations}
+            onRemoveStation={onRemoveStation}
+            onUpdateStation={onUpdateStation}
+            onSelectStation={onSelectStation}
+          />
+          // <Settings/>
+        )}
 
       <AppFooter />
       {showLyrics && currentSong && (

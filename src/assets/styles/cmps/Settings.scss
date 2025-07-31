@@ -1,0 +1,67 @@
+.settings-body {
+    padding: 32px 40px;
+    display: flex;
+    flex-direction: column;
+
+
+    h1 {
+        color: white;
+        font-weight: bold;
+        font-size: rem(32px);
+        margin: 0;
+        padding-bottom: 16px;
+    }
+
+    .account-information-title {
+        font-size: rem(24px);
+        padding-bottom: 30px;
+    }
+
+    .white-text {
+        color: white;
+    }
+
+    .settings-info-wrapper {
+        padding: 16px 0;
+        border-bottom: 1px solid rgb(79, 79, 79);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .edit-details-btn {
+            background-color: transparent;
+            padding: 0;
+            
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        .settings-info-inner-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .settings-logo {
+                margin-right: rem(16px);
+            }
+
+            .settings-user-info-wrapper {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                .settings-user-option {
+                    font-size: 1rem;
+                    font-weight: bold;
+                }
+                .settings-user-hidden {
+                    color: darken($color: white, $amount: 50%);
+                }
+            }
+
+
+
+        }
+
+    }
+}

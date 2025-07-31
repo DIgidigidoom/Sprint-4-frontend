@@ -65,7 +65,7 @@ export function Login() {
                 <div className='login-logo-container'>
                     <SpotifyLogo className="login-logo" />
                 </div>
-                <h1 className='login-h1'>Log in to Spotify</h1>
+                <h1 className='login-h1'>Log in to Stupify</h1>
                 <form className="login-form" onSubmit={onLogin}>
                     <input
                         type="text"
@@ -88,7 +88,7 @@ export function Login() {
                         <input type="checkbox" name="demo-user" id="demo-user" className='demo-user-input' onChange={handleCheckboxChange} />
                     </label>
                     {/* <ImgUploader onUploaded={onUploaded} /> */}
-                    <button className='login-btn'>Login</button>
+                    <button className='login-btn'>Log in</button>
                 </form>
             </div>
         </div>

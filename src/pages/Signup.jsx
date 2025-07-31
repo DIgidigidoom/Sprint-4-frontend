@@ -59,7 +59,7 @@ export function Signup() {
                         type="text"
                         name="fullname"
                         value={credentials.fullname}
-                        placeholder="Fullname"
+                        placeholder="Full name"
                         onChange={handleChange}
                         required
                     />
@@ -80,7 +80,7 @@ export function Signup() {
                         required
                     />
                     {/* <ImgUploader onUploaded={onUploaded} /> */}
-                    <button className='signup-btn'>Signup</button>
+                    <button className='signup-btn'>Sign up</button>
                 </form>
             </div>
         </div>

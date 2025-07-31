@@ -60,6 +60,10 @@ export function AppHeader() {
 		}
 	}
 
+	function onSettings() {
+		navigate('/settings', )
+	}
+
 	function onGoHome() {
 		dispatch(setSearchText(''))
 		dispatch({ type: SET_YOUTUBE_RESULTS, results: [] })
@@ -176,7 +180,23 @@ export function AppHeader() {
 
 								}}>
 								<button
-									className="logout-btn"
+									className="user-option-btns"
+
+									onClick={(ev) => {
+										ev.preventDefault()
+										ev.stopPropagation()
+										setUserContextMenu({
+											visible: false,
+											x: ev.clientX,
+											y: ev.clientY,
+										})
+										onSettings()
+									}}
+								>
+									Settings
+								</button>
+								<button
+									className="user-option-btns"
 
 									onClick={(ev) => {
 										ev.preventDefault()

@@ -12,6 +12,8 @@ import { useDispatch } from 'react-redux'
 import { SET_USER } from './store/reducers/user.reducer.js'
 import { httpService } from './services/http.service.js'
 import { socketService } from './services/socket.service'
+import { Settings } from './cmps/Settings.jsx'
+import { EditFullName } from './cmps/EditFullName.jsx'
 
 
 
@@ -22,7 +24,7 @@ export function RootCmp() {
   useEffect(() => {
     socketService.setup()
   }, [])
-  
+
   useEffect(() => {
     async function restoreUser() {
       try {
@@ -45,6 +47,9 @@ export function RootCmp() {
       <Routes>
         <Route path="/" element={<StationIndex />} >
           <Route path="station/:stationId" element={<StationDetails />} />
+          <Route path="settings" element={<Settings />}  >
+            <Route path="edit-fullname" element={<EditFullName />} />
+          </Route>
         </Route>
         <Route path="about" element={<AboutUs />} />
 
