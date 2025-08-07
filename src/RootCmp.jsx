@@ -14,6 +14,7 @@ import { httpService } from './services/http.service.js'
 import { socketService } from './services/socket.service'
 import { Settings } from './cmps/Settings.jsx'
 import { EditFullName } from './cmps/EditFullName.jsx'
+import { ChangePassword } from './cmps/ChangePassword.jsx'
 
 
 
@@ -49,6 +50,7 @@ export function RootCmp() {
           <Route path="station/:stationId" element={<StationDetails />} />
           <Route path="settings" element={<Settings />}  >
             <Route path="edit-fullname" element={<EditFullName />} />
+            <Route path="change-password" element={<ChangePassword />} />
           </Route>
         </Route>
         <Route path="about" element={<AboutUs />} />

@@ -13,6 +13,7 @@ import { AppFooter } from '../cmps/AppFooter.jsx'
 import { useLocation } from 'react-router-dom'
 import { Settings } from '../cmps/Settings.jsx'
 import { EditFullName } from '../cmps/EditFullName.jsx'
+import { ChangePassword } from '../cmps/ChangePassword.jsx'
 
 
 export default function MainPage({
@@ -45,30 +46,33 @@ export default function MainPage({
       {pathname === '/settings' ? (
         <Settings />
       ) :
-      pathname === '/settings/edit-fullname' ? (
+        pathname === '/settings/edit-fullname' ? (
           <EditFullName />
         ) :
-        youtubeResults.length !== 0 ? (
-          <StaitionSearch />
-        ) : searchQuery === '' ? (
-          <Explore />
-        ) : searchQuery ? (
-          <ExploreDetails tag={searchQuery} />
-        ) : stationId ? (
-          !station ? (
-            <div>Loading station...</div>
-          ) : (
-            <StationDetails onRemoveStation={onRemoveStation} />
-          )
-        ) : (
-          <StationList
-            stations={stations}
-            onRemoveStation={onRemoveStation}
-            onUpdateStation={onUpdateStation}
-            onSelectStation={onSelectStation}
-          />
-          // <Settings/>
-        )}
+          pathname === '/settings/change-password' ? (
+            <ChangePassword />
+          ) :
+            youtubeResults.length !== 0 ? (
+              <StaitionSearch />
+            ) : searchQuery === '' ? (
+              <Explore />
+            ) : searchQuery ? (
+              <ExploreDetails tag={searchQuery} />
+            ) : stationId ? (
+              !station ? (
+                <div>Loading station...</div>
+              ) : (
+                <StationDetails onRemoveStation={onRemoveStation} />
+              )
+            ) : (
+              <StationList
+                stations={stations}
+                onRemoveStation={onRemoveStation}
+                onUpdateStation={onUpdateStation}
+                onSelectStation={onSelectStation}
+              />
+              // <Settings/>
+            )}
 
       <AppFooter />
       {showLyrics && currentSong && (

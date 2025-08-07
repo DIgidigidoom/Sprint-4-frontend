@@ -17,6 +17,10 @@ export function Settings() {
         navigate('settings/edit-fullname')
     }
 
+    function onChangePassword() {
+        navigate('settings/change-password')
+    }
+
     return (
         <>
         {user && (
@@ -52,7 +56,7 @@ export function Settings() {
                         <span className="white-text settings-user-hidden">********</span>
                     </div>
                 </div>
-                <button className="edit-details-btn">
+                <button onClick={onChangePassword} className="edit-details-btn">
                     <EditDetailsLogo />
                 </button>
             </div>

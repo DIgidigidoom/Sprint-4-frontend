@@ -94,7 +94,6 @@ function saveLoggedinUser(user) {
     user = {
         _id: user._id,
         fullname: user.fullname,
-        imgUrl: user.imgUrl,
         isAdmin: user.isAdmin,
         likedSongsIds: user.likedSongsIds
 

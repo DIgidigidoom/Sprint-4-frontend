@@ -135,7 +135,7 @@ export function EditStationModal({ onClose }) {
           <div className='spotify-terms-warning-container'>
             <p className='spotify-terms-warning'>
               By proceeding,
-              you agree to give Spotify access to the image you choose to upload.
+              you agree to give Stupify access to the image you choose to upload.
               Please make sure you have the right to upload the image.
             </p>
           </div>

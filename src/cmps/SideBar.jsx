@@ -31,6 +31,7 @@ export function SideBar({ onCreateStation, onSelectStation, isCollapsed, setIsCo
     // const {createdBy} = station
 
     const likedStation = stations.find(station => station.createdBy._id === user?._id && station.type === 'liked station')
+    console.log('sidebar user: ', user)
 
 
     useEffect(() => {
@@ -146,7 +147,7 @@ export function SideBar({ onCreateStation, onSelectStation, isCollapsed, setIsCo
                             <HoverPlayBtn className="hover-play-btn" />
                             <div className='sidebar-content-info'>
                                 <span className='sidebar-content-info-title'>{station.name}</span>
-                                <span className='sidebar-content-info-description'>Playlist • {station.createdBy.fullname}</span>
+                                <span className='sidebar-content-info-description'>Playlist • {user?.fullname}</span>
                             </div>
                         </div>
                     </div>

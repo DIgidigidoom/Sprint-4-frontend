@@ -278,7 +278,7 @@ export function StationDetails({ onRemoveStation }) {
 
 
 
-  const { createdBy } = station
+  const { createdBy, type } = station
 
   // console.log("variable: ", variable)
   if (!station) return <div>Loading...</div>
@@ -323,7 +323,7 @@ export function StationDetails({ onRemoveStation }) {
             )}
 
             <p>
-              <span style={{ fontWeight: "700" }}> {createdBy.fullname}</span><span style={{ color: "#b3b3b3" }}> • {songs.length} {songs.length === 1 ? 'song' : 'songs'} , about {stationDuration} </span>
+              <span style={{ fontWeight: "700" }}> {['user playlist', 'liked station'].includes(station.type) ? loggedInUser.fullname : createdBy.fullname}</span><span style={{ color: "#b3b3b3" }}> • {songs.length} {songs.length === 1 ? 'song' : 'songs'} , about {stationDuration} </span>
             </p>
           </div>
         </div>
